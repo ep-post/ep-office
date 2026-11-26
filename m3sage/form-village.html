@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d4a7c">
+  <title>फॉर्म 2: ग्राम प्रोफाइल | M3-SAGE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="offline-bar">📵 ऑफलाइन — फॉर्म भरा जाएगा, डेटा बाद में सिंक होगा</div>
+
+<div class="app-header">
+  <a href="index.html" class="back-btn">←</a>
+  <div class="header-title">
+    ग्राम प्रोफाइल एवं मानचित्रण
+    <div class="header-sub">प्रश्नावली 2 · M3-SAGE</div>
+  </div>
+  <div class="sync-badge" id="syncBadge"></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label" id="progressLabel">खंड 1 / 5</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+</div>
+
+<div id="successScreen" class="form-container hidden">
+  <div class="success-screen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">फॉर्म सफलतापूर्वक जमा हुआ</div>
+    <div class="success-id" id="successId"></div>
+    <div class="success-note" id="successNote"></div>
+    <div class="success-btns">
+      <button class="btn-primary" onclick="location.reload()">नया फॉर्म भरें</button>
+      <button class="btn-secondary" onclick="location.href='index.html'">होम पर जाएं</button>
+    </div>
+  </div>
+</div>
+
+<form id="mainForm" class="form-container" novalidate>
+
+  <div class="form-meta-box">
+    <span class="form-id" id="formId">M3-VG-...</span>
+    <span class="form-enum" id="formEnum"></span>
+  </div>
+
+  <!-- ══════ SECTION A: VILLAGE IDENTIFICATION ══════ -->
+  <div class="form-section" id="secA">
+    <div class="section-header">खंड A: गांव की जानकारी</div>
+    <div class="q-hint">प्रत्येक गांव के लिए अनिवार्य</div>
+
+    <table class="id-table">
+      <tr>
+        <td>प्रखंड<span style="color:red">*</span></td>
+        <td>
+          <select class="select-input" name="A_block" required>
+            <option value="">— चुनें —</option>
+            <option>शेरघाटी</option>
+            <option>आमस</option>
+            <option>डोभी</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>पंचायत</td>
+        <td><input type="text" name="A_panchayat" placeholder="पंचायत का नाम"></td>
+      </tr>
+      <tr>
+        <td>गांव</td>
+        <td><input type="text" name="A_village" placeholder="गांव का नाम"></td>
+      </tr>
+      <tr>
+        <td>गांव कोड</td>
+        <td><input type="text" name="A_village_code" placeholder="कोड"></td>
+      </tr>
+      <tr>
+        <td>कुल परिवार</td>
+        <td><input type="number" name="A_total_hh" min="0" placeholder="संख्या"></td>
+      </tr>
+      <tr>
+        <td>अनुमानित जनसंख्या</td>
+        <td><input type="number" name="A_population" min="0" placeholder="संख्या"></td>
+      </tr>
+      <tr>
+        <td>महिला जनसंख्या</td>
+        <td><input type="number" name="A_female_pop" min="0" placeholder="संख्या"></td>
+      </tr>
+      <tr>
+        <td>SC परिवार</td>
+        <td><input type="number" name="A_sc_hh" min="0" placeholder="संख्या"></td>
+      </tr>
+      <tr>
+        <td>ST परिवार</td>
+        <td><input type="number" name="A_st_hh" min="0" placeholder="संख्या"></td>
+      </tr>
+      <tr>
+        <td>महिला SHG</td>
+        <td><input type="number" name="A_shg_count" min="0" placeholder="संख्या"></td>
+      </tr>
+      <tr>
+        <td>सर्वेक्षण की तारीख</td>
+        <td><input type="date" name="A_date"></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ══════ SECTION B: LIVELIHOOD ══════ -->
+  <div class="form-section hidden" id="secB">
+    <div class="section-header">खंड B: गांव की आजीविका स्थिति</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न B1. गांव के लोगों की आजीविका के मुख्य स्रोत क्या हैं?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="खेती"><span>खेती</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="कृषि मजदूरी"><span>कृषि मजदूरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="पशुपालन"><span>पशुपालन</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="निर्माण कार्य"><span>निर्माण कार्य</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="दूसरे राज्यों में मजदूरी"><span>दूसरे राज्यों में मजदूरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="छोटा व्यवसाय"><span>छोटा व्यवसाय</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="नौकरी"><span>नौकरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="B1_livelihood" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न B2. क्या गांव में महिलाओं के लिए पर्याप्त रोजगार के अवसर उपलब्ध हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="B2_employment" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="B2_employment" value="कुछ हद तक"><span>कुछ हद तक</span></label>
+        <label class="radio-opt"><input type="radio" name="B2_employment" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="B2_employment" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न B3. क्या गांव से दूसरे राज्यों में रोजगार के लिए पलायन होता है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="B3_migration_level" value="बहुत अधिक"><span>बहुत अधिक</span></label>
+        <label class="radio-opt"><input type="radio" name="B3_migration_level" value="सामान्य"><span>सामान्य</span></label>
+        <label class="radio-opt"><input type="radio" name="B3_migration_level" value="कम"><span>कम</span></label>
+        <label class="radio-opt"><input type="radio" name="B3_migration_level" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="B3_migration_level" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ SECTION C: MIGRATION ══════ -->
+  <div class="form-section hidden" id="secC">
+    <div class="section-header">खंड C: पलायन एवं रोजगार संबंधी जानकारी</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C1. गांव के लोगों के सामान्य गंतव्य कौन-से हैं?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="दिल्ली"><span>दिल्ली</span></label>
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="हरियाणा"><span>हरियाणा</span></label>
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="पंजाब"><span>पंजाब</span></label>
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="राजस्थान"><span>राजस्थान</span></label>
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="उत्तर प्रदेश"><span>उत्तर प्रदेश</span></label>
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="अन्य राज्य"><span>अन्य राज्य</span></label>
+        <label class="check-opt"><input type="checkbox" name="C1_destinations" value="विदेश"><span>विदेश</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C2. रोजगार के लिए लोगों को कौन ले जाता है?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="रिश्तेदार"><span>रिश्तेदार</span></label>
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="मित्र"><span>मित्र</span></label>
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="ठेकेदार"><span>ठेकेदार</span></label>
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="रोजगार एजेंट"><span>रोजगार एजेंट</span></label>
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="नियोक्ता"><span>नियोक्ता</span></label>
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="अन्य"><span>अन्य</span></label>
+        <label class="check-opt"><input type="checkbox" name="C2_recruiters" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C3. क्या गांव में रोजगार के नाम पर धोखाधड़ी की शिकायतें मिली हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="C3_fraud_complaints" value="आधिकारिक रूप से दर्ज मामले"><span>आधिकारिक रूप से दर्ज मामले</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_fraud_complaints" value="समुदाय द्वारा बताई गई अपुष्ट जानकारी"><span>समुदाय द्वारा बताई गई लेकिन अपुष्ट जानकारी</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_fraud_complaints" value="ऐसी कोई जानकारी नहीं"><span>ऐसी कोई जानकारी नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_fraud_complaints" value="जानकारी उपलब्ध नहीं"><span>जानकारी उपलब्ध नहीं</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ SECTION D: TRAFFICKING & EXPLOITATION ══════ -->
+  <div class="form-section hidden" id="secD">
+    <div class="section-header">खंड D: मानव तस्करी एवं शोषण संबंधी जानकारी</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D1. क्या गांव में महिलाओं को धोखे से विवाह के नाम पर दूसरे स्थानों पर ले जाने की घटनाओं की जानकारी मिली है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D1_deceptive_marriage" value="दर्ज मामले"><span>दर्ज मामले</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_deceptive_marriage" value="अपुष्ट शिकायतें"><span>अपुष्ट शिकायतें</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_deceptive_marriage" value="ऐसी कोई जानकारी नहीं"><span>ऐसी कोई जानकारी नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_deceptive_marriage" value="जानकारी उपलब्ध नहीं"><span>जानकारी उपलब्ध नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D2. क्या गांव में जबरन विवाह या विवाह के बाद शोषण की शिकायतें मिली हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D2_forced_marriage" value="हाँ, दर्ज मामले"><span>हाँ, दर्ज मामले</span></label>
+        <label class="radio-opt"><input type="radio" name="D2_forced_marriage" value="हाँ, अपुष्ट शिकायतें"><span>हाँ, अपुष्ट शिकायतें</span></label>
+        <label class="radio-opt"><input type="radio" name="D2_forced_marriage" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D2_forced_marriage" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D3. क्या गांव में मजदूरी या रोजगार के नाम पर शोषण की घटनाओं की जानकारी मिली है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D3_labour_exploit" value="हाँ, दर्ज मामले"><span>हाँ, दर्ज मामले</span></label>
+        <label class="radio-opt"><input type="radio" name="D3_labour_exploit" value="हाँ, अपुष्ट शिकायतें"><span>हाँ, अपुष्ट शिकायतें</span></label>
+        <label class="radio-opt"><input type="radio" name="D3_labour_exploit" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D3_labour_exploit" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D4. क्या निम्नलिखित समस्याओं की जानकारी मिली है?</div>
+      <div class="grid-wrap">
+        <table class="grid-table">
+          <thead>
+            <tr>
+              <th>समस्या</th>
+              <th>हाँ</th>
+              <th>नहीं</th>
+              <th>जानकारी नहीं</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>मजदूरी रोक लेना</td>
+              <td><input type="radio" name="D4_wage_withheld" value="हाँ"></td>
+              <td><input type="radio" name="D4_wage_withheld" value="नहीं"></td>
+              <td><input type="radio" name="D4_wage_withheld" value="जानकारी नहीं"></td>
+            </tr>
+            <tr>
+              <td>जबरन काम करवाना</td>
+              <td><input type="radio" name="D4_forced_labour" value="हाँ"></td>
+              <td><input type="radio" name="D4_forced_labour" value="नहीं"></td>
+              <td><input type="radio" name="D4_forced_labour" value="जानकारी नहीं"></td>
+            </tr>
+            <tr>
+              <td>काम करने वाले को बंद रखना</td>
+              <td><input type="radio" name="D4_confinement" value="हाँ"></td>
+              <td><input type="radio" name="D4_confinement" value="नहीं"></td>
+              <td><input type="radio" name="D4_confinement" value="जानकारी नहीं"></td>
+            </tr>
+            <tr>
+              <td>पहचान पत्र अपने पास रख लेना</td>
+              <td><input type="radio" name="D4_id_withheld" value="हाँ"></td>
+              <td><input type="radio" name="D4_id_withheld" value="नहीं"></td>
+              <td><input type="radio" name="D4_id_withheld" value="जानकारी नहीं"></td>
+            </tr>
+            <tr>
+              <td>विवाह के लिए धोखा देना</td>
+              <td><input type="radio" name="D4_marriage_deceit" value="हाँ"></td>
+              <td><input type="radio" name="D4_marriage_deceit" value="नहीं"></td>
+              <td><input type="radio" name="D4_marriage_deceit" value="जानकारी नहीं"></td>
+            </tr>
+            <tr>
+              <td>आवाजाही पर जबरन रोक</td>
+              <td><input type="radio" name="D4_movement_restriction" value="हाँ"></td>
+              <td><input type="radio" name="D4_movement_restriction" value="नहीं"></td>
+              <td><input type="radio" name="D4_movement_restriction" value="जानकारी नहीं"></td>
+            </tr>
+            <tr>
+              <td>बच्चों का शोषण</td>
+              <td><input type="radio" name="D4_child_exploit" value="हाँ"></td>
+              <td><input type="radio" name="D4_child_exploit" value="नहीं"></td>
+              <td><input type="radio" name="D4_child_exploit" value="जानकारी नहीं"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D5. क्या गांव में ऐसी महिलाओं की जानकारी है जो शोषण या कठिन परिस्थितियों से वापस लौटी हैं?</div>
+      <div class="warn-box">इस प्रश्न के उत्तर में किसी महिला का नाम या व्यक्तिगत पहचान दर्ज न करें।</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D5_returnees" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="D5_returnees" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D5_returnees" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ SECTION E: INSTITUTIONS ══════ -->
+  <div class="form-section hidden" id="secE">
+    <div class="section-header">खंड E: स्थानीय संस्थाएँ एवं सहायता</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E1. गांव में कौन-कौन सी संस्थाएँ सक्रिय हैं?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="महिला स्वयं सहायता समूह"><span>महिला स्वयं सहायता समूह</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="जीविका समूह"><span>जीविका समूह</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="पंचायत"><span>पंचायत</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="आंगनवाड़ी"><span>आंगनवाड़ी</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="आशा कार्यकर्ता"><span>आशा कार्यकर्ता</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="विद्यालय"><span>विद्यालय</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="स्वास्थ्य केंद्र"><span>स्वास्थ्य केंद्र</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="गैर-सरकारी संस्था"><span>गैर-सरकारी संस्था</span></label>
+        <label class="check-opt"><input type="checkbox" name="E1_active_institutions" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E2. क्या गांव में महिलाओं को कानूनी सहायता उपलब्ध कराने की व्यवस्था है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="E2_legal_aid" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="E2_legal_aid" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="E2_legal_aid" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E3. क्या मानव तस्करी या शोषण से प्रभावित महिलाओं को सहायता के लिए किसी संस्था से जोड़ा जा सकता है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="E3_referral_possible" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="E3_referral_possible" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="E3_referral_possible" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E4. गांव में महिलाओं के आर्थिक विकास के लिए कौन-से व्यवसाय शुरू किए जा सकते हैं?</div>
+      <textarea class="textarea-input" name="E4_biz_suggestions" placeholder="सुझाव यहाँ लिखें..."></textarea>
+    </div>
+  </div>
+
+</form>
+
+<div class="form-nav-wrap">
+  <div class="form-nav">
+    <button type="button" class="btn-secondary hidden" id="btnPrev" onclick="prevSection()">← पिछला</button>
+    <button type="button" class="btn-primary" id="btnNext" onclick="nextSection()">अगला →</button>
+    <button type="button" class="btn-submit hidden" id="btnSubmit" onclick="submitForm()">जमा करें ✓</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+<script>
+initAuth(
+  user => { document.getElementById('formEnum').textContent = user.displayName || user.email; refreshSyncBadge(); document.querySelector('[name="A_date"]').value = new Date().toISOString().slice(0,10); },
+  () => { window.location.href = 'index.html'; }
+);
+
+const SECTIONS = ['secA','secB','secC','secD','secE'];
+let cur = 0;
+
+function showSection(idx) {
+  SECTIONS.forEach((id, i) => document.getElementById(id).classList.toggle('hidden', i !== idx));
+  cur = idx;
+  const pct = Math.round(((idx+1)/SECTIONS.length)*100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `खंड ${idx+1} / ${SECTIONS.length}`;
+  document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
+  document.getElementById('btnNext').classList.toggle('hidden', idx === SECTIONS.length - 1);
+  document.getElementById('btnSubmit').classList.toggle('hidden', idx !== SECTIONS.length - 1);
+  window.scrollTo(0, 0);
+}
+function nextSection() { if (cur < SECTIONS.length-1) showSection(cur+1); }
+function prevSection() { if (cur > 0) showSection(cur-1); }
+
+async function submitForm() {
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> जमा हो रहा है...';
+  try {
+    const id = await saveSubmission('village', collectFormData(document.getElementById('mainForm')));
+    document.getElementById('mainForm').classList.add('hidden');
+    document.getElementById('successScreen').classList.remove('hidden');
+    document.getElementById('successId').textContent = id;
+    document.getElementById('successNote').textContent = navigator.onLine ? 'Google Sheets में सिंक हो रहा है।' : 'ऑफलाइन — इंटरनेट आने पर सिंक होगा।';
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.querySelector('.form-nav-wrap').style.display = 'none';
+    window.scrollTo(0,0);
+  } catch(e) {
+    alert('जमा करने में समस्या। पुनः प्रयास करें।');
+    btn.disabled = false; btn.textContent = 'जमा करें ✓';
+  }
+}
+
+showSection(0);
+</script>
+</body>
+</html>

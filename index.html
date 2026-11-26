@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F4D3A">
+<title>Empower People Office</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=590">
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-storage-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="app" class="app">
+
+  <!-- Sign in -->
+  <section id="v-login" class="screen hidden">
+    <div class="signin-wrap"><div class="signin-card">
+      <div class="signin-photo">
+        <img src="hero.jpg" alt="Women at an Empower People enterprise training" loading="eager" decoding="async">
+      </div>
+      <div class="signin-body">
+        <div class="signin-plaque"><img src="logo.png" alt="Empower People"></div>
+        <h1 class="signin-title">EMPOWER PEOPLE OFFICE</h1>
+        <p class="signin-tag">One workplace. One team. One mission.</p>
+        <p class="signin-sub">Everything we do, in one place — from a day report in Yamunanagar to the accounts in Delhi.</p>
+        <div class="signin-rule"></div>
+
+        <div class="waysin">
+          <button class="wayin" id="phoneSwitch">
+            <span class="wayart" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="46" height="46"><rect x="14" y="4" width="20" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2.6"/><line x1="20" y1="9" x2="28" y2="9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="38" r="1.8" fill="currentColor"/><text x="24" y="27" font-size="11" font-weight="700" text-anchor="middle" fill="currentColor">1234</text></svg></span>
+            <span class="waytext"><b data-i18n="signInPhone">Phone number</b><i data-i18n="signInPhoneSub">A code comes to you by SMS</i></span></button>
+
+          <button class="wayin" id="googleBtn">
+            <span class="wayart" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="42" height="42"><path fill="#4285F4" d="M44 24.5c0-1.6-.1-2.8-.4-4H24v7.3h11.5c-.2 1.9-1.5 4.8-4.3 6.7l6.6 5.1C41.7 36 44 30.8 44 24.5z"/><path fill="#34A853" d="M24 45c5.8 0 10.6-1.9 14.1-5.2l-6.7-5.2c-1.8 1.2-4.2 2.1-7.4 2.1-5.6 0-10.4-3.7-12.1-8.8l-7 5.4C8.3 40.3 15.6 45 24 45z"/><path fill="#FBBC05" d="M11.9 27.9c-.4-1.3-.7-2.6-.7-4s.3-2.7.7-4l-7-5.4C3.4 17.4 2.6 20.6 2.6 24s.8 6.6 2.3 9.4l7-5.5z"/><path fill="#EA4335" d="M24 10.8c4 0 6.6 1.7 8.1 3.2l5.9-5.8C34.6 4.8 29.8 3 24 3 15.6 3 8.3 7.7 4.9 14.6l7 5.4c1.7-5.1 6.5-9.2 12.1-9.2z"/></svg></span>
+            <span class="waytext"><b data-i18n="signInGoogle">Google</b><i data-i18n="signInGoogleSub">Use your Google account</i></span></button>
+
+          <button class="wayin quiet" id="emailSwitch">
+            <span class="wayart" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="42" height="42"><rect x="5" y="11" width="38" height="26" rx="4" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M6 14l18 13L42 14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="waytext"><b data-i18n="signInEmail">Email</b><i data-i18n="signInEmailSub">Email address and password</i></span></button>
+        </div>
+
+        <div id="m-email" class="hidden">
+          <div class="row-fields">
+            <input id="emailIn" placeholder="Email" autocomplete="username">
+            <input id="passIn" type="password" placeholder="Password" autocomplete="current-password">
+          </div>
+          <button class="btn quiet" id="emailBtn">Sign in with email</button>
+          <button class="btn quiet" id="emailNewBtn" style="margin-top:6px">Create an account with this email</button>
+
+        </div>
+        <div id="m-phone" class="hidden">
+          <div class="row-fields">
+            <p class="waystep"><b data-i18n="yourNumber">Your mobile number</b><br><i>10 digits</i></p>
+          <input id="phoneIn" class="bigin" type="tel" inputmode="numeric" maxlength="10" placeholder="9991552079" autocomplete="tel">
+          </div>
+          <button class="btn quiet" id="phoneSendBtn">Send me a code</button>
+          <div id="otpWrap" class="hidden" style="margin-top:8px">
+            <p class="waystep"><b data-i18n="theCode">The code from the SMS</b><br><i>6 digits</i></p>
+            <input id="otpIn" class="bigin" inputmode="numeric" maxlength="6" placeholder="● ● ● ● ● ●" autocomplete="one-time-code">
+            <button class="btn" id="otpBtn" style="margin-top:6px">Sign in</button>
+            <button class="btn quiet" id="otpAgain" style="margin-top:6px">Send it again</button>
+          </div>
+          <div id="recaptcha"></div>
+        </div>
+        <div class="err" id="loginErr"></div>
+        <button class="btn quiet hidden" id="installBtn" style="margin-top:14px">Install the app on this phone</button>
+        <p class="muted small hidden" id="installHint" style="margin-top:12px">To install on Android: open in Chrome → menu (⋮) → Add to Home screen.</p>
+        <p class="signin-foot">New here? Just sign in — the office will approve you.<br>
+          A-131, Sarita Vihar, New Delhi-110076</p>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- Not on the allowlist -->
+  <section id="v-denied" class="screen center hidden">
+    <h1>Not on the list yet</h1>
+    <p class="muted">This email is not permitted to use the app. Ask your Admin to add it, then sign in again.</p>
+    <button class="btn quiet" id="deniedOut">Sign out</button>
+  </section>
+
+  <!-- Main shell -->
+  <section id="v-main" class="screen hidden">
+    <header class="top">
+      <button class="iconbtn" id="menuBtn" aria-label="Menu">☰</button>
+      <img src="logo.png" alt="" class="hlogo">
+      <div class="title"><h1 id="pageTitle">Home</h1><span class="sub" id="userLine"></span></div>
+      <button id="backBtn" class="backbtn hidden" title="Back" aria-label="Back">←</button>
+      <button id="bell" class="bellbtn hidden" title="What's new" aria-label="What's new">🔔</button>
+      <select id="langSel" class="langsel" aria-label="Language"></select>
+    </header>
+    <nav class="drawer hidden" id="drawer"><div class="panel">
+      <div id="nav-head"><strong id="navName"></strong><span class="muted small" id="navRoles"></span></div>
+      <div id="navLinks"></div>
+      <button class="navlink out" id="outBtn">Sign out</button>
+    </div></nav>
+    <main id="content" class="content"></main>
+    <div class="offline hidden" id="offlineBar">Offline — entries will sync when connected</div>
+  </section>
+
+</div>
+<div class="toast hidden" id="toast"></div>
+<script src="geo.js?v=590"></script>
+<script src="app.js?v=590"></script>
+<script src="programs.js?v=590"></script>
+<script src="fundraising.js?v=590"></script>
+<script src="modules.js?v=590"></script>
+<script src="policy.js?v=590"></script>
+<script src="collab.js?v=590"></script>
+<script src="programmes-v2.js?v=590"></script>
+<script src="accounts.js?v=590"></script>
+<script src="forms.js?v=590"></script>
+<script src="m3sage.js?v=590"></script>
+<script src="i18n.js?v=590"></script>
+</body>
+</html>

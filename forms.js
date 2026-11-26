@@ -1,0 +1,1041 @@
+const EP_STAMP = 'data:image/png;base64,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';
+/* ===============================================================
+   EMPOWER PEOPLE — FORMS ENGINE  F-01 through F-09
+   Blank + filled PDF generation with verification codes
+   All forms black and white for plain-printer output
+   =============================================================== */
+
+async function ensureJsPDF() {
+  if (!window.jspdf) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+}
+
+/* ── Generate & store a verification code ── */
+async function makeVerifyCode(formCode, collection, recordId) {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const rand = Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join("");
+  const code = `EP-${formCode}-${rand}`;
+  try {
+    await db.collection("verifiedForms").doc(code).set({
+      code, formCode, collection, recordId,
+      generatedBy: state.user.uid, generatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch(e) { console.warn("Could not save verify code", e); }
+  return code;
+}
+
+/* ── Base document setup — B&W ── */
+function formBase(title, code, verifyCode) {
+  const doc = new jspdf.jsPDF({ unit:"mm", format:"a4" });
+  const W=210, H=297, M=15, IW=W-M*2;
+  let y=M;
+
+  // B&W header — black border, bold text
+  doc.setLineWidth(0.8); doc.setDrawColor(0); doc.rect(M, y, IW, 12);
+  doc.setFontSize(11); doc.setFont(undefined,"bold"); doc.setTextColor(0);
+  doc.text("EMPOWER PEOPLE", M+3, y+5);
+  doc.setFontSize(8); doc.setFont(undefined,"normal");
+  doc.text("5 Dreams Apartments, A-4 Abulfazal Enclave, Jamia Nagar, New Delhi-110025  ·  post@empowerpeople.in  ·  011-40671714", M+3, y+9.5);
+  doc.setFontSize(11); doc.setFont(undefined,"bold");
+  doc.text(code, W-M-3, y+5, {align:"right"});
+  doc.setFontSize(9); doc.setFont(undefined,"normal");
+  doc.text(title, W-M-3, y+9.5, {align:"right"});
+  y += 14; doc.setTextColor(0);
+
+  // Helpers
+  const line = (x1,y1,x2,y2,w=0.3) => { doc.setLineWidth(w); doc.setDrawColor(0); doc.line(x1,y1,x2,y2); };
+  const box  = (bx,by,bw,bh) => { doc.setLineWidth(0.3); doc.setDrawColor(0); doc.rect(bx,by,bw,bh); };
+  const label = (txt,lx,ly,size=7.5,bold=false) => { doc.setFontSize(size); doc.setFont(undefined,bold?"bold":"normal"); doc.setTextColor(80); doc.text(String(txt||""),lx,ly); doc.setTextColor(0); };
+  const val   = (txt,vx,vy,vw,vh=8) => { box(vx,vy,vw,vh); doc.setFontSize(9); doc.setFont(undefined,"normal"); doc.setTextColor(0); if(txt) doc.text(String(txt).slice(0,Math.floor(vw/2)),vx+1,vy+5.5); };
+  const field = (lbl,fx,fy,fw,fh=8,value) => { box(fx,fy,fw,fh); label(lbl,fx+1,fy+3,6); if(value) { doc.setFontSize(8.5); doc.setFont(undefined,"normal"); doc.setTextColor(0); doc.text(String(value).slice(0,Math.floor(fw/1.8)),fx+1,fy+6.5); }};
+  const sectionHead = (txt,sy) => {
+    doc.setLineWidth(0.3); doc.rect(M,sy,IW,6);
+    doc.setFontSize(7.5); doc.setFont(undefined,"bold"); doc.setTextColor(0);
+    doc.text(txt.toUpperCase(), M+2, sy+4);
+    doc.setFont(undefined,"normal"); return sy+6;
+  };
+  const sigBlock = (lbl,role,name,date,sx,sw,sy,postTitleArg) => {
+    if(name) {
+      const _users=(typeof state!=="undefined"&&state.users)||[];
+      const _uAll=_users.find(x=>x.name===name);
+      const _u=_uAll&&_uAll.signature?_uAll:null;
+      if(_u&&_u.signature){try{const _src=_u.signature.startsWith("data:")?_u.signature:"data:image/jpeg;base64,"+_u.signature;doc.addImage(_src,"JPEG",sx+1,sy+2,Math.min(sw-4,28),10);}catch(_e){}}
+      doc.setFontSize(8.5); doc.setFont(undefined,"bold"); doc.text(String(name).slice(0,Math.floor(sw/2.2)),sx+1,sy+13); doc.setFont(undefined,"normal");
+      const _pt=postTitleArg||(_uAll&&_uAll.postTitle)||"";
+      if(_pt){ doc.setFontSize(6); doc.setTextColor(80); doc.text(String(_pt).slice(0,Math.floor(sw/1.6)),sx+1,sy+16.5); doc.setTextColor(0); }
+      const _eid = _uAll ? (_uAll.id || "") : "";
+      if(_eid){ doc.setFontSize(5.5); doc.setTextColor(100); doc.text(_eid, sx+1, sy+19.5); doc.setTextColor(0); }
+    } else {
+      // No signature — dashed blank box for physical signature
+      doc.setDrawColor(180); doc.setLineDash([1,1]); doc.rect(sx+1, sy+1, sw-2, 20); doc.setLineDash([]); doc.setDrawColor(0);
+    }
+    box(sx,sy,sw,32);
+    line(sx,sy+21,sx+sw,sy+21);
+    label(lbl,sx+1,sy+24,7,true); label(role,sx+1,sy+27.5,6.5);
+    label("Date: "+(date||"__________"),sx+1,sy+31,6.5);
+  };
+  const topRow = (fields,rowY) => {
+    let cx=M;
+    fields.forEach(f => { field(f.l,cx,rowY,f.w,8,f.v); cx+=f.w; });
+    return rowY+8;
+  };
+  const row2 = (a,b,rowY,av,bv) => topRow([{l:a,w:IW/2,v:av},{l:b,w:IW/2,v:bv}],rowY);
+  const row3 = (a,b,c,rowY,av,bv,cv) => topRow([{l:a,w:IW/3,v:av},{l:b,w:IW/3,v:bv},{l:c,w:IW/3,v:cv}],rowY);
+
+  // Footer with verify code
+  const addFooter = () => {
+    const fy = H-10;
+    doc.setLineWidth(0.3); doc.rect(M,fy,IW,7);
+    doc.setFontSize(7); doc.setFont(undefined,"normal"); doc.setTextColor(0);
+    const msg = verifyCode
+      ? `Verify at app.empowerpeople.in/verify  ·  Code: ${verifyCode}  ·  Generated ${today()} by ${state.me.name}`
+      : `Empower People  ·  Blank form — fill by hand  ·  Digital submissions via app.empowerpeople.in`;
+    doc.text(msg, W/2, fy+4, {align:"center"});
+  };
+
+  window._formDoc = doc;   // expose for downloadFilledForm PDF upload
+  return { doc, y, M, IW, W, H, line, box, label, val, field, sectionHead, sigBlock, topRow, row2, row3, addFooter };
+}
+
+/* ══════════════════════════════════════════════════
+   F-01  REQUISITION
+   ══════════════════════════════════════════════════ */
+function formF01(d={}) {
+  const {doc,M,IW,line,box,label,field,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Requisition","F-01",d._code);
+  let y=29;
+  y = row3("Ref no.","Date","Office",y, d.id?.slice(0,8), d.createdAt||d.date, d.officeName);
+  y = row2("Requested by","Department",y, d.byName||d.requestedBy, d.forDept);
+  y = row2("Project / programme","Needed by",y, d.projectName, d.neededBy||d.dueBy);
+  y+=2; y=sectionHead("What is needed",y);
+  const cols=[8,70,22,28,42]; const heads=["#","Item / service","Qty","Est. cost ₹","Purpose / justification"];
+  box(M,y,IW,7); let cx=M;
+  heads.forEach((h,i)=>{ label(h,cx+1,y+4.5,6.5,true); if(i<heads.length-1)line(cx+cols[i],y,cx+cols[i],y+7); cx+=cols[i]; });
+  y+=7;
+  const items = d.items ? String(d.items).split("\n").filter(Boolean) : [];
+  for(let r=0;r<Math.max(4,items.length);r++){
+    cx=M; box(M,y,IW,8);
+    cols.forEach((w,i)=>{ if(i<cols.length-1)line(cx+w,y,cx+w,y+8); cx+=w; });
+    if(items[r]){ doc.setFontSize(8); doc.text(String(items[r]).slice(0,55), M+cols[0]+1, y+5); }
+    y+=8;
+  }
+  box(M,y,IW,7);
+  label("TOTAL ESTIMATED COST  ₹",M+2,y+4.5,7,true);
+  if(d.estimate||d.amount){ doc.setFontSize(9); doc.text(Number(d.estimate||d.amount).toLocaleString("en-IN"), M+IW-40, y+4.5, {align:"right"}); }
+  y+=7; y+=3;
+  y=sectionHead("Authorisation",y); y+=2;
+  const _hasVerifier = !!(d.verifiedByName);
+  if(_hasVerifier){
+    const sw3=IW/3-1;
+    sigBlock("Requested by","Name & post", d.byName, d.createdOn, M, sw3, y);
+    sigBlock("Verified by","Line manager", d.verifiedByName, d.verifiedAt, M+sw3+1, sw3, y);
+    sigBlock("Approved by","Director ACF", d.approvedByName, d.approvedAt, M+(sw3+1)*2, sw3, y);
+  } else {
+    const sw2=IW/2-1;
+    sigBlock("Requested by","Name & post", d.byName, d.createdOn, M, sw2, y);
+    sigBlock("Approved by","Director ACF", d.approvedByName, d.approvedAt, M+sw2+1, sw2, y);
+  }
+  y+=36;
+  if(d.notes){ label("Notes:",M,y,7,true); doc.setFontSize(8); doc.text(String(d.notes).slice(0,100),M+12,y); }
+  addFooter();
+  doc.save(`${d._code||"F-01"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-02  REIMBURSEMENT
+   ══════════════════════════════════════════════════ */
+function formF02(d={}) {
+  const {doc,M,IW,line,box,label,field,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Reimbursement","F-02",d._code);
+  let y=29;
+  y=row3("Ref no.","Date","Office",y, d.id?.slice(0,8), d.date||d.createdOn, d.officeName);
+  y=row2("Name","Post",y, d.byName, d.postTitle);
+  y=row2("Department","Project / programme",y, d.department, d.projectName);
+  y+=2; y=sectionHead("Expenses claimed",y);
+  const cols=[8,25,65,40,32]; const heads=["#","Date","Particulars","Project","Amount ₹"];
+  box(M,y,IW,7); let cx=M;
+  heads.forEach((h,i)=>{ label(h,cx+1,y+4.5,6.5,true); if(i<heads.length-1)line(cx+cols[i],y,cx+cols[i],y+7); cx+=cols[i]; });
+  y+=7;
+  const lines=d.lines||[];
+  for(let r=0;r<Math.max(8,lines.length);r++){
+    cx=M; box(M,y,IW,8);
+    cols.forEach((w,i)=>{ if(i<cols.length-1)line(cx+w,y,cx+w,y+8); cx+=w; });
+    if(lines[r]){
+      doc.setFontSize(7.5);
+      doc.text(String(lines[r].date||""),M+cols[0]+1,y+5);
+      doc.text(String(lines[r].desc||"").slice(0,35),M+cols[0]+cols[1]+1,y+5);
+      doc.text(String(lines[r].project||"").slice(0,20),M+cols[0]+cols[1]+cols[2]+1,y+5);
+      doc.text(String(Number(lines[r].amount||0).toLocaleString("en-IN")),M+IW-2,y+5,{align:"right"});
+    }
+    y+=8;
+  }
+  box(M,y,IW,7); label("TOTAL  ₹",M+IW-40,y+4.5,7,true);
+  if(d.amount){ doc.setFontSize(9); doc.text(Number(d.amount).toLocaleString("en-IN"),M+IW-2,y+4.5,{align:"right"}); }
+  y+=7; y+=2;
+  box(M,y,IW/2,8); label("Bills attached (count)",M+1,y+3,6.5); if(d.billsCount){ doc.setFontSize(9); doc.text(String(d.billsCount),M+IW/4,y+6,{align:"center"}); }
+  box(M+IW/2,y,IW/2,8); label("Less advance received ₹",M+IW/2+1,y+3,6.5); if(d.advanceDeducted){ doc.setFontSize(9); doc.text(Number(d.advanceDeducted).toLocaleString("en-IN"),M+IW-2,y+6,{align:"right"}); }
+  y+=8;
+  box(M,y,IW,8); label("Net amount to be reimbursed  ₹",M+1,y+3,6.5,true);
+  if(d.netAmount){ doc.setFontSize(9); doc.text(Number(d.netAmount).toLocaleString("en-IN"),M+IW-2,y+6,{align:"right"}); }
+  y+=8; y+=3;
+  y=sectionHead("Authorisation",y); y+=2;
+  sigBlock("Claimed by","Staff member", d.byName, d.createdOn, M, IW/3-2, y);
+  sigBlock("Verified by","Department head", d.verifiedByName, d.verifiedAt, M+IW/3, IW/3-2, y);
+  sigBlock("Approved by","Director ACF", d.approvedByName, d.approvedAt, M+2*IW/3, IW/3-2, y);
+  addFooter();
+  doc.save(`${d._code||"F-02"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-03  MONTHLY EXPENSES
+   ══════════════════════════════════════════════════ */
+function formF03(d={}) {
+  const {doc,M,IW,line,box,label,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Monthly Expenses","F-03",d._code);
+  let y=29;
+  y=row3("Office","Month","Financial year",y, d.officeName, d.month, d.fy);
+  y+=2; y=sectionHead("Expenditure for the month",y);
+  const cols=[8,22,22,58,40,30]; const heads=["#","Date","Voucher","Particulars","Budget head","Amount ₹"];
+  box(M,y,IW,7); let cx=M;
+  heads.forEach((h,i)=>{ label(h,cx+1,y+4.5,6.5,true); if(i<heads.length-1)line(cx+cols[i],y,cx+cols[i],y+7); cx+=cols[i]; });
+  y+=7;
+  const rows=d.rows||[];
+  for(let r=0;r<Math.max(14,rows.length);r++){
+    cx=M; box(M,y,IW,7);
+    cols.forEach((w,i)=>{ if(i<cols.length-1)line(cx+w,y,cx+w,y+7); cx+=w; });
+    if(rows[r]){
+      doc.setFontSize(7);
+      doc.text(String(r+1),M+2,y+4.5);
+      doc.text(String(rows[r].date||""),M+cols[0]+1,y+4.5);
+      doc.text(String(rows[r].voucher||"").slice(0,8),M+cols[0]+cols[1]+1,y+4.5);
+      doc.text(String(rows[r].desc||"").slice(0,30),M+cols[0]+cols[1]+cols[2]+1,y+4.5);
+      doc.text(String(rows[r].head||"").slice(0,20),M+cols[0]+cols[1]+cols[2]+cols[3]+1,y+4.5);
+      doc.text(Number(rows[r].amount||0).toLocaleString("en-IN"),M+IW-2,y+4.5,{align:"right"});
+    }
+    y+=7;
+  }
+  box(M,y,IW,7); label("TOTAL  ₹",M+2,y+4.5,7,true);
+  if(d.total){ doc.setFontSize(9); doc.text(Number(d.total).toLocaleString("en-IN"),M+IW-2,y+4.5,{align:"right"}); }
+  y+=7; y+=3;
+  box(M,y,IW/2,8); label("Opening balance ₹",M+1,y+3,6.5); if(d.opening){ doc.setFontSize(9); doc.text(Number(d.opening).toLocaleString("en-IN"),M+IW/4,y+6,{align:"center"}); }
+  box(M+IW/2,y,IW/2,8); label("Closing balance ₹",M+IW/2+1,y+3,6.5); if(d.closing){ doc.setFontSize(9); doc.text(Number(d.closing).toLocaleString("en-IN"),M+IW-2,y+6,{align:"right"}); }
+  y+=8; y+=3;
+  y=sectionHead("Authorisation",y); y+=2;
+  sigBlock("Prepared by","Accountant", d.preparedByName, d.preparedOn, M, IW/3-2, y);
+  sigBlock("Verified by","Director ACF", d.verifiedByName, d.verifiedAt, M+IW/3, IW/3-2, y);
+  sigBlock("Approved by","Founder & GS", d.approvedByName, d.approvedAt, M+2*IW/3, IW/3-2, y);
+  addFooter();
+  doc.save(`${d._code||"F-03"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-04  PAYMENT VOUCHER
+   ══════════════════════════════════════════════════ */
+function formF04(d={}) {
+  const {doc,M,IW,W,line,box,label,field,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Payment Voucher","F-04",d._code);
+  let y=29;
+  y=row3("Voucher no.","Date","Office",y, d.voucherNo||d.id?.slice(0,8), d.date||d.createdOn, d.officeName);
+  y=row2("Pay to (name / vendor / organisation)","Mode of payment",y, d.payee, d.mode);
+  y=row2("Project","Budget head",y, d.projectName, d.head);
+  box(M,y,IW,8); label("Amount ₹ (figures)",M+1,y+3,6.5);
+  if(d.amount){ doc.setFontSize(10); doc.setFont(undefined,"bold"); doc.text("₹ "+Number(d.amount).toLocaleString("en-IN"),M+IW-2,y+6,{align:"right"}); doc.setFont(undefined,"normal"); }
+  y+=8;
+  box(M,y,IW,10); label("Amount in words",M+1,y+3,6.5);
+  if(d.amountWords){ doc.setFontSize(8.5); doc.text(String(d.amountWords).slice(0,80),M+1,y+8); }
+  y+=10;
+  box(M,y,IW,14); label("Purpose / narration",M+1,y+3,6.5);
+  if(d.particulars){ doc.setFontSize(8.5); const lines=doc.splitTextToSize(String(d.particulars),IW-4); doc.text(lines.slice(0,3),M+1,y+8); }
+  y+=14; y+=3;
+  box(M,y,IW/2,8); label("Bills / invoices attached",M+1,y+3,6.5); if(d.billsCount){ doc.setFontSize(9); doc.text(String(d.billsCount),M+IW/4,y+6,{align:"center"}); }
+  box(M+IW/2,y,IW/2,8); label("Requisition ref.",M+IW/2+1,y+3,6.5); if(d.reqRef){ doc.setFontSize(9); doc.text(String(d.reqRef),M+IW-2,y+6,{align:"right"}); }
+  y+=8; y+=4;
+  y=sectionHead("Five-signature authorisation chain",y); y+=3;
+  const sw=IW/5-1;
+  const sw4=IW/4-1;
+  sigBlock("Prepared by","Accountant", d.preparedByName, d.preparedOn, M, sw4, y);
+  sigBlock("Verified by","Department head", d.verifiedByName, d.verifiedAt, M+sw4+1, sw4, y);
+  sigBlock("Finance & compliance","Director ACF", d.directorName||d.approvedByName, d.directorAt||d.approvedAt, M+(sw4+1)*2, sw4, y);
+  sigBlock("Final approval","Founder & GS", d.gsName, d.gsAt, M+(sw4+1)*3, sw4, y);
+  y+=36;
+  label("Bank / UPI ref. no.:",M,y,7,true);
+  if(d.bankRef){ doc.setFontSize(9); doc.text(String(d.bankRef),M+32,y); }
+  else line(M+30,y,M+IW,y);
+  addFooter();
+  doc.save(`${d._code||"F-04"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-05  DONATION RECEIPT  (matches existing EP receipt format)
+   ══════════════════════════════════════════════════ */
+function _amtWords(n) {
+  if(!n||isNaN(n)) return "";
+  var ones=["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+  var tens=["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+  function w(num) {
+    if(num===0) return ""; if(num<20) return ones[num];
+    if(num<100) return tens[Math.floor(num/10)]+(num%10?" "+ones[num%10]:"");
+    return ones[Math.floor(num/100)]+" Hundred"+(num%100?" "+w(num%100):"");
+  }
+  var num=Math.round(Number(n));
+  if(num===0) return "Zero Rupees Only";
+  var cr=Math.floor(num/10000000),lac=Math.floor((num%10000000)/100000),th=Math.floor((num%100000)/1000),rest=num%1000;
+  var parts=[];
+  if(cr) parts.push(w(cr)+" Crore"); if(lac) parts.push(w(lac)+" Lakh");
+  if(th) parts.push(w(th)+" Thousand"); if(rest) parts.push(w(rest));
+  return parts.join(" ")+" Rupees Only";
+}
+function _fyReceiptNo(d) {
+  var dt=d.date||(d.createdAt?.seconds?new Date(d.createdAt.seconds*1000).toISOString().slice(0,10):"");
+  if(!dt) return d.id?.slice(-5).toUpperCase()||d.receiptNo||"";
+  var yr=parseInt(dt.slice(0,4)), mo=parseInt(dt.slice(5,7));
+  var fyStart=mo>=4?yr:yr-1; var fyEnd=(fyStart+1).toString().slice(2);
+  // Use last 5 chars of doc ID for alphanumeric code (EP/2026-27/WVQJK style)
+  var suffix=(d.id||d._id||"").slice(-5).toUpperCase()||d.receiptNo||"";
+  return "EP/"+fyStart+"-"+fyEnd+"/"+suffix;
+}
+function formF05(d={}) {
+  var jsPDF=window.jspdf?.jsPDF||window.jsPDF;
+  var doc=new jsPDF({unit:"mm",format:"a4"});
+  var W=210,H=297,ML=15,MR=15,MT=14;
+  // Helpers
+  var ln=(x1,y1,x2,y2,w)=>{doc.setLineWidth(w||0.3);doc.setDrawColor(0);doc.line(x1,y1,x2,y2);};
+  var txt=(t,x,y,sz,bold,color)=>{doc.setFontSize(sz||9);doc.setFont(undefined,bold?"bold":"normal");if(color)doc.setTextColor(...color);doc.text(String(t||""),x,y);doc.setTextColor(0);};
+  var underline=(t,lx,ly,uw)=>{doc.setFontSize(9);doc.setFont(undefined,"normal");doc.text(String(t||""),lx,ly);ln(lx,ly+1,lx+uw,ly+1,0.2);};
+  // ── Header ──────────────────────────────────────────
+  txt("EMPOWER PEOPLE",ML,MT+6,13,true);
+  doc.setFontSize(7);doc.setFont(undefined,"normal");doc.setTextColor(80);
+  doc.text("Registered address: 5 Dreams Apartments, A-4 Abulfazal Enclave, Jamia Nagar, Delhi-110025 · post@empowerpeople.in · 011-40671714",ML,MT+11);
+  doc.text("12A: AABAE2016N25DLO1 · 80G: AABAE2016N25DLO2 · PAN: AABAE2016N",ML,MT+15);
+  doc.setTextColor(0);
+  // Receipt number + date top right
+  var rcNo=_fyReceiptNo(d);
+  var rcDate=(d.date||"");
+  if(rcDate){var parts=rcDate.split("-");var months=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];rcDate=parseInt(parts[2])+" "+months[parseInt(parts[1])]+" "+parts[0];}
+  doc.setFontSize(9);doc.setFont(undefined,"bold");doc.text(rcNo,W-MR,MT+6,{align:"right"});
+  doc.setFont(undefined,"normal");doc.setFontSize(8);doc.text(rcDate,W-MR,MT+10,{align:"right"});
+  doc.setFontSize(7.5);doc.setTextColor(80);doc.text("Form F-05",W-MR,MT+14,{align:"right"});doc.setTextColor(0);
+  ln(ML,MT+18,W-MR,MT+18,0.5);
+  // ── Title ──────────────────────────────────────────
+  var ty=MT+26;
+  doc.setFontSize(11);doc.setFont(undefined,"bold");doc.text("DONATION RECEIPT",W/2,ty,{align:"center"});
+  // ── Fields ──────────────────────────────────────────
+  var FX=ML+28,IW2=W-MR-FX-2; var fy=ty+10;
+  var field=(label,val,yy)=>{txt(label,ML,yy,8.5);if(val)underline(val,FX,yy,IW2);else ln(FX,yy+1,FX+IW2,yy+1,0.2);return yy;};
+  txt("Received with thanks",ML,fy,8.5);fy+=6;
+  field("from",d.payerName||d.remitter||d.donorName||"",fy);fy+=8;
+  if(d.donorPan||d.pan){field("PAN",d.donorPan||d.pan||"",fy);fy+=8;}
+  if(d.donorAddress||d.address){txt("Address",ML,fy,8.5);doc.setFontSize(8.5);var alines=doc.splitTextToSize(String(d.donorAddress||d.address||""),IW2);doc.text(alines.slice(0,2),FX,fy);ln(FX,fy+1,FX+IW2,fy+1,0.2);fy+=8+(alines.length>1?6:0);}
+  // Amount
+  var amtStr=d.amount?"₹"+Number(d.amount).toLocaleString("en-IN"):"";
+  txt("The sum of",ML,fy,8.5);if(amtStr){doc.setFontSize(10);doc.setFont(undefined,"bold");doc.text(amtStr,FX,fy);doc.setFont(undefined,"normal");}ln(FX,fy+1,FX+IW2,fy+1,0.2);fy+=7;
+  var words=d.amountWords||_amtWords(d.amount);
+  if(words){doc.setFontSize(8.5);doc.setFont(undefined,"italic");doc.text(words,FX,fy);doc.setFont(undefined,"normal");fy+=8;}
+  // Payment method
+  var modeStr=(d.mode||"Bank transfer / NEFT")+(d.ref?" · reference "+d.ref:"")+(d.bank?" · credited to "+d.bank:"");
+  field("Received by",modeStr,fy);fy+=8;
+  if(d.foreignAmount){field("Foreign amount",d.foreignAmount+(d.exchangeRate?" at ₹"+d.exchangeRate:""),fy);fy+=8;}
+  field("Towards",d.purpose||d.projectName||d.notes||d.description||"",fy);fy+=10;
+  // ── Disclaimer ──────────────────────────────────────
+  ln(ML,fy,W-MR,fy,0.3);fy+=5;
+  doc.setFontSize(7);doc.setTextColor(80);
+  doc.text("Donations to Empower People are exempt under section 80G of the Income Tax Act, 1961. Please quote your PAN to claim the deduction.",ML,fy,{maxWidth:W-ML-MR-55});
+  doc.text("This receipt is issued subject to realisation of the instrument where applicable.",ML,fy+5,{maxWidth:W-ML-MR-55});
+  doc.setTextColor(0);
+  // ── Signature + Stamp (bottom right) ────────────────
+  var SX=W-MR-55,SY=fy-2;
+  var sigName=d.byName||d.name||"";
+  var sigUser=(typeof state!=="undefined")?(state.users||[]).find(u=>u.name===sigName):null;
+  var sigSrc=sigUser&&sigUser.signature?(sigUser.signature.startsWith("data:")?sigUser.signature:"data:image/jpeg;base64,"+sigUser.signature):"";
+  if(sigSrc){try{doc.addImage(sigSrc,"JPEG",SX,SY,50,18);}catch(_e){}}
+  try{if(typeof EP_STAMP!=="undefined"){doc.addImage(EP_STAMP,"PNG",SX,SY+2,22,20,undefined,"NONE",0);}}catch(_e){}
+  ln(SX,SY+22,SX+50,SY+22,0.3);
+  doc.setFontSize(8);doc.setFont(undefined,"normal");doc.text("Authorised signatory",SX,SY+26);
+  if(sigName){doc.setFont(undefined,"bold");doc.text(sigName,SX,SY+30);doc.setFont(undefined,"normal");}
+  doc.text("Empower People",SX,SY+34);
+  doc.save(`${rcNo||d._code||"F-05"}.pdf`);
+}
+/* ══════════════════════════════════════════════════
+   F-06  TRAVEL
+   ══════════════════════════════════════════════════ */
+function formF06(d={}) {
+  const {doc,M,IW,line,box,label,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Travel Authorisation & TA/DA Claim","F-06",d._code);
+  let y=29;
+  y=row3("Ref no.","Date","Office",y, d.id?.slice(0,8), d.date||d.createdOn, d.officeName);
+  y=row2("Name","Post",y, d.byName||d.travellerName, d.postTitle);
+  y=row2("Department","Project / programme",y, d.department, d.projectName);
+  y+=2; y=sectionHead("Journey details",y);
+  y=row3("From","To","Date of travel",y, d.fromPlace, d.toPlace, d.date||d.travelDate);
+  y=row2("Purpose of visit","Mode of travel",y, d.purpose, d.mode);
+  y=row2("Expected return date","Authorised by",y, d.returnDate, d.approvedByName);
+  box(M,y,IW,10); label("What is expected from this visit",M+1,y+3,6.5);
+  if(d.purpose){ doc.setFontSize(8.5); doc.text(String(d.purpose).slice(0,100),M+1,y+8); }
+  y+=10; y+=3;
+  y=sectionHead("Actual expenses (fill on return)",y);
+  const cols=[25,60,25,25,45]; const heads=["Date","Particulars","Mode","Km","Amount ₹"];
+  box(M,y,IW,7); let cx=M;
+  heads.forEach((h,i)=>{ label(h,cx+1,y+4.5,6.5,true); if(i<heads.length-1)line(cx+cols[i],y,cx+cols[i],y+7); cx+=cols[i]; });
+  y+=7;
+  for(let r=0;r<7;r++){
+    cx=M; box(M,y,IW,8);
+    cols.forEach((w,i)=>{ if(i<cols.length-1)line(cx+w,y,cx+w,y+8); cx+=w; });
+    y+=8;
+  }
+  box(M,y,IW,7); label("TOTAL TA/DA CLAIMED  ₹",M+2,y+4.5,7,true); y+=7; y+=3;
+  box(M,y,IW,10); label("Visit report summary",M+1,y+3,6.5); y+=10; y+=3;
+  y=sectionHead("Authorisation",y); y+=2;
+  const sw6=IW/4-1;
+  sigBlock("Applied by","Traveller", d.byName||d.travellerName, d.createdOn, M, sw6, y);
+  sigBlock("Verified by","Line manager", d.verifiedByName, d.verifiedAt, M+sw6+1, sw6, y);
+  sigBlock("Approved by","Director ACF", d.approvedByName, d.approvedAt, M+(sw6+1)*2, sw6, y);
+  sigBlock("Certified on return","Line manager", d.returnVerifiedBy, d.returnVerifiedOn, M+(sw6+1)*3, sw6, y);
+  addFooter();
+  doc.save(`${d._code||"F-06"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-07  LEAVE
+   ══════════════════════════════════════════════════ */
+function formF07(d={}) {
+  const {doc,M,IW,line,box,label,field,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Leave Application","F-07",d._code);
+  let y=29;
+  y=row3("Ref no.","Date applied","Office",y, d.id?.slice(0,8), d.appliedOn||d.createdOn, d.officeName);
+  y=row2("Name","Post",y, d.byName, d.postTitle);
+  y=row2("Department","Reports to",y, d.department, d.managerName);
+  y+=2; y=sectionHead("Leave requested",y);
+  y=row3("Leave type","From date","To date",y, d.type, d.from, d.to);
+  y=row3("No. of days","Handover arranged with","Return date",y, d.days, d.handoverWith, d.returnDate);
+  box(M,y,IW,14); label("Reason",M+1,y+3,6.5);
+  if(d.reason){ doc.setFontSize(8.5); const ls=doc.splitTextToSize(String(d.reason),IW-4); doc.text(ls.slice(0,3),M+1,y+8); }
+  y+=14; y+=2;
+  y=sectionHead("Leave balance (filled by Administration)",y);
+  const bCols=[60,30,30,30,30]; const bHeads=["Leave type","Entitlement","Taken so far","This leave","Balance after"];
+  box(M,y,IW,7); let cx=M;
+  bHeads.forEach((h,i)=>{ label(h,cx+1,y+4.5,6.5,true); if(i<bCols.length-1)line(cx+bCols[i],y,cx+bCols[i],y+7); cx+=bCols[i]; });
+  y+=7;
+  ["Casual leave","Sick leave","Annual / earned leave","Menstrual leave"].forEach(lt=>{
+    cx=M; box(M,y,IW,7);
+    bCols.forEach((w,i)=>{ if(i===0) label(lt,cx+1,y+4.5,6.5); if(i<bCols.length-1)line(cx+w,y,cx+w,y+7); cx+=w; });
+    y+=7;
+  });
+  y+=4;
+  y=sectionHead("Authorisation",y); y+=2;
+  sigBlock("Applied by","Staff member", d.byName, d.appliedOn||d.createdOn, M, IW/3-2, y);
+  sigBlock("Approved by","Line manager", d.approvedByName, d.approvedAt||d.approvedOn, M+IW/3, IW/3-2, y);
+  sigBlock("Recorded by","Administration, HR & Comm.", d.recordedByName, d.recordedOn, M+2*IW/3, IW/3-2, y);
+  addFooter();
+  doc.save(`${d._code||"F-07"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-08  ADVANCE SETTLEMENT
+   ══════════════════════════════════════════════════ */
+function formF08(d={}) {
+  const {doc,M,IW,line,box,label,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Advance Settlement","F-08",d._code);
+  let y=29;
+  y=row3("Advance ref.","Settlement date","Office",y, d.advanceRef||d.id?.slice(0,8), d.settledOn, d.officeName);
+  y=row2("Name","Post",y, d.byName, d.postTitle);
+  y=row2("Advance issued on","Amount advanced ₹",y, d.issuedOn, d.amount?.toLocaleString("en-IN"));
+  y=row2("Project","Purpose of advance",y, d.projectName, d.purpose);
+  y+=2; y=sectionHead("Expenses incurred",y);
+  const cols=[8,25,65,40,32]; const heads=["#","Date","Particulars","Project / head","Amount ₹"];
+  box(M,y,IW,7); let cx=M;
+  heads.forEach((h,i)=>{ label(h,cx+1,y+4.5,6.5,true); if(i<cols.length-1)line(cx+cols[i],y,cx+cols[i],y+7); cx+=cols[i]; });
+  y+=7;
+  const items=d.expenses||[];
+  for(let r=0;r<Math.max(8,items.length);r++){
+    cx=M; box(M,y,IW,8);
+    cols.forEach((w,i)=>{ if(i<cols.length-1)line(cx+w,y,cx+w,y+8); cx+=w; });
+    if(items[r]){
+      doc.setFontSize(7.5);
+      doc.text(String(r+1),M+2,y+5);
+      doc.text(String(items[r].date||""),M+cols[0]+1,y+5);
+      doc.text(String(items[r].desc||"").slice(0,35),M+cols[0]+cols[1]+1,y+5);
+      doc.text(Number(items[r].amount||0).toLocaleString("en-IN"),M+IW-2,y+5,{align:"right"});
+    }
+    y+=8;
+  }
+  y+=2; const hw=IW/2;
+  box(M,y,IW,7); label("TOTAL SPENT  ₹",M+2,y+4.5,7,true);
+  if(d.spent){ doc.setFontSize(9); doc.text(Number(d.spent).toLocaleString("en-IN"),M+IW-2,y+4.5,{align:"right"}); }
+  y+=7;
+  box(M,y,hw,7); label("Advance received ₹",M+1,y+4.5,6.5); if(d.amount){ doc.setFontSize(8.5); doc.text(Number(d.amount).toLocaleString("en-IN"),M+hw-2,y+4.5,{align:"right"}); }
+  box(M+hw,y,hw,7); label("Bills attached (count)",M+hw+1,y+4.5,6.5); if(d.billsCount){ doc.setFontSize(8.5); doc.text(String(d.billsCount),M+IW-2,y+4.5,{align:"right"}); }
+  y+=7;
+  box(M,y,hw,7); label("Balance to return  ₹",M+1,y+4.5,6.5,true); if(d.balance>0){ doc.setFontSize(9); doc.setFont(undefined,"bold"); doc.text(Number(d.balance).toLocaleString("en-IN"),M+hw-2,y+4.5,{align:"right"}); doc.setFont(undefined,"normal"); }
+  box(M+hw,y,hw,7); label("Further claim  ₹",M+hw+1,y+4.5,6.5,true); if(d.balance<0){ doc.setFontSize(9); doc.setFont(undefined,"bold"); doc.text(Number(Math.abs(d.balance)).toLocaleString("en-IN"),M+IW-2,y+4.5,{align:"right"}); doc.setFont(undefined,"normal"); }
+  y+=7; y+=4;
+  y=sectionHead("Authorisation",y); y+=2;
+  sigBlock("Submitted by","Staff member", d.byName, d.settledOn, M, IW/3-2, y);
+  sigBlock("Verified by","Department head", d.verifiedByName, d.verifiedAt, M+IW/3, IW/3-2, y);
+  sigBlock("Settled by","Accountant", d.settledByName, d.settledOn, M+2*IW/3, IW/3-2, y);
+  addFooter();
+  doc.save(`${d._code||"F-08"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   F-09  MONTHLY WORK SHEET
+   ══════════════════════════════════════════════════ */
+function formF09(d={}) {
+  const {doc,M,IW,line,box,label,sectionHead,sigBlock,row2,row3,addFooter} = formBase("Monthly Work Sheet","F-09",d._code);
+  let y=29;
+  y=row3("Name","Post","Office",y, d.name, d.postTitle, d.officeName);
+  y=row3("Department","Month","Financial year",y, d.department, d.month, d.fy);
+  y+=2; y=sectionHead("Daily attendance and reporting",y);
+  const cols=[10,14,20,20,18,22,24,22,30];
+  const heads=["Day","Date","Check-in","Check-out","Hours","Leave type","Day report","Verified","Remarks"];
+  box(M,y,IW,7); let cx=M;
+  heads.forEach((h,i)=>{ label(h,cx+1,y+4.5,5.5,true); if(i<heads.length-1)line(cx+cols[i],y,cx+cols[i],y+7); cx+=cols[i]; });
+  y+=7;
+  const dayNames=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const rows=d.days||[];
+  for(let r=0;r<31;r++){
+    const rh=6; cx=M; box(M,y,IW,rh);
+    const dr=rows[r]||{};
+    doc.setFontSize(6.5);
+    doc.text(String(r+1),cx+3,y+4);
+    if(dr.date) doc.text(String(dr.date),cx+cols[0]+1,y+4);
+    if(dr.checkIn) doc.text(String(dr.checkIn),cx+cols[0]+cols[1]+1,y+4);
+    if(dr.checkOut) doc.text(String(dr.checkOut||""),cx+cols[0]+cols[1]+cols[2]+1,y+4);
+    if(dr.hours) doc.text(String(dr.hours),cx+cols[0]+cols[1]+cols[2]+cols[3]+1,y+4);
+    if(dr.leave) doc.text(String(dr.leave),cx+cols[0]+cols[1]+cols[2]+cols[3]+cols[4]+1,y+4);
+    if(dr.reported!==undefined) doc.text(dr.reported?"✓":"—",cx+cols[0]+cols[1]+cols[2]+cols[3]+cols[4]+cols[5]+5,y+4);
+    cols.forEach((w,i)=>{ if(i<cols.length-1)line(cx+w,y,cx+w,y+rh); cx+=w; });
+    y+=rh;
+  }
+  y+=3;
+  y=sectionHead("Monthly summary",y);
+  const sumCols=IW/4;
+  const summary=[
+    ["Total working days", d.workingDays],
+    ["Days present", d.present],
+    ["Days absent", d.absent],
+    ["Leave taken", d.leaveTaken]
+  ];
+  summary.forEach(([lbl,val],i)=>{
+    box(M+i*sumCols,y,sumCols,9); label(lbl,M+i*sumCols+1,y+3.5,6.5);
+    if(val!==undefined){ doc.setFontSize(10); doc.setFont(undefined,"bold"); doc.text(String(val),M+(i+0.5)*sumCols,y+8,{align:"center"}); doc.setFont(undefined,"normal"); }
+  }); y+=9; y+=4;
+  y=sectionHead("Certification",y); y+=2;
+  sigBlock("Submitted by","Staff member", d.name, d.submittedOn, M, IW/2-4, y);
+  sigBlock("Verified by","Line manager", d.verifiedByName, d.verifiedAt, M+IW/2, IW/2-4, y);
+  addFooter();
+  doc.save(`${d._code||"F-09"}.pdf`);
+}
+
+/* ══════════════════════════════════════════════════
+   FILLED FORM GENERATORS — called from record screens
+   ══════════════════════════════════════════════════ */
+async function downloadFilledForm(formCode, collection, recordId, record) {
+  await ensureJsPDF();
+  const code = await makeVerifyCode(formCode, collection, recordId);
+  const d = { ...record, _code: code };
+  // Enrich with names from state
+  const _getUser = id => id ? (state.users||[]).find(u=>u.id===id) : null;
+  const _uById = id => { const u=_getUser(id); return u; };
+  const _signId = u => u ? (u.id || "") : "";
+  if(d.uid && !d.byName) { const _u=_getUser(d.uid); d.byName=_u?.name||""; d.bySignInId=_signId(_u); d.byPostTitle=_u?.postTitle||""; }
+  if(d.verifiedBy && !d.verifiedByName) { const _u=_getUser(d.verifiedBy); d.verifiedByName=_u?.name||""; d.verifiedBySignInId=_signId(_u); d.verifiedByPost=_u?.postTitle||""; }
+  if(d.approvedBy && !d.approvedByName) { const _u=_getUser(d.approvedBy); d.approvedByName=_u?.name||""; d.approvedBySignInId=_signId(_u); d.approvedByPost=_u?.postTitle||""; }
+  if(d.fulfilledBy && !d.fulfilledByName) { const _u=_getUser(d.fulfilledBy); d.fulfilledByName=_u?.name||""; d.fulfilledByPost=_u?.postTitle||""; }
+  if(d.settledBy && !d.settledByName) { const _u=_getUser(d.settledBy); d.settledByName=_u?.name||""; d.settledByPost=_u?.postTitle||""; }
+  if(d.issuedBy && !d.issuedByName) { const _u=_getUser(d.issuedBy); d.issuedByName=_u?.name||""; d.issuedByPost=_u?.postTitle||""; }
+  if(d.projectId && !d.projectName) d.projectName = projectName(d.projectId);
+  if(d.officeId && !d.officeName) d.officeName = officeName(d.officeId);
+  if(d.managerIds?.[0] && !d.managerName) { const _u=_getUser(d.managerIds[0]); d.managerName=_u?.name||""; d.managerPost=_u?.postTitle||""; }
+  // Always enrich submitter
+  if(!d.byPostTitle && d.uid) { const _u=_getUser(d.uid); if(_u) { d.byPostTitle=_u.postTitle||""; d.bySignInId=_signId(_u); } }
+  if(!d.postTitle && d.uid) { const _u=_getUser(d.uid); if(_u) d.postTitle=_u.postTitle||""; }
+  // Field aliases — map collection-specific fields to form field names
+  d.amount    = d.amount    || d.outAmt || d.inAmt || 0;
+  d.purpose   = d.purpose   || d.particulars || d.description || d.notes || "";
+  d.date      = d.date      || d.createdOn || (d.createdAt?.seconds ? new Date(d.createdAt.seconds*1000).toISOString().slice(0,10) : "");
+  // pettyCash uses `by` instead of `uid`; `approvedBy` is the verifier/approver
+  if (!d.uid && d.by) { d.uid = d.by; const _u=_getUser(d.by); if(_u){d.byName=_u.name||""; d.bySignInId=_signId(_u); d.byPostTitle=_u.postTitle||"";} }
+  if (!d.verifiedBy && d.approvedBy && collection==="pettyCash") { d.verifiedBy=d.approvedBy; const _u=_getUser(d.approvedBy); if(_u){d.verifiedByName=_u.name||""; d.verifiedByPost=_u.postTitle||"";} }
+  // Map to form-expected field names
+  d.receivedByName = d.receivedByName || d.byName || d.issuedByName || "";
+  d.payerName      = d.payerName      || d.payee  || d.to || "";
+  d.remitter       = d.remitter       || d.payerName || "";
+  d.bank           = d.bank           || (collection==="pettyCash" ? "Petty cash" : "");
+  d.period         = d.period         || (d.date ? d.date.slice(0,7) : "");
+  d.forDept        = d.forDept        || d.department || d.byPostTitle || "";
+  d.ref            = d.ref            || d.voucherNo  || d.receiptNo  || d.id?.slice(0,8) || "";
+  // Post titles for all signatories
+  const _enrich = (nameKey, idKey, ptKey) => {
+    const u = idKey && d[idKey] ? _getUser(d[idKey]) : (d[nameKey] ? (state.users||[]).find(u=>u.name===d[nameKey]) : null);
+    if(u && !d[ptKey]) d[ptKey] = u.postTitle || "";
+  };
+  if(!d.postTitle){ const u=_getUser(d.uid); if(u) d.postTitle=u.postTitle||""; }
+  _enrich("byName","uid","byPostTitle");
+  _enrich("verifiedByName","verifiedBy","verifiedByPostTitle");
+  _enrich("approvedByName","approvedBy","approvedByPostTitle");
+  _enrich("fulfilledByName","fulfilledBy","fulfilledByPostTitle");
+  _enrich("settledByName","settledBy","settledByPostTitle");
+  if(d.managerIds?.[0]&&!d.managerPostTitle){ const mu=_getUser(d.managerIds[0]); if(mu) d.managerPostTitle=mu.postTitle||""; }
+
+  switch(formCode){
+    case "F-01": formF01(d); break;
+    case "F-02": formF02(d); break;
+    case "F-03": formF03(d); break;
+    case "F-04": formF04(d); break;
+    case "F-05": formF05(d); break;
+    case "F-06": formF06(d); break;
+    case "F-07": formF07(d); break;
+    case "F-08": formF08(d); break;
+    case "F-09": formF09(d); break;
+  }
+  // Save HTML to Firestore (3-month in-app view)
+  (function(){var _hf={"F-01":htmlFormF01,"F-02":htmlFormF02,"F-03":htmlFormF03,"F-04":htmlFormF04,"F-05":function(d){return (typeof collection!=="undefined"&&collection==="incomeReceipts"?htmlFormF05_donation:htmlFormF05)(d);},"F-06":htmlFormF06,"F-07":htmlFormF07,"F-08":htmlFormF08,"F-09":htmlFormF09}[formCode];if(_hf&&collection&&recordId){try{var _k="form_"+formCode.replace("-","")+"_html";db.collection(collection).doc(recordId).update({[_k]:_hf(d),[_k+"On"]:today()}).catch(function(){});}catch(_e){console.warn("html form:",_e&&_e.message);}}})();
+  var _du; try{var _b64=(window._formDoc||doc).output('datauristring').split(',')[1];var _fn=formCode+'-'+(recordId||'form')+'-'+today()+'.pdf';_du=await uploadToDrive(new File([new Blob([Uint8Array.from(atob(_b64),function(c){return c.charCodeAt(0);})],{type:'application/pdf'})],_fn,{type:'application/pdf'}),'forms',_fn).then(function(_dr){if(_dr&&_dr.link&&collection&&recordId){var _u={};_u['form_'+formCode+'_url']=_dr.link;_u['form_'+formCode+'_on']=today();db.collection(collection).doc(recordId).update(_u).catch(function(){});}}).catch(function(){});}catch(_fe){console.warn('Form Drive:',_fe&&_fe.message);}
+  if(_du&&_du.link&&collection&&recordId){var _uk="form_"+formCode.replace("-","")+"_url";try{await db.collection(collection).doc(recordId).update({[_uk]:_du.link});}catch(_e){console.warn("Drive URL save failed",_e);}} toast(`${formCode} generated · verify code: ${code}`);
+}
+
+/* ══════════════════════════════════════════════════
+   REGENERATE ALL STORED FORM HTML
+   Fixes existing forms that have blank/missing names or signatures.
+   Run from Drive screen → "Regenerate all forms"
+   ══════════════════════════════════════════════════ */
+async function regenAllForms() {
+  const COLS = [
+    { col:"advances",      codes:["F-01","F-08"], htmlFns:{  "F-01":htmlFormF01,"F-08":htmlFormF08 } },
+    { col:"expenseClaims", codes:["F-02"],        htmlFns:{ "F-02":htmlFormF02 } },
+    { col:"incomeReceipts", codes:["F-05"],       htmlFns:{ "F-05":htmlFormF05_donation } },
+    { col:"leaveRequests", codes:["F-07"],        htmlFns:{ "F-07":htmlFormF07 } },
+    { col:"travelRequests",codes:["F-06"],        htmlFns:{ "F-06":htmlFormF06 } },
+    { col:"expenses",      codes:["F-04"],        htmlFns:{ "F-04":htmlFormF04 } },
+  ];
+  let fixed = 0, skipped = 0;
+  for (const { col, codes, htmlFns } of COLS) {
+    const snap = await db.collection(col).limit(300).get().catch(() => ({ docs: [] }));
+    for (const doc of snap.docs) {
+      const r = { id: doc.id, ...doc.data() };
+      // Enrich with names and UIDs
+      const _getUser = id => id ? (state.users||[]).find(u => u.id === id) : null;
+      const _signId = u => u ? (u.id || "") : "";
+      if (r.uid) { const u=_getUser(r.uid); if(u){r.byName=r.byName||u.name||""; r.bySignInId=_signId(u); r.byPostTitle=r.byPostTitle||u.postTitle||""; r.postTitle=r.postTitle||u.postTitle||"";} }
+      if (r.verifiedBy) { const u=_getUser(r.verifiedBy); if(u){r.verifiedByName=r.verifiedByName||u.name||""; r.verifiedBySignInId=_signId(u); r.verifiedByPost=u.postTitle||"";} }
+      if (r.approvedBy) { const u=_getUser(r.approvedBy); if(u){r.approvedByName=r.approvedByName||u.name||""; r.approvedBySignInId=_signId(u); r.approvedByPost=u.postTitle||"";} }
+      if (r.issuedBy)   { const u=_getUser(r.issuedBy);   if(u){r.issuedByName=r.issuedByName||u.name||""; r.issuedByPost=u.postTitle||"";} }
+      if (r.settledBy)  { const u=_getUser(r.settledBy);  if(u){r.settledByName=r.settledByName||u.name||""; r.settledByPost=u.postTitle||"";} }
+      if (r.managerIds?.[0]) { const u=_getUser(r.managerIds[0]); if(u){r.managerName=r.managerName||u.name||""; r.managerPost=u.postTitle||"";} }
+      if (r.projectId && !r.projectName) r.projectName = projectName(r.projectId);
+      if (r.officeId && !r.officeName) r.officeName = officeName(r.officeId);
+      // Field aliases
+      r.amount    = r.amount    || r.outAmt || r.inAmt || 0;
+      r.purpose   = r.purpose   || r.particulars || r.description || r.notes || "";
+      r.date      = r.date      || r.createdOn || "";
+      if (!r.uid && r.by) { r.uid = r.by; const _u=_getUser(r.by); if(_u){r.byName=_u.name||""; r.bySignInId=_signId(_u); r.byPostTitle=_u.postTitle||"";} }
+      if (!r.verifiedBy && r.approvedBy && col.col==="pettyCash") { r.verifiedBy=r.approvedBy; const _u=_getUser(r.approvedBy); if(_u){r.verifiedByName=_u.name||""; r.verifiedByPost=_u.postTitle||"";} }
+      r.receivedByName = r.receivedByName || r.byName || "";
+      r.payerName      = r.payerName      || r.payee  || r.to || "";
+      r.remitter       = r.remitter       || r.payerName || "";
+      r.bank           = r.bank           || (col.col==="pettyCash" ? "Petty cash" : "");
+      r.ref            = r.ref            || r.voucherNo || r.id?.slice(0,8) || "";
+      r.forDept        = r.forDept        || r.department || r.byPostTitle || "";
+      const patch = {};
+      for (const code of codes) {
+        const fn = htmlFns[code];
+        if (!fn) continue;
+        const k = "form_" + code.replace("-","") + "_html";
+        try { patch[k] = fn({ ...r, _code: r["form_"+code.replace("-","")+"_code"] || "" }); fixed++; }
+        catch(e) { skipped++; console.warn("regenAllForms:", col, doc.id, e.message); }
+      }
+      if (Object.keys(patch).length) await doc.ref.update(patch).catch(() => {});
+    }
+  }
+  toast(`Forms regenerated — ${fixed} updated, ${skipped} skipped`);
+  console.log("regenAllForms done:", fixed, "fixed,", skipped, "skipped");
+}
+
+/* ══════════════════════════════════════════════════
+   VERIFY FORM SCREEN
+   ══════════════════════════════════════════════════ */
+routes.verifyForm = async () => {
+  setTitle("Verify a form");
+  html(`<div class="card"><h2>Verify a form</h2>
+    <p class="small muted">Enter the code printed at the bottom of any Empower People form. The app will confirm whether it is genuine and show the original record.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <input id="vCode" placeholder="e.g. EP-F07-X9K2MP" style="flex:1;min-width:180px;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:monospace;text-transform:uppercase">
+      <button class="btn" id="vBtn">Verify</button>
+    </div>
+    <div id="vResult" style="margin-top:12px"></div>
+  </div>`);
+
+  const doVerify = async () => {
+    const code = ($("vCode").value||"").trim().toUpperCase();
+    if(!code){ $("vResult").innerHTML = `<div class="err">Enter a code</div>`; return; }
+    $("vBtn").textContent="Checking…"; $("vBtn").disabled=true;
+    try {
+      const snap = await db.collection("verifiedForms").doc(code).get();
+      if(!snap.exists){
+        $("vResult").innerHTML = `<div class="card" style="border:2px solid var(--bad)">
+          <h2 style="color:var(--bad)">✗ Not found</h2>
+          <p class="small">No record matches <b>${esc(code)}</b>. Check the code and try again. If the form was printed from an older version of the app it may not have a code.</p></div>`;
+      } else {
+        const r = snap.data();
+        const genBy = userName(r.generatedBy);
+        const genAt = r.generatedAt?.seconds ? new Date(r.generatedAt.seconds*1000).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) : "";
+        $("vResult").innerHTML = `<div class="card" style="border:2px solid var(--green)">
+          <h2 style="color:var(--green)">✓ Genuine Empower People document</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:8px">
+            <div><div class="small muted">Form</div><b>${esc(r.formCode)}</b></div>
+            <div><div class="small muted">Code</div><b style="font-family:monospace">${esc(r.code)}</b></div>
+            <div><div class="small muted">Generated by</div><b>${esc(genBy)}</b></div>
+            <div><div class="small muted">Generated on</div><b>${esc(genAt)}</b></div>
+            <div><div class="small muted">Record ID</div><b style="font-family:monospace">${esc(r.recordId?.slice(0,12))}</b></div>
+          </div>
+          <p class="small muted" style="margin-top:8px">This document was generated by the Empower People app and its contents match the record in the system.</p>
+${(function(){
+  var _collMap={"F-01":"advances","F-02":"expenseClaims","F-03":"monthlyExpenses","F-04":"payments","F-05":"incomeReceipts","F-06":"travelRequests","F-07":"leaveRequests","F-08":"advances","F-09":"monthlyReports"};
+  var _coll=r.collection||_collMap[r.formCode]||"";
+  return _coll&&r.recordId?'<div style="margin-top:10px"><button class="btn" id="vViewBtn">View form</button></div>':'';
+})()}
+        </div>`;
+// View form handler on verify screen
+(function(){
+  if(!$("vViewBtn")) return;
+  $("vViewBtn").onclick = async function() {
+    var _collMap={"F-01":"advances","F-02":"expenseClaims","F-03":"monthlyExpenses","F-04":"payments","F-05":"incomeReceipts","F-06":"travelRequests","F-07":"leaveRequests","F-08":"advances","F-09":"monthlyReports"};
+    var _coll=r.collection||_collMap[r.formCode]||"";
+    if(!_coll||!r.recordId){toast("Record location unknown");return;}
+    toast("Loading…");
+    try {
+      var snap=await db.collection(_coll).doc(r.recordId).get();
+      var d=snap.data()||{};
+      var hk="form_"+r.formCode.replace("-","")+"_html";
+      var uk="form_"+r.formCode.replace("-","")+"_url";
+      var html=d[hk]; var htmlOn=d[hk+"On"]; var driveUrl=d[uk];
+      var cutoff=new Date(); cutoff.setMonth(cutoff.getMonth()-3);
+      var fresh=htmlOn&&htmlOn>cutoff.toISOString().slice(0,10);
+      if(html&&fresh){
+        var w=window.open("","_blank");
+        w.document.write(html);
+        w.document.close();
+      } else if(driveUrl){
+        window.open(driveUrl,"_blank");
+      } else {
+        toast("Form not stored yet — generate it from the original record first.");
+      }
+    } catch(_e){ toast("Could not load: "+(_e&&_e.message||"error")); }
+  };
+})();
+      }
+    } catch(e){ $("vResult").innerHTML=`<div class="err">Could not check — ${esc(e.message)}</div>`; }
+    $("vBtn").textContent="Verify"; $("vBtn").disabled=false;
+  };
+  $("vBtn").onclick = doVerify;
+  $("vCode").onkeydown = e => { if(e.key==="Enter") doVerify(); };
+};
+
+/* ══════════════════════════════════════════════════
+   FORMS DOWNLOAD SCREEN
+   ══════════════════════════════════════════════════ */
+const FORMS = [
+  { code:"F-01", title:"Requisition",        desc:"What was asked for — verified and approved before purchase",    fn:formF01 },
+  { code:"F-02", title:"Reimbursement",       desc:"Money already spent — claimed back with bills",                fn:formF02 },
+  { code:"F-03", title:"Monthly expenses",    desc:"The month's spending by office — prepared by Accounts",       fn:formF03 },
+  { code:"F-04", title:"Payment voucher",     desc:"Central payment record — five-signature chain",               fn:formF04 },
+  { code:"F-05", title:"Receipt",             desc:"Acknowledgement of money received by Empower People",         fn:formF05 },
+  { code:"F-06", title:"Travel",              desc:"Journey authorised — TA/DA claimed on return",                fn:formF06 },
+  { code:"F-07", title:"Leave",               desc:"Leave applied for and approved by line manager",              fn:formF07 },
+  { code:"F-08", title:"Advance settlement",  desc:"What the advance was spent on — balance returned or claimed", fn:formF08 },
+  { code:"F-09", title:"Monthly work sheet",  desc:"One per person — days in, leave, reports filed",             fn:formF09 },
+];
+
+routes.resources = async () => {
+  setTitle("Resources");
+  html(`<div class="card">
+    <h2>Resources</h2>
+    <p class="small muted">Forms, verification and the policy assistant — everything you need in one place.</p>
+  </div>
+  <div class="grid">
+    <div class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+      <div style="font-size:40px">📋</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:17px">Blank forms</div>
+        <div class="small muted" style="margin-top:4px">F-01 to F-09 — standard Empower People forms to download and print.</div>
+      </div>
+      <button class="btn" onclick="go('forms')">Open blank forms →</button>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+      <div style="font-size:40px">✅</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:17px">Verify a form</div>
+        <div class="small muted" style="margin-top:4px">Check that a printed form is genuine using its verification code.</div>
+      </div>
+      <button class="btn" onclick="go('verifyForm')">Verify a form →</button>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+      <div style="font-size:40px">📖</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:17px">Policy assistant</div>
+        <div class="small muted" style="margin-top:4px">Ask what the Organisation Policy Manual says, in plain language.</div>
+      </div>
+      <button class="btn" id="openPolicy">Open policy assistant →</button>
+    </div>
+  </div>`);
+  $("openPolicy") && ($("openPolicy").onclick = () => go("policy"));
+  const _rGrid = $("content").querySelector(".grid");
+  if (_rGrid) {
+    const _gc = document.createElement("div");
+    _gc.className = "card";
+    _gc.style.cssText = "display:flex;flex-direction:column;gap:12px;align-items:flex-start";
+    _gc.innerHTML = `<div style="font-size:40px">\u{1F4D6}</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:17px">My guide</div>
+        <div class="small muted" style="margin-top:4px">What you can do in this app — your role, your screens, your responsibilities.</div></div>
+      <button class="btn" onclick="go('manual')">Open my guide \u2192</button>`;
+    _rGrid.appendChild(_gc);
+  }
+};
+
+routes.forms = async () => {
+  setTitle("Blank forms");
+  html(`<div class="card">
+    <h2>Blank forms</h2>
+    <p class="small muted">Standard Empower People forms — F-01 to F-09. Download and print blank for manual use. When a request is submitted, approved or settled through the app, a <b>filled and signed form</b> is generated automatically with a verification code. Anyone can check a form is genuine at <b>Verify a form</b> below.</p>
+    <button class="btn small quiet" onclick="go('verifyForm')">Verify a form →</button>
+  </div>
+  <div class="grid">
+    ${FORMS.map(f=>`
+      <div class="card" style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:flex-start;gap:12px">
+          <div style="background:#111;color:#fff;border-radius:6px;padding:5px 10px;font-size:13px;font-weight:700;flex-shrink:0;min-width:40px;text-align:center;font-family:monospace">${esc(f.code)}</div>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:15px">${esc(f.title)}</div>
+            <div class="small muted" style="margin-top:2px">${esc(f.desc)}</div>
+          </div>
+        </div>
+        <button class="btn small quiet" data-form="${f.code}" style="align-self:flex-start">↓ Blank form</button>
+      </div>`).join("")}
+  </div>
+  <div class="card">
+    <p class="small muted"><b>How to use:</b> Download and print. Fill by hand and get the required signatures. Scan and file in the Administration folder on the shared drive. Digital submissions through the app generate a pre-filled form automatically — no paper form needed.</p>
+  </div>`);
+
+  await ensureJsPDF();
+  $("content").querySelectorAll("[data-form]").forEach(btn=>{
+    btn.onclick = async () => {
+      const f = FORMS.find(x=>x.code===btn.dataset.form);
+      if(!f) return;
+      btn.textContent="Generating…"; btn.disabled=true;
+      try{ f.fn(); } catch(e){ toast("Could not generate — "+e.message); }
+      btn.textContent="↓ Blank form"; btn.disabled=false;
+    };
+  });
+};
+
+/* Explicit global exports — ensures functions are available regardless of how the script loads */
+window.downloadFilledForm = downloadFilledForm;
+window.EP_routes_resources = routes.resources;
+window.EP_routes_forms = routes.forms;
+window.EP_routes_verifyForm = routes.verifyForm;
+window.makeVerifyCode = makeVerifyCode;
+window.ensureJsPDF = ensureJsPDF;
+window.formF01 = formF01; window.formF02 = formF02; window.formF03 = formF03;
+window.formF04 = formF04; window.formF05 = formF05; window.formF06 = formF06;
+window.formF07 = formF07; window.formF08 = formF08; window.formF09 = formF09;
+
+function _fEsc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function _fFmt(n){return n?Number(n).toLocaleString("en-IN"):"";}
+function _fCss(){return window._epFormCss||`<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:9pt;color:#000;background:#fff}
+.page{width:190mm;margin:0 auto;padding:8mm 10mm 6mm}
+@page{size:A4 portrait;margin:8mm 10mm}
+@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.page{width:100%;padding:0}}
+.ep-hd{display:flex;justify-content:space-between;border:1.5px solid #000;padding:4px 6px;margin-bottom:4px}
+.ep-name{font-weight:700;font-size:10pt}.ep-addr{font-size:7pt;color:#444;margin-top:1px}
+.ep-meta{text-align:right;font-size:8pt;line-height:1.4}
+.ftitle{background:#000;color:#fff;text-align:center;font-weight:700;font-size:10pt;padding:3px;margin-bottom:4px;letter-spacing:1px}
+.sec{background:#eee;border:1px solid #000;padding:2px 4px;font-weight:700;font-size:8pt;text-transform:uppercase;margin:4px 0 2px}
+.row{display:flex;gap:2px;margin-bottom:2px}
+.bx{flex:1;border:1px solid #000;padding:2px 4px;min-height:14px}
+.lbl{font-size:6.5pt;color:#555}.val{font-size:9pt;font-weight:600;margin-top:1px}
+.tbl{width:100%;border-collapse:collapse;margin-bottom:4px;font-size:8pt}
+.tbl th,.tbl td{border:1px solid #000;padding:2px 4px}
+.tbl th{background:#eee;font-weight:700;font-size:7.5pt}
+.tbl .tot td{font-weight:700;background:#f5f5f5}
+.tbl .num,.tbl th.num{text-align:right}
+.sigs{display:flex;gap:4px;margin-top:4px}
+.sig{flex:1;border:1px solid #000;padding:3px 4px;min-height:36px;display:flex;flex-direction:column}
+.si{height:20px;display:flex;align-items:center}.si img{max-height:18px;max-width:60px}
+.sl{border-bottom:1px solid #000;margin:1px 0}
+.slbl{font-weight:700;font-size:7pt}.srole{font-size:6.5pt;color:#555}.sdate{font-size:6.5pt;margin-top:1px}
+.note{font-size:7.5pt;font-style:italic;border:1px solid #aaa;padding:3px;margin-top:4px}
+.ft{text-align:center;font-size:6.5pt;color:#666;margin-top:4px;border-top:1px solid #ccc;padding-top:2px}
+.stamp-row{display:flex;align-items:center;gap:8px;margin-top:6px;border-top:1px solid #eee;padding-top:4px}
+.stamp img{width:48px;height:48px;object-fit:contain;opacity:0.85}
+
+/* Donation receipt — clean B&W matching existing EP receipts */
+.rc-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.rc-hd-left{}
+.rc-org{font-size:11pt;font-weight:700;letter-spacing:0.5px}
+.rc-addr{font-size:7pt;color:#444;line-height:1.5}
+.rc-reg{font-size:6.5pt;color:#555;margin-top:2px}
+.rc-hd-right{text-align:right;font-size:8.5pt;line-height:1.6;white-space:nowrap}
+.rc-hr{border:none;border-top:1px solid #000;margin:6px 0}
+.rc-title{font-size:11pt;font-weight:700;text-align:center;text-decoration:underline;margin:8px 0 10px;letter-spacing:1px}
+.rc-tbl{width:100%;border-collapse:collapse;margin-bottom:8px}
+.rc-tbl .rl{font-size:8.5pt;width:35mm;vertical-align:top;padding:1px 0}
+.rc-tbl .rv{font-size:8.5pt;border-bottom:1px solid #000;padding:1px 2px}
+.rc-amt{font-size:11pt;font-weight:700}
+.rc-words{font-style:italic;font-size:8pt;padding:1px 2px}
+.rc-disc{font-size:6.5pt;color:#555;line-height:1.5;max-width:70%}
+.rc-sig-row{display:flex;justify-content:flex-end;margin-top:8px}
+.rc-sig-box{text-align:center;min-width:55mm;position:relative}
+.rc-sig-img{max-height:28px;max-width:60px;display:block;margin:0 auto 2px}
+.rc-stamp-img{position:absolute;top:-4px;left:0;width:36px;height:36px;object-fit:contain;opacity:0.85}
+.rc-sig-line{border-top:1px solid #000;margin:2px 0}
+.rc-sig-lbl{font-size:7.5pt}
+.rc-sig-name{font-size:8pt;font-weight:700}
+.rc-sig-blank{height:28px}
+
+</style>`;}
+
+function _fHd(code,title,d){var td=typeof today==="function"?today():new Date().toISOString().slice(0,10);return["<div class=\"ep-hd\"><div><div class=\"ep-name\">EMPOWER PEOPLE</div>","<div class=\"ep-addr\">5 Dreams Apartments, A-4 Abulfazal Enclave, Jamia Nagar, Delhi-110025<br>","PAN AABAE2016N &middot; 12A: AABAE2016N25DL01 &middot; 80G: AABAE2016N25DLO2</div></div>","<div class=\"ep-meta\"><b>"+_fEsc(code)+"</b><br>"+_fEsc(d.ref||d.id||"")+"<br>"+_fEsc(d.date||d.createdOn||d.appliedOn||"")+"</div></div>","<div class=\"ftitle\">"+_fEsc(title)+"</div>"].join("");}
+function _fSig(lbl,role,name,date,postTitleOverride){
+  var users=(typeof state!=="undefined"&&state.users)||[];
+  var uAll=name?users.find(function(x){return x.name===name;}):null;
+  var uSig=uAll&&uAll.signature?uAll:null;
+  var src=uSig?(uSig.signature.indexOf("data:")===0?uSig.signature:"data:image/jpeg;base64,"+uSig.signature):"";
+  var postTitle=postTitleOverride||(uAll&&uAll.postTitle)||"";
+  var empId=uAll?(uAll.id||""):"";
+  var sigImg=src?"<img src=\""+src+"\" alt=\"\" style=\"max-height:22px;max-width:70px;display:block\">":"<div style=\"height:22px;width:70px;border:1px dashed #bbb;margin-bottom:2px\"></div>";
+  var nameHtml=name?"<span style=\"font-weight:700;font-size:8pt;display:block\">"+_fEsc(name)+"</span>":"<span style=\"color:#aaa;font-size:7pt\">(not yet signed)</span>";
+  var ptHtml=postTitle?"<span style=\"font-size:6pt;color:#555;display:block\">"+_fEsc(postTitle)+"</span>":"";
+  var idHtml=empId?"<span style=\"font-size:6pt;color:#888;font-family:monospace;display:block\">"+_fEsc(empId)+"</span>":"";
+  var siContent=sigImg+nameHtml+ptHtml+idHtml;
+  return["<div class=\"sig\">","<div class=\"si\" style=\"min-height:32px\">",siContent,"</div>","<div class=\"sl\"></div>","<div class=\"slbl\">"+_fEsc(lbl)+"</div>","<div class=\"srole\">"+_fEsc(role)+"</div>","<div class=\"sdate\">Date: "+_fEsc(date||"__________")+"</div>","</div>"].join("");
+}
+function _fW(h){
+  return["<!doctype html><html><head><meta charset=\"utf-8\">",_fCss(),"</head><body><div class=\"page\">",h,"<div class=\"ft\">Empower People &middot; app.empowerpeople.in &middot; EP Office</div></div></body></html>"].join("");
+}
+function htmlFormF01(d){var items=Array.isArray(d.items)?d.items:(d.item?[d.item]:[]);var rows=[0,1,2,3,4].map(function(i){return"<tr><td>"+(i+1)+"</td><td>"+_fEsc(items[i]||"")+"</td><td></td><td class=\"num\">"+_fEsc(i===0&&d.estimate?"&#8377;"+_fFmt(d.estimate):"")+"</td></tr>";}).join("");return _fW(_fHd("Form F-01","REQUISITION",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Requested by / Department</div><div class=\"val\">"+_fEsc(d.byName)+" &middot; "+_fEsc(d.forDept||d.department||"")+"</div></div>"+"<div class=\"bx\"><div class=\"lbl\">Project</div><div class=\"val\">"+_fEsc(d.projectName||"")+"</div></div></div>"+"<div class=\"sec\">Items requested</div>"+"<table class=\"tbl\"><tr><th>#</th><th>Description</th><th>Qty</th><th>Est. cost &#8377;</th></tr>"+rows+"<tr class=\"tot\"><td colspan=\"3\">Total</td><td class=\"num\">&#8377;"+_fFmt(d.estimate||d.amount)+"</td></tr></table>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Purpose / justification</div><div class=\"val\">"+_fEsc(d.notes||d.reason||"")+"</div></div></div>"+"<div class=\"sigs\">"+_fSig("Requested by","Name & post",d.byName,d.createdOn)+(d.verifiedByName?_fSig("Verified by","Line manager",d.verifiedByName,d.verifiedAt):"")+_fSig("Approved by","Director ACF",d.approvedByName,d.approvedAt)+"</div>",d);}
+function htmlFormF02(d){var bills=Array.isArray(d.bills)?d.bills:[];var br=(bills.length?bills:[1,2,3].map(function(){return"";})).map(function(b,i){return"<tr><td>"+(i+1)+"</td><td>"+_fEsc(b)+"</td><td class=\"num\"></td></tr>";}).join("");return _fW(_fHd("Form F-02","EXPENSE REIMBURSEMENT CLAIM",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Staff / Department</div><div class=\"val\">"+_fEsc(d.byName)+" &middot; "+_fEsc(d.department||d.byDept||"")+"</div></div>"+"<div class=\"bx\"><div class=\"lbl\">Period</div><div class=\"val\">"+_fEsc(d.period||"")+"</div></div>"+"<div class=\"bx\"><div class=\"lbl\">Project</div><div class=\"val\">"+_fEsc(d.projectName||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Purpose</div><div class=\"val\">"+_fEsc(d.purpose||d.description||"")+"</div></div></div>"+"<div class=\"sec\">Bills</div><table class=\"tbl\"><tr><th>#</th><th>Item / bill</th><th class=\"num\">Amount &#8377;</th></tr>"+br+"<tr class=\"tot\"><td colspan=\"2\">Total claimed</td><td class=\"num\">&#8377;"+_fFmt(d.amount||d.total)+"</td></tr></table>"+"<div class=\"sigs\">"+_fSig("Claimed by","Staff member",d.byName,d.createdOn)+_fSig("Verified by","Dept. head",d.verifiedByName,d.verifiedAt)+_fSig("Approved by","Director ACF",d.approvedByName,d.approvedAt)+"</div>",d);}
+function htmlFormF03(d){var lr=Array.isArray(d.lines)?d.lines.map(function(l){return"<tr><td>"+_fEsc(l.head||l.category||"")+"</td><td class=\"num\">"+_fFmt(l.amount)+"</td><td>"+_fEsc(l.notes||"")+"</td></tr>";}).join(""):"<tr><td colspan=\"3\">&nbsp;</td></tr>";return _fW(_fHd("Form F-03","MONTHLY EXPENSES STATEMENT",d)+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Office</div><div class=\"val\">"+_fEsc(d.office||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Month</div><div class=\"val\">"+_fEsc(d.month||d.period||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Project</div><div class=\"val\">"+_fEsc(d.projectName||"")+"</div></div></div>"+"<div class=\"sec\">Expenses</div><table class=\"tbl\"><tr><th>Head</th><th class=\"num\">Amount &#8377;</th><th>Notes</th></tr>"+lr+"<tr class=\"tot\"><td>Total</td><td class=\"num\">&#8377;"+_fFmt(d.total||d.amount)+"</td><td></td></tr></table>"+"<div class=\"sigs\">"+_fSig("Prepared by","Accountant",d.preparedByName,d.preparedOn)+_fSig("Verified by","Director ACF",d.verifiedByName,d.verifiedAt)+_fSig("Approved by","Founder & GS",d.approvedByName,d.approvedAt)+"</div>",d);}
+function htmlFormF04(d){return _fW(_fHd("Form F-04","PAYMENT VOUCHER",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Pay to</div><div class=\"val\">"+_fEsc(d.payTo||d.receivedBy||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Date</div><div class=\"val\">"+_fEsc(d.date||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Amount &#8377;</div><div class=\"val\" style=\"font-size:13pt;color:#1F4D3A;font-weight:700\">&#8377;"+_fFmt(d.amount)+"</div></div><div class=\"bx\"><div class=\"lbl\">UTR / Cheque</div><div class=\"val\">"+_fEsc(d.ref||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Amount in words</div><div class=\"val\" style=\"font-style:italic\">"+_fEsc(d.amountWords||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Purpose</div><div class=\"val\">"+_fEsc(d.purpose||d.description||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Bank</div><div class=\"val\">"+_fEsc(d.bank||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Project</div><div class=\"val\">"+_fEsc(d.projectName||"")+"</div></div></div>"+"<div class=\"sigs\">"+_fSig("Prepared by","Accountant",d.preparedByName,d.preparedOn)+_fSig("Verified by","Dept. head",d.verifiedByName,d.verifiedAt)+_fSig("Finance","Director ACF",d.directorName,d.directorAt)+_fSig("Final approval","Founder & GS",d.gsName,d.gsAt)+"</div>",d);}
+// ─── F-05 Donation Receipt HTML (for incomeReceipts) ─────────────────────────
+// Same layout as printDonationReceipt but returns HTML string for Drive/Firestore storage
+function htmlFormF05_donation(d) {
+  var proj = (typeof state !== "undefined") ? (state.projects||[]).find(function(p){return p.id===d.projectId;})||{} : {};
+  var fcra = /FCRA/.test(d.fcra||proj.fundType||"") && !/Non/.test(d.fcra||proj.fundType||"");
+  var creatorUid = d.createdBy||d.uid||d.by||"";
+  var creator = (typeof state !== "undefined") ? (state.users||[]).find(function(u){return u.id===creatorUid;})||{} : {};
+  var sigSrc = creator.signature ? (creator.signature.indexOf("data:")===0 ? creator.signature : "data:image/jpeg;base64,"+creator.signature) : "";
+  var stampSrc = typeof EP_STAMP !== "undefined" ? EP_STAMP : "";
+  var amount = Number(d.amount||0);
+  var words = typeof inWords==="function" ? inWords(amount) : (typeof _amtWords==="function" ? _amtWords(amount) : "");
+  var rcNo = d.receiptNo||d._code||"";
+  var title = fcra ? "FOREIGN CONTRIBUTION RECEIPT" : "DONATION RECEIPT";
+  var disc = fcra
+    ? "This contribution has been received in the designated FCRA account and will be used only for the purposes permitted under the Foreign Contribution (Regulation) Act, 2010."
+    : "Donations to Empower People are exempt under section 80G of the Income Tax Act, 1961. Please quote your PAN to claim the deduction.";
+  var modeStr = _fEsc(d.mode||"Bank transfer") + (d.ref ? " \u00b7 reference "+_fEsc(d.ref) : "") + (d.bank ? " \u00b7 credited to "+_fEsc(d.bank) : "");
+  return [
+    "<!doctype html><html><head><meta charset=\"utf-8\">",
+    "<title>"+_fEsc(rcNo)+"</title>",
+    "<link href=\"https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&display=swap\" rel=\"stylesheet\">",
+    "<style>",
+    "@page{size:A5 landscape;margin:10mm}",
+    "body{font-family:Mukta,system-ui,sans-serif;color:#111;margin:0;font-size:11pt}",
+    ".sheet{border:2px solid #1F4D3A;border-radius:4mm;padding:6mm 8mm}",
+    ".hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px solid #1F4D3A;padding-bottom:3mm}",
+    ".org{font-size:15pt;font-weight:700;color:#1F4D3A;line-height:1.1}",
+    ".sub{font-size:7.5pt;color:#555;line-height:1.45}",
+    ".ttl{text-align:center;font-weight:700;letter-spacing:1px;margin:4mm 0 3mm;font-size:12pt;color:#1F4D3A}",
+    "table{width:100%;border-collapse:collapse;font-size:10pt}",
+    "td{padding:1.4mm 0;vertical-align:top}",
+    ".k{color:#555;width:34mm}",
+    ".amt{font-size:14pt;font-weight:700;color:#1F4D3A}",
+    ".words{font-style:italic;font-size:9.5pt}",
+    ".ft{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8mm;font-size:8.5pt;color:#444}",
+    ".sig-box{text-align:center;font-size:9pt;position:relative;min-width:50mm}",
+    ".sig-img{height:13mm;display:block;margin:0 auto 1mm}",
+    ".stamp-img{position:absolute;left:0;top:-4mm;width:14mm;height:14mm;object-fit:contain;opacity:0.9}",
+    ".line{border-top:1px solid #777;width:46mm;margin:1mm auto 1mm}",
+    ".note{font-size:7.5pt;color:#666;margin-top:3mm;line-height:1.5;max-width:65%}",
+    "</style></head><body><div class=\"sheet\">",
+    "<div class=\"hd\"><div>",
+    "<div class=\"org\">EMPOWER PEOPLE</div>",
+    "<div class=\"sub\">Registered address: 5 Dreams Apartments, A-4 Abulfazal Enclave, Jamia Nagar, Delhi-110025 &middot; post@empowerpeople.in &middot; 011-40671714<br>",
+    "Registered under the Societies Registration Act 1860, Delhi &middot; PAN AABAE2016N<br>",
+    "12A: AABAE2016N25DL01 &middot; 80G: AABAE2016N25DLO2"+(fcra ? " &middot; FCRA: 231661880" : "")+"</div></div>",
+    "<div style=\"text-align:right;font-size:9pt\"><b>"+_fEsc(rcNo)+"</b><br>"+_fEsc(d.date||"")+"</div></div>",
+    "<div style=\"text-align:right;font-size:8pt;color:#667\">Form F-05</div>",
+    "<div class=\"ttl\">"+title+"</div>",
+    "<table>",
+    "<tr><td class=\"k\">Received with thanks from</td><td><b>"+_fEsc(d.remitter||d.donorName||"&mdash;")+"</b></td></tr>",
+    (d.donorAddress ? "<tr><td class=\"k\">Address</td><td>"+_fEsc(d.donorAddress)+"</td></tr>" : ""),
+    (d.donorPan ? "<tr><td class=\"k\">PAN</td><td>"+_fEsc(d.donorPan)+"</td></tr>" : ""),
+    "<tr><td class=\"k\">The sum of</td><td class=\"amt\">&#8377;"+amount.toLocaleString("en-IN")+"</td></tr>",
+    "<tr><td></td><td class=\"words\">"+_fEsc(words)+"</td></tr>",
+    "<tr><td class=\"k\">Received by</td><td>"+modeStr+"</td></tr>",
+    (d.foreign ? "<tr><td class=\"k\">Foreign amount</td><td>"+_fEsc(d.foreign)+(d.rate?" at &#8377;"+_fEsc(d.rate):"")+"</td></tr>" : ""),
+    "<tr><td class=\"k\">Towards</td><td>"+_fEsc(d.purpose||d.description||"General donation")+(proj.name?" &mdash; "+_fEsc(proj.name):"")+"</td></tr>",
+    "</table>",
+    "<div class=\"ft\">",
+    "<div class=\"note\">"+disc+"<br>This receipt is issued subject to realisation of the instrument where applicable.</div>",
+    "<div class=\"sig-box\">",
+    stampSrc ? "<img src=\""+stampSrc+"\" class=\"stamp-img\" alt=\"\">" : "",
+    sigSrc ? "<img src=\""+sigSrc+"\" class=\"sig-img\" alt=\"sig\">" : "<div class=\"sig-img\" style=\"border:1px dashed #bbb;width:70px;margin:0 auto\"></div>",
+    "<div class=\"line\"></div>",
+    "Authorised signatory<br><b>"+_fEsc(creator.name||"")+"</b><br>Empower People",
+    "</div></div>",
+    "</div></body></html>"
+  ].join("");
+}
+
+function htmlFormF05(d){
+  var rcNo=typeof _fyReceiptNo==="function"?_fyReceiptNo(d):(d.receiptNo||d.id?.slice(0,8)||"");
+  var words=d.amountWords||(typeof _amtWords==="function"?_amtWords(d.amount):"");
+  var modeStr=(d.mode||"Bank transfer / NEFT")+(d.ref?" · reference "+d.ref:"")+(d.bank?" · credited to "+d.bank:"");
+  var isFcra=d.fcra||d.type==="FCRA"||/fcra|foreign/i.test(d.incomeType||d.head||"");
+  var title=isFcra?"FOREIGN CONTRIBUTION RECEIPT":"DONATION RECEIPT";
+  var disc=isFcra
+    ?"This contribution has been received in the designated FCRA account and will be used only for the purposes permitted under the Foreign Contribution (Regulation) Act, 2010. This receipt is issued subject to realisation of the instrument where applicable."
+    :"Donations to Empower People are exempt under section 80G of the Income Tax Act, 1961. Please quote your PAN to claim the deduction. This receipt is issued subject to realisation of the instrument where applicable.";
+  // Person who recorded
+  var recBy=d.byName||d.name||"";
+  var recUid=d.bySignInId||d.uid||d.by||"";
+  var recDate=d.date||d.createdOn||"";
+  var _uRec=(typeof state!=="undefined")?(state.users||[]).find(function(u){return u.name===recBy;}):null;
+  var recSig=_uRec&&_uRec.signature?(_uRec.signature.indexOf("data:")===0?_uRec.signature:"data:image/jpeg;base64,"+_uRec.signature):"";
+  return _fW(
+    "<div class=\"rcp-wrap\">"
+    // Left vertical strip
+    +"<div class=\"rcp-left\">"
+    +"<div class=\"rcp-org\">EMPOWER PEOPLE</div>"
+    +"<div class=\"rcp-det\">Registered address: 5 Dreams Apartments, A-4 Abulfazal Enclave, Jamia Nagar, Delhi-110025 &nbsp;&middot;&nbsp; post@empowerpeople.in &nbsp;&middot;&nbsp; 011-40671714</div>"
+    +"<div class=\"rcp-det\">Registered under the Societies Registration Act 1860, Delhi &nbsp;&middot;&nbsp; PAN AABAE2016N</div>"
+    +"<div class=\"rcp-det\">12A: AABAE2016N25DLO1 &nbsp;&middot;&nbsp; 80G: AABAE2016N25DLO2 &nbsp;&middot;&nbsp; FCRA: 231661880</div>"
+    +"</div>"
+    // Main content
+    +"<div class=\"rcp-main\">"
+    +"<div class=\"rcp-ref\"><b>"+_fEsc(rcNo)+"</b><br>"+_fEsc(recDate)+"<br><span style=\"font-size:7pt;color:#666\">Form F-05</span></div>"
+    +"<div class=\"rcp-title\">"+_fEsc(title)+"</div>"
+    // Fields
+    +"<table class=\"rcp-tbl\">"
+    +"<tr><td class=\"rl\">Received with thanks</td><td></td></tr>"
+    +"<tr><td class=\"rl\">from</td><td class=\"rv\">"+_fEsc(d.payerName||d.remitter||d.donorName||"")+"</td></tr>"
+    +(d.donorAddress||d.address?"<tr><td class=\"rl\">Address</td><td class=\"rv\">"+_fEsc(d.donorAddress||d.address||"")+"</td></tr>":"")
+    +(d.donorPan||d.pan?"<tr><td class=\"rl\">PAN</td><td class=\"rv\">"+_fEsc(d.donorPan||d.pan||"")+"</td></tr>":"")
+    +"<tr><td class=\"rl\" style=\"padding-top:10px\">The sum of</td><td class=\"rv rcp-amt\" style=\"padding-top:10px\">&#8377;"+_fFmt(d.amount)+"</td></tr>"
+    +(words?"<tr><td></td><td class=\"rcp-words\">"+_fEsc(words)+"</td></tr>":"")
+    +"<tr><td class=\"rl\">Received by</td><td class=\"rv\">"+_fEsc(modeStr)+"</td></tr>"
+    +(d.foreignAmount?"<tr><td class=\"rl\">Foreign amount</td><td class=\"rv\">"+_fEsc(d.foreignAmount+(d.exchangeRate?" at ₹"+d.exchangeRate:""))+"</td></tr>":"")
+    +"<tr><td class=\"rl\">towards</td><td class=\"rv\">"+_fEsc(d.purpose||d.projectName||d.notes||d.description||"")+"</td></tr>"
+    +"</table>"
+    +"<div class=\"rcp-disc\">"+_fEsc(disc)+"</div>"
+    // Sig + stamp — person who recorded
+    +"<div class=\"rcp-sig\">"
+    +(recSig?"<img src=\""+recSig+"\" class=\"rcp-sig-img\">":"<div style=\"height:32px;width:70px;border:1px dashed #bbb;margin:0 auto\"></div>")
+    +(typeof EP_STAMP!=="undefined"?"<img src=\""+EP_STAMP+"\" class=\"rcp-stmp\">":"")
+    +"<div class=\"rcp-sline\"></div>"
+    +"<div>Authorised signatory</div>"
+    +"<div class=\"rcp-sname\">"+_fEsc(recBy)+"</div>"
+    +"<div>Empower People</div>"
+    +"</div>"
+    +"</div></div>"
+    ,
+  d);
+}
+function htmlFormF06(d){var er=Array.isArray(d.expenses)?d.expenses.map(function(e){return"<tr><td>"+_fEsc(e.head||e.type||"")+"</td><td class=\"num\">"+_fFmt(e.amount)+"</td><td>"+_fEsc(e.notes||"")+"</td></tr>";}).join(""):"<tr><td colspan=\"3\">&nbsp;</td></tr>";return _fW(_fHd("Form F-06","TRAVEL AUTHORISATION & CLAIM",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Traveller / Dept</div><div class=\"val\">"+_fEsc(d.byName||d.travellerName||"")+" &middot; "+_fEsc(d.department||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Dates</div><div class=\"val\">"+_fEsc(d.fromDate||"")+" &ndash; "+_fEsc(d.toDate||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Destination</div><div class=\"val\">"+_fEsc(d.destination||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Purpose</div><div class=\"val\">"+_fEsc(d.purpose||d.reason||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Mode</div><div class=\"val\">"+_fEsc(d.mode||"")+"</div></div></div>"+"<div class=\"sec\">Expenditure on return</div><table class=\"tbl\"><tr><th>Head</th><th class=\"num\">Amount &#8377;</th><th>Details</th></tr>"+er+"<tr class=\"tot\"><td>Total</td><td class=\"num\">&#8377;"+_fFmt(d.totalClaimed||d.amount)+"</td><td></td></tr></table>"+"<div class=\"sigs\">"+_fSig("Applied by","Traveller",d.byName||d.travellerName,d.createdOn)+_fSig("Verified by","Line manager",d.verifiedByName,d.verifiedAt)+_fSig("Approved by","Director ACF",d.approvedByName,d.approvedAt)+_fSig("Certified on return","Line manager",d.returnVerifiedBy,d.returnVerifiedOn)+"</div>",d);}
+function htmlFormF07(d){return _fW(_fHd("Form F-07","LEAVE APPLICATION",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Staff / Dept</div><div class=\"val\">"+_fEsc(d.byName||"")+" &middot; "+_fEsc(d.department||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Applied on</div><div class=\"val\">"+_fEsc(d.appliedOn||d.createdOn||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Leave type</div><div class=\"val\">"+_fEsc(d.type||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">From</div><div class=\"val\">"+_fEsc(d.from||d.startDate||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">To</div><div class=\"val\">"+_fEsc(d.to||d.endDate||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Days</div><div class=\"val\">"+_fEsc(d.days||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Reason</div><div class=\"val\">"+_fEsc(d.reason||"")+"</div></div></div>"+"<div class=\"sigs\">"+_fSig("Applied by","Staff member",d.byName,d.appliedOn||d.createdOn)+_fSig("Approved by","Line manager",d.approvedByName,d.approvedAt||d.approvedOn)+_fSig("Recorded by","Administration",d.recordedByName,d.recordedOn)+"</div>",d);}
+function htmlFormF08(d){var ir=Array.isArray(d.items)?d.items.map(function(it,i){return"<tr><td>"+(i+1)+"</td><td>"+_fEsc(it.desc||it||"")+"</td><td class=\"num\">"+_fFmt(it.amount||"")+"</td></tr>";}).join(""):"<tr><td colspan=\"3\">&nbsp;</td></tr>";return _fW(_fHd("Form F-08","ADVANCE SETTLEMENT",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Staff / Dept</div><div class=\"val\">"+_fEsc(d.byName||"")+" &middot; "+_fEsc(d.department||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Advance ref</div><div class=\"val\">"+_fEsc(d.advanceRef||d.ref||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Received &#8377;</div><div class=\"val\">"+_fFmt(d.advanceAmount||d.amount)+"</div></div><div class=\"bx\"><div class=\"lbl\">Spent &#8377;</div><div class=\"val\">"+_fFmt(d.spent||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Returned &#8377;</div><div class=\"val\">"+_fFmt(d.returned||"")+"</div></div></div>"+"<div class=\"sec\">Expenditure</div><table class=\"tbl\"><tr><th>#</th><th>Item / bill</th><th class=\"num\">Amount &#8377;</th></tr>"+ir+"</table>"+"<div class=\"sigs\">"+_fSig("Submitted by","Staff member",d.byName,d.settledOn)+_fSig("Verified by","Dept. head",d.verifiedByName,d.verifiedAt)+_fSig("Settled by","Accountant",d.settledByName,d.settledOn)+"</div>",d);}
+function htmlFormF09(d){return _fW(_fHd("Form F-09","MONTHLY WORK SHEET",d)+"<div class=\"row\"><div class=\"bx\" style=\"flex:2\"><div class=\"lbl\">Staff / Dept</div><div class=\"val\">"+_fEsc(d.name||d.byName||"")+" &middot; "+_fEsc(d.department||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Month</div><div class=\"val\">"+_fEsc(d.month||d.period||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Project</div><div class=\"val\">"+_fEsc(d.projectName||"")+"</div></div></div>"+"<div class=\"row\"><div class=\"bx\"><div class=\"lbl\">Days present</div><div class=\"val\">"+_fEsc(d.daysPresent||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Leave taken</div><div class=\"val\">"+_fEsc(d.leaveTaken||"")+"</div></div><div class=\"bx\"><div class=\"lbl\">Reports filed</div><div class=\"val\">"+_fEsc(d.reportsFiled||"")+"</div></div></div>"+"<div class=\"sigs\">"+_fSig("Submitted by","Staff member",d.name||d.byName,d.submittedOn)+_fSig("Verified by","Line manager",d.verifiedByName,d.verifiedAt)+"</div>",d);}

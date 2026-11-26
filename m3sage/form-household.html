@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d4a7c">
+  <title>फॉर्म 1: परिवार सर्वेक्षण | M3-SAGE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="offline-bar">📵 ऑफलाइन — फॉर्म भरा जाएगा, डेटा बाद में सिंक होगा</div>
+
+<div class="app-header">
+  <a href="index.html" class="back-btn">←</a>
+  <div class="header-title">
+    परिवार सर्वेक्षण
+    <div class="header-sub">प्रश्नावली 1 · M3-SAGE</div>
+  </div>
+  <div class="sync-badge" id="syncBadge"></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label" id="progressLabel">खंड 1 / 9</div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:11%"></div></div>
+</div>
+
+<!-- Success screen (hidden until submit) -->
+<div id="successScreen" class="form-container hidden">
+  <div class="success-screen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">फॉर्म सफलतापूर्वक जमा हुआ</div>
+    <div class="success-id" id="successId"></div>
+    <div class="success-note" id="successNote">डेटा सिंक हो रहा है...</div>
+    <div class="success-btns">
+      <button class="btn-primary" onclick="location.reload()">नया फॉर्म भरें</button>
+      <button class="btn-secondary" onclick="location.href='index.html'">होम पर जाएं</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main form -->
+<form id="mainForm" class="form-container" novalidate>
+
+  <div class="form-meta-box">
+    <span class="form-id" id="formId">M3-HH-...</span>
+    <span class="form-enum" id="formEnum"></span>
+  </div>
+
+  <!-- ══════════════ SECTION A: IDENTIFICATION ══════════════ -->
+  <div class="form-section" id="secA">
+    <div class="section-header">खंड A: सर्वेक्षण की पहचान</div>
+
+    <div class="q-group">
+      <div class="q-label">जिला</div>
+      <input type="text" class="text-input" name="A_district" value="गया" readonly>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रखंड<span class="req">*</span></div>
+      <select class="select-input" name="A_block" required>
+        <option value="">— चुनें —</option>
+        <option>शेरघाटी</option>
+        <option>आमस</option>
+        <option>डोभी</option>
+      </select>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">पंचायत</div>
+      <input type="text" class="text-input" name="A_panchayat" placeholder="पंचायत का नाम">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">गांव</div>
+      <input type="text" class="text-input" name="A_village" placeholder="गांव का नाम">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">गांव कोड</div>
+      <input type="text" class="text-input" name="A_village_code" placeholder="कोड">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">सर्वेक्षण की तारीख<span class="req">*</span></div>
+      <input type="date" class="text-input" name="A_date" required>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">सर्वेक्षक का नाम / कोड</div>
+      <input type="text" class="text-input" name="A_enumerator_code" placeholder="नाम या कोड" id="enumCodeField">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">साक्षात्कार की भाषा</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="A_language" value="हिंदी" checked><span>हिंदी</span></label>
+        <label class="radio-opt"><input type="radio" name="A_language" value="मगही"><span>मगही</span></label>
+        <label class="radio-opt"><input type="radio" name="A_language" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="warn-box">उत्तरदाता का नाम सामान्य सर्वेक्षण डेटाबेस में दर्ज न करें।</div>
+  </div>
+
+  <!-- ══════════════ SECTION B: CONSENT ══════════════ -->
+  <div class="form-section hidden" id="secB">
+    <div class="section-header">खंड B: सहमति (Informed Consent)</div>
+
+    <div class="consent-text">
+      <p>नमस्कार!</p>
+      <p>हम Empower People संस्था की ओर से आपके क्षेत्र में महिलाओं की सामाजिक एवं आर्थिक स्थिति, रोजगार, आजीविका, कौशल और उद्यमिता के अवसरों को समझने के लिए एक अध्ययन कर रहे हैं।</p>
+      <p>इस अध्ययन का उद्देश्य यह जानना है कि महिलाओं के लिए किस प्रकार के रोजगार एवं व्यवसाय के अवसर विकसित किए जा सकते हैं।</p>
+      <p>आपकी भागीदारी पूरी तरह <strong>स्वैच्छिक</strong> है। आप किसी भी प्रश्न का उत्तर देने से मना कर सकती हैं और किसी भी समय बातचीत रोक सकती हैं।</p>
+      <p>आपके उत्तर <strong>गोपनीय</strong> रखे जाएंगे। इस सर्वेक्षण में भाग लेने से M3-SAGE कार्यक्रम में चयन की गारंटी नहीं मिलती है।</p>
+      <p>इस बातचीत में लगभग <strong>30–40 मिनट</strong> लगेंगे।</p>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न A1. क्या आप इस सर्वेक्षण में भाग लेने के लिए सहमत हैं?<span class="req">*</span></div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="A1_consent" value="हाँ" required><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="A1_consent" value="नहीं"><span>नहीं</span></label>
+      </div>
+    </div>
+
+    <div id="consentRefused" class="consent-refused hidden">
+      <h3>साक्षात्कार समाप्त</h3>
+      <p>उत्तरदाता ने भाग लेने से मना किया। फॉर्म यहीं बंद करें।</p>
+      <button type="button" class="btn-secondary" onclick="location.href='index.html'">होम पर जाएं</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION C: RESPONDENT INFO ══════════════ -->
+  <div class="form-section hidden" id="secC">
+    <div class="section-header">खंड C: उत्तरदाता की व्यक्तिगत जानकारी</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C1. आपकी आयु कितनी है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="C1_age" value="18-24"><span>18–24 वर्ष</span></label>
+        <label class="radio-opt"><input type="radio" name="C1_age" value="25-30"><span>25–30 वर्ष</span></label>
+        <label class="radio-opt"><input type="radio" name="C1_age" value="31-40"><span>31–40 वर्ष</span></label>
+        <label class="radio-opt"><input type="radio" name="C1_age" value="41-50"><span>41–50 वर्ष</span></label>
+        <label class="radio-opt"><input type="radio" name="C1_age" value="51-60"><span>51–60 वर्ष</span></label>
+        <label class="radio-opt"><input type="radio" name="C1_age" value="60+"><span>60 वर्ष से अधिक</span></label>
+        <label class="radio-opt"><input type="radio" name="C1_age" value="बताना नहीं चाहतीं"><span>बताना नहीं चाहतीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C2. आपकी वैवाहिक स्थिति क्या है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="C2_marital" value="विवाहित"><span>विवाहित</span></label>
+        <label class="radio-opt"><input type="radio" name="C2_marital" value="अविवाहित"><span>अविवाहित</span></label>
+        <label class="radio-opt"><input type="radio" name="C2_marital" value="विधवा"><span>विधवा</span></label>
+        <label class="radio-opt"><input type="radio" name="C2_marital" value="तलाकशुदा"><span>तलाकशुदा</span></label>
+        <label class="radio-opt"><input type="radio" name="C2_marital" value="अलग रह रही हैं"><span>अलग रह रही हैं</span></label>
+        <label class="radio-opt"><input type="radio" name="C2_marital" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C3. आपने कितनी पढ़ाई की है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="कोई औपचारिक शिक्षा नहीं"><span>कोई औपचारिक शिक्षा नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="प्राथमिक (कक्षा 1-5)"><span>प्राथमिक (कक्षा 1–5)</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="मध्य विद्यालय (कक्षा 6-8)"><span>मध्य विद्यालय (कक्षा 6–8)</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="माध्यमिक (कक्षा 9-10)"><span>माध्यमिक (कक्षा 9–10)</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="उच्च माध्यमिक (कक्षा 11-12)"><span>उच्च माध्यमिक (कक्षा 11–12)</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="स्नातक"><span>स्नातक</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="स्नातकोत्तर या उससे अधिक"><span>स्नातकोत्तर या उससे अधिक</span></label>
+        <label class="radio-opt"><input type="radio" name="C3_edu" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C4. आपके परिवार में कुल कितने सदस्य रहते हैं?</div>
+      <input type="number" class="num-input" name="C4_family_size" min="1" max="30" placeholder="संख्या">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C5. आपके परिवार में कितने सदस्य कमाने का काम करते हैं?</div>
+      <input type="number" class="num-input" name="C5_earning_members" min="0" max="20" placeholder="संख्या">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न C6. क्या आप वर्तमान में कोई काम या रोजगार करती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="C6_work" value="नियमित काम"><span>नियमित काम</span></label>
+        <label class="radio-opt"><input type="radio" name="C6_work" value="मौसमी काम"><span>मौसमी काम</span></label>
+        <label class="radio-opt"><input type="radio" name="C6_work" value="कभी-कभी काम"><span>कभी-कभी काम</span></label>
+        <label class="radio-opt"><input type="radio" name="C6_work" value="कोई काम नहीं"><span>कोई काम नहीं</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION D: ECONOMIC STATUS ══════════════ -->
+  <div class="form-section hidden" id="secD">
+    <div class="section-header">खंड D: परिवार की आर्थिक स्थिति</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D1. आपके परिवार की अनुमानित मासिक आय कितनी है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹5,000 से कम"><span>₹5,000 से कम</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹5,001-₹10,000"><span>₹5,001–₹10,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹10,001-₹15,000"><span>₹10,001–₹15,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹15,001-₹25,000"><span>₹15,001–₹25,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹25,001-₹40,000"><span>₹25,001–₹40,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹40,001-₹60,000"><span>₹40,001–₹60,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="₹60,000 से अधिक"><span>₹60,000 से अधिक</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D1_income" value="बताना नहीं चाहतीं"><span>बताना नहीं चाहतीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D2. आपके परिवार की आय के मुख्य स्रोत क्या हैं?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="खेती"><span>खेती</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="कृषि मजदूरी"><span>कृषि मजदूरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="दिहाड़ी मजदूरी"><span>दिहाड़ी मजदूरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="नौकरी"><span>नौकरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="छोटा व्यवसाय"><span>छोटा व्यवसाय</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="पशुपालन"><span>पशुपालन</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="प्रवासी सदस्यों से पैसा"><span>दूसरे राज्यों में काम करने वाले सदस्यों से प्राप्त पैसा</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="सरकारी सहायता"><span>सरकारी सहायता</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="घरेलू काम"><span>घरेलू काम</span></label>
+        <label class="check-opt"><input type="checkbox" name="D2_income_sources" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D3. क्या आपके परिवार पर कोई कर्ज है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D3_debt" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="D3_debt" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D3_debt" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="D3_debt" value="बताना नहीं चाहतीं"><span>बताना नहीं चाहतीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group hidden" id="D4group">
+      <div class="q-label">प्रश्न D4. यदि हाँ, तो लगभग कितना कर्ज है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D4_debt_amt" value="₹10,000 से कम"><span>₹10,000 से कम</span></label>
+        <label class="radio-opt"><input type="radio" name="D4_debt_amt" value="₹10,001-₹25,000"><span>₹10,001–₹25,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D4_debt_amt" value="₹25,001-₹50,000"><span>₹25,001–₹50,000</span></label>
+        <label class="radio-opt"><input type="radio" name="D4_debt_amt" value="₹50,001-₹1 लाख"><span>₹50,001–₹1 लाख</span></label>
+        <label class="radio-opt"><input type="radio" name="D4_debt_amt" value="₹1 लाख से अधिक"><span>₹1 लाख से अधिक</span></label>
+        <label class="radio-opt"><input type="radio" name="D4_debt_amt" value="बताना नहीं चाहतीं"><span>बताना नहीं चाहतीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D5. क्या आपके नाम से बैंक खाता है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D5_bank" value="व्यक्तिगत खाता"><span>हाँ, व्यक्तिगत खाता</span></label>
+        <label class="radio-opt"><input type="radio" name="D5_bank" value="संयुक्त खाता"><span>हाँ, संयुक्त खाता</span></label>
+        <label class="radio-opt"><input type="radio" name="D5_bank" value="परिवार के सदस्य का खाता"><span>केवल परिवार के किसी अन्य सदस्य का खाता</span></label>
+        <label class="radio-opt"><input type="radio" name="D5_bank" value="नहीं"><span>नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न D6. क्या आप अपने बैंक खाते का उपयोग स्वयं कर सकती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="D6_bank_use" value="हाँ, स्वतंत्र रूप से"><span>हाँ, स्वतंत्र रूप से</span></label>
+        <label class="radio-opt"><input type="radio" name="D6_bank_use" value="परिवार की सहायता से"><span>परिवार की सहायता से</span></label>
+        <label class="radio-opt"><input type="radio" name="D6_bank_use" value="सीमित रूप से"><span>सीमित रूप से</span></label>
+        <label class="radio-opt"><input type="radio" name="D6_bank_use" value="नहीं"><span>नहीं</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION E: ECONOMIC PARTICIPATION ══════════════ -->
+  <div class="form-section hidden" id="secE">
+    <div class="section-header">खंड E: महिलाओं की आर्थिक भागीदारी एवं निर्णय क्षमता</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E1. परिवार के खर्च से जुड़े निर्णय सामान्यतः कौन लेता है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="E1_decision" value="मैं स्वयं"><span>मैं स्वयं</span></label>
+        <label class="radio-opt"><input type="radio" name="E1_decision" value="मैं और पति मिलकर"><span>मैं और पति मिलकर</span></label>
+        <label class="radio-opt"><input type="radio" name="E1_decision" value="पति"><span>पति</span></label>
+        <label class="radio-opt"><input type="radio" name="E1_decision" value="परिवार के अन्य सदस्य"><span>परिवार के अन्य सदस्य</span></label>
+        <label class="radio-opt"><input type="radio" name="E1_decision" value="कोई अन्य व्यक्ति"><span>कोई अन्य व्यक्ति</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E2. क्या आप अपनी कमाई को अपनी इच्छा से खर्च कर सकती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="E2_spending" value="हाँ, पूरी तरह"><span>हाँ, पूरी तरह</span></label>
+        <label class="radio-opt"><input type="radio" name="E2_spending" value="कुछ हद तक"><span>कुछ हद तक</span></label>
+        <label class="radio-opt"><input type="radio" name="E2_spending" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="E2_spending" value="लागू नहीं"><span>लागू नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E3. क्या आपने कभी अपना व्यवसाय शुरू करने के बारे में सोचा है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="E3_biz_intent" value="हाँ, शुरू करने की योजना है"><span>हाँ, शुरू करने की योजना है</span></label>
+        <label class="radio-opt"><input type="radio" name="E3_biz_intent" value="हाँ, लेकिन अभी कोई योजना नहीं"><span>हाँ, लेकिन अभी कोई योजना नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="E3_biz_intent" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="E3_biz_intent" value="निश्चित नहीं"><span>निश्चित नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E4. व्यवसाय शुरू करने में आपके सामने सबसे बड़ी कठिनाइयाँ क्या हैं?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="पूंजी की कमी"><span>पैसे या पूंजी की कमी</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="प्रशिक्षण की कमी"><span>प्रशिक्षण की कमी</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="बाजार की जानकारी नहीं"><span>बाजार की जानकारी नहीं</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="परिवार का सहयोग नहीं"><span>परिवार का सहयोग नहीं</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="घर से बाहर जाने में कठिनाई"><span>घर से बाहर जाने में कठिनाई</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="बच्चों की देखभाल"><span>बच्चों की देखभाल</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="आत्मविश्वास की कमी"><span>आत्मविश्वास की कमी</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="नुकसान का डर"><span>व्यवसाय में नुकसान का डर</span></label>
+        <label class="check-opt"><input type="checkbox" name="E4_barriers" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न E5. क्या आप अपने परिवार से स्वतंत्र होकर कोई आर्थिक गतिविधि करना चाहती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="E5_independence" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="E5_independence" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="E5_independence" value="शायद"><span>शायद</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION F: SKILLS & ASPIRATIONS ══════════════ -->
+  <div class="form-section hidden" id="secF">
+    <div class="section-header">खंड F: कौशल एवं आजीविका संबंधी आकांक्षाएँ</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न F1. क्या आपके पास कोई व्यावसायिक या तकनीकी कौशल है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="F1_skill" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="F1_skill" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="F1_skill" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न F2. आप किस प्रकार का प्रशिक्षण लेना चाहेंगी?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="खाद्य प्रसंस्करण"><span>खाद्य प्रसंस्करण (Food Processing)</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="सोलर एवं LED असेंबली"><span>सोलर एवं LED असेंबली</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="सिलाई एवं कपड़ा निर्माण"><span>सिलाई एवं कपड़ा निर्माण</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="कृषि आधारित व्यवसाय"><span>कृषि आधारित व्यवसाय</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="पशुपालन"><span>पशुपालन</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="डिजिटल सेवाएँ"><span>डिजिटल सेवाएँ</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="खुदरा व्यापार"><span>खुदरा व्यापार</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="पैकेजिंग एवं निर्माण"><span>पैकेजिंग एवं निर्माण</span></label>
+        <label class="check-opt"><input type="checkbox" name="F2_training" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न F3. आप किस प्रकार का काम करना पसंद करेंगी?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="नौकरी"><span>नौकरी</span></label>
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="स्वयं का व्यवसाय"><span>स्वयं का व्यवसाय</span></label>
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="सामूहिक व्यवसाय"><span>सामूहिक व्यवसाय</span></label>
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="घर से काम"><span>घर से काम</span></label>
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="महिलाओं के समूह के साथ काम"><span>महिलाओं के समूह के साथ काम</span></label>
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="आगे की पढ़ाई या प्रशिक्षण"><span>आगे की पढ़ाई या प्रशिक्षण</span></label>
+        <label class="check-opt"><input type="checkbox" name="F3_work_pref" value="निश्चित नहीं"><span>निश्चित नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न F4. आप प्रतिदिन आर्थिक गतिविधियों के लिए कितना समय दे सकती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="F4_time" value="2 घंटे से कम"><span>2 घंटे से कम</span></label>
+        <label class="radio-opt"><input type="radio" name="F4_time" value="2-4 घंटे"><span>2–4 घंटे</span></label>
+        <label class="radio-opt"><input type="radio" name="F4_time" value="4-6 घंटे"><span>4–6 घंटे</span></label>
+        <label class="radio-opt"><input type="radio" name="F4_time" value="6 घंटे से अधिक"><span>6 घंटे से अधिक</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION G: MOBILITY & DIGITAL ══════════════ -->
+  <div class="form-section hidden" id="secG">
+    <div class="section-header">खंड G: आवागमन एवं डिजिटल सुविधा</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न G1. क्या आप अपने गांव से बाहर स्वतंत्र रूप से जा सकती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="G1_mobility" value="हाँ, बिना किसी रोक-टोक के"><span>हाँ, बिना किसी रोक-टोक के</span></label>
+        <label class="radio-opt"><input type="radio" name="G1_mobility" value="हाँ, परिवार की अनुमति से"><span>हाँ, परिवार की अनुमति से</span></label>
+        <label class="radio-opt"><input type="radio" name="G1_mobility" value="हाँ, लेकिन कठिनाई होती है"><span>हाँ, लेकिन कठिनाई होती है</span></label>
+        <label class="radio-opt"><input type="radio" name="G1_mobility" value="नहीं"><span>नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group hidden" id="G2group">
+      <div class="q-label">प्रश्न G2. यदि आपको बाहर जाने में कठिनाई होती है, तो उसका कारण क्या है?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="परिवार की रोक-टोक"><span>परिवार की रोक-टोक</span></label>
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="आर्थिक समस्या"><span>आर्थिक समस्या</span></label>
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="सुरक्षा की चिंता"><span>सुरक्षा की चिंता</span></label>
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="परिवहन की सुविधा नहीं"><span>परिवहन की सुविधा नहीं</span></label>
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="बच्चों की जिम्मेदारी"><span>बच्चों की जिम्मेदारी</span></label>
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="स्वास्थ्य संबंधी समस्या"><span>स्वास्थ्य संबंधी समस्या</span></label>
+        <label class="check-opt"><input type="checkbox" name="G2_mobility_barrier" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न G3. क्या आपके पास स्मार्टफोन है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="G3_phone" value="अपना स्मार्टफोन"><span>अपना स्मार्टफोन</span></label>
+        <label class="radio-opt"><input type="radio" name="G3_phone" value="परिवार का साझा स्मार्टफोन"><span>परिवार का साझा स्मार्टफोन</span></label>
+        <label class="radio-opt"><input type="radio" name="G3_phone" value="नहीं"><span>नहीं</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न G4. क्या आप स्वयं डिजिटल भुगतान कर सकती हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="G4_digital_pay" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="G4_digital_pay" value="किसी की सहायता से"><span>किसी की सहायता से</span></label>
+        <label class="radio-opt"><input type="radio" name="G4_digital_pay" value="नहीं"><span>नहीं</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION H: MIGRATION ══════════════ -->
+  <div class="form-section hidden" id="secH">
+    <div class="section-header">खंड H: पलायन एवं रोजगार संबंधी जानकारी</div>
+    <div class="info-box">इस खंड का उद्देश्य परिवार के पलायन के स्वरूप को समझना है। केवल पलायन या दूसरे राज्य में विवाह होने को मानव तस्करी नहीं माना जाएगा।</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न H1. क्या पिछले तीन वर्षों में आपके परिवार का कोई सदस्य काम के लिए दूसरे स्थान पर गया है?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="H1_migration" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="H1_migration" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="H1_migration" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+      </div>
+    </div>
+
+    <div id="H2to5group" class="hidden">
+      <div class="q-group">
+        <div class="q-label">प्रश्न H2. यदि हाँ, तो वह कहाँ गया है?</div>
+        <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+        <div class="options-list">
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="गया जिले के भीतर"><span>गया जिले के भीतर</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="बिहार के अन्य जिले"><span>बिहार के अन्य जिले</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="दिल्ली NCR"><span>दिल्ली NCR</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="हरियाणा"><span>हरियाणा</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="पंजाब"><span>पंजाब</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="राजस्थान"><span>राजस्थान</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="उत्तर प्रदेश"><span>उत्तर प्रदेश</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="अन्य राज्य"><span>अन्य राज्य</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="विदेश"><span>विदेश</span></label>
+          <label class="check-opt"><input type="checkbox" name="H2_destination" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-label">प्रश्न H3. उसे काम की जानकारी किस माध्यम से मिली?</div>
+        <div class="options-list">
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="रिश्तेदार"><span>रिश्तेदार</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="दोस्त"><span>दोस्त</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="ठेकेदार"><span>ठेकेदार</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="रोजगार एजेंट"><span>रोजगार एजेंट</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="सीधे नियोक्ता से"><span>सीधे नियोक्ता से</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="ऑनलाइन माध्यम"><span>ऑनलाइन माध्यम</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="अन्य"><span>अन्य</span></label>
+          <label class="radio-opt"><input type="radio" name="H3_info_source" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-label">प्रश्न H4. क्या काम पर जाने से पहले रोजगार की शर्तें स्पष्ट थीं?</div>
+        <div class="options-list">
+          <label class="radio-opt"><input type="radio" name="H4_terms" value="हाँ"><span>हाँ</span></label>
+          <label class="radio-opt"><input type="radio" name="H4_terms" value="कुछ हद तक"><span>कुछ हद तक</span></label>
+          <label class="radio-opt"><input type="radio" name="H4_terms" value="नहीं"><span>नहीं</span></label>
+          <label class="radio-opt"><input type="radio" name="H4_terms" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+        </div>
+      </div>
+
+      <div class="q-group">
+        <div class="q-label">प्रश्न H5. क्या बाहर काम करने वाले सदस्य को अपनी कमाई और पहचान संबंधी दस्तावेजों पर नियंत्रण है?</div>
+        <div class="options-list">
+          <label class="radio-opt"><input type="radio" name="H5_control" value="हाँ"><span>हाँ</span></label>
+          <label class="radio-opt"><input type="radio" name="H5_control" value="कुछ हद तक"><span>कुछ हद तक</span></label>
+          <label class="radio-opt"><input type="radio" name="H5_control" value="नहीं"><span>नहीं</span></label>
+          <label class="radio-opt"><input type="radio" name="H5_control" value="जानकारी नहीं"><span>जानकारी नहीं</span></label>
+          <label class="radio-opt"><input type="radio" name="H5_control" value="लागू नहीं"><span>लागू नहीं</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SECTION I: M3-SAGE INTEREST ══════════════ -->
+  <div class="form-section hidden" id="secI">
+    <div class="section-header">खंड I: M3-SAGE में रुचि</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न I1. क्या आप आर्थिक सशक्तिकरण कार्यक्रम में भाग लेना चाहेंगी?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="I1_interest" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="I1_interest" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="I1_interest" value="शायद"><span>शायद</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न I2. आपको किस प्रकार की सहायता की आवश्यकता है?</div>
+      <div class="q-hint">एक से अधिक उत्तर चुन सकते हैं।</div>
+      <div class="options-list">
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="कौशल प्रशिक्षण"><span>कौशल प्रशिक्षण</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="व्यवसाय शुरू करने में सहायता"><span>व्यवसाय शुरू करने में सहायता</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="व्यवसाय के लिए पूंजी"><span>व्यवसाय के लिए पूंजी</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="बाजार से जुड़ाव"><span>बाजार से जुड़ाव</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="वित्तीय साक्षरता"><span>वित्तीय साक्षरता</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="डिजिटल साक्षरता"><span>डिजिटल साक्षरता</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="मार्गदर्शन एवं मेंटरशिप"><span>मार्गदर्शन एवं मेंटरशिप</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="महिलाओं का सामूहिक उद्यम"><span>महिलाओं का सामूहिक उद्यम</span></label>
+        <label class="check-opt"><input type="checkbox" name="I2_support_needed" value="अन्य"><span>अन्य</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न I3. क्या आप महिलाओं के समूह के साथ मिलकर व्यवसाय करना चाहेंगी?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="I3_group_biz" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="I3_group_biz" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="I3_group_biz" value="शायद"><span>शायद</span></label>
+      </div>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">प्रश्न I4. आप अगले दो वर्षों में अपनी आर्थिक स्थिति में क्या बदलाव देखना चाहती हैं?</div>
+      <textarea class="textarea-input" name="I4_aspiration" placeholder="उत्तर यहाँ लिखें..."></textarea>
+    </div>
+  </div>
+
+</form>
+
+<!-- Fixed nav bar -->
+<div class="form-nav-wrap">
+  <div class="form-nav">
+    <button type="button" class="btn-secondary hidden" id="btnPrev" onclick="prevSection()">← पिछला</button>
+    <button type="button" class="btn-primary" id="btnNext" onclick="nextSection()">अगला →</button>
+    <button type="button" class="btn-submit hidden" id="btnSubmit" onclick="submitForm()">जमा करें ✓</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+<script>
+// ── Auth guard ──
+initAuth(
+  user => {
+    document.getElementById('formEnum').textContent = user.displayName || user.email;
+    refreshSyncBadge();
+    // Set today's date
+    const today = new Date().toISOString().slice(0,10);
+    document.querySelector('[name="A_date"]').value = today;
+  },
+  () => { window.location.href = 'index.html'; }
+);
+
+// ── Section navigation ──
+const SECTIONS = ['secA','secB','secC','secD','secE','secF','secG','secH','secI'];
+let cur = 0;
+
+function showSection(idx) {
+  SECTIONS.forEach((id, i) => {
+    document.getElementById(id).classList.toggle('hidden', i !== idx);
+  });
+  cur = idx;
+  const pct = Math.round(((idx + 1) / SECTIONS.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `खंड ${idx+1} / ${SECTIONS.length}`;
+  document.getElementById('btnPrev').classList.toggle('hidden', idx === 0);
+  document.getElementById('btnNext').classList.toggle('hidden', idx === SECTIONS.length - 1);
+  document.getElementById('btnSubmit').classList.toggle('hidden', idx !== SECTIONS.length - 1);
+  window.scrollTo(0, 0);
+}
+
+function nextSection() {
+  // Consent check
+  if (cur === 1) {
+    const consent = document.querySelector('[name="A1_consent"]:checked');
+    if (!consent) { alert('कृपया सहमति का उत्तर चुनें।'); return; }
+    if (consent.value === 'नहीं') { document.getElementById('consentRefused').classList.remove('hidden'); return; }
+  }
+  if (cur < SECTIONS.length - 1) showSection(cur + 1);
+}
+
+function prevSection() {
+  if (cur > 0) showSection(cur - 1);
+}
+
+// ── Conditional logic ──
+document.querySelectorAll('[name="D3_debt"]').forEach(r =>
+  r.addEventListener('change', function() {
+    document.getElementById('D4group').classList.toggle('hidden', this.value !== 'हाँ');
+  })
+);
+
+document.querySelectorAll('[name="G1_mobility"]').forEach(r =>
+  r.addEventListener('change', function() {
+    const show = this.value === 'हाँ, परिवार की अनुमति से' ||
+                 this.value === 'हाँ, लेकिन कठिनाई होती है' ||
+                 this.value === 'नहीं';
+    document.getElementById('G2group').classList.toggle('hidden', !show);
+  })
+);
+
+document.querySelectorAll('[name="H1_migration"]').forEach(r =>
+  r.addEventListener('change', function() {
+    document.getElementById('H2to5group').classList.toggle('hidden', this.value !== 'हाँ');
+  })
+);
+
+// ── Submit ──
+async function submitForm() {
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> जमा हो रहा है...';
+
+  const data = collectFormData(document.getElementById('mainForm'));
+
+  try {
+    const id = await saveSubmission('household', data);
+    document.getElementById('mainForm').classList.add('hidden');
+    document.getElementById('successScreen').classList.remove('hidden');
+    document.getElementById('successId').textContent = id;
+    document.getElementById('successNote').textContent =
+      navigator.onLine ? 'डेटा Google Sheets में सिंक हो रहा है।' : 'ऑफलाइन — इंटरनेट आने पर स्वतः सिंक होगा।';
+    window.scrollTo(0, 0);
+    // hide progress and nav
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.querySelector('.form-nav-wrap').style.display = 'none';
+  } catch (e) {
+    alert('जमा करने में समस्या। पुनः प्रयास करें।');
+    btn.disabled = false;
+    btn.textContent = 'जमा करें ✓';
+  }
+}
+
+showSection(0);
+</script>
+</body>
+</html>

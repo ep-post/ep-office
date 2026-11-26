@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d4a7c">
+  <title>फॉर्म 3: KII / FGD / बाजार | M3-SAGE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="offline-bar">📵 ऑफलाइन — फॉर्म भरा जाएगा, डेटा बाद में सिंक होगा</div>
+
+<div class="app-header">
+  <a href="index.html" class="back-btn">←</a>
+  <div class="header-title">
+    KII / FGD / बाजार / संस्थागत मानचित्रण
+    <div class="header-sub">प्रश्नावली 3-4-6-7 · M3-SAGE</div>
+  </div>
+  <div class="sync-badge" id="syncBadge"></div>
+</div>
+
+<div id="successScreen" class="form-container hidden">
+  <div class="success-screen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">फॉर्म सफलतापूर्वक जमा हुआ</div>
+    <div class="success-id" id="successId"></div>
+    <div class="success-note" id="successNote"></div>
+    <div class="success-btns">
+      <button class="btn-primary" onclick="location.reload()">नया फॉर्म भरें</button>
+      <button class="btn-secondary" onclick="location.href='index.html'">होम पर जाएं</button>
+    </div>
+  </div>
+</div>
+
+<form id="mainForm" class="form-container" novalidate>
+
+  <div class="form-meta-box">
+    <span class="form-id" id="formId">M3-KF-...</span>
+    <span class="form-enum" id="formEnum"></span>
+  </div>
+
+  <!-- ══════ META ══════ -->
+  <div class="form-section" id="secMeta">
+    <div class="section-header">सर्वेक्षण की जानकारी</div>
+
+    <div class="q-group">
+      <div class="q-label">प्रखंड</div>
+      <select class="select-input" name="meta_block">
+        <option value="">— चुनें —</option>
+        <option>शेरघाटी</option><option>आमस</option><option>डोभी</option>
+      </select>
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">गांव / स्थान</div>
+      <input type="text" class="text-input" name="meta_location" placeholder="गांव का नाम">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">तारीख</div>
+      <input type="date" class="text-input" name="meta_date">
+    </div>
+
+    <div class="q-group">
+      <div class="q-label">फॉर्म का प्रकार चुनें</div>
+      <div class="type-selector">
+        <button type="button" class="type-btn" id="btnKII"  onclick="selectType('kii')">🗣️ KII<br><small>प्रमुख व्यक्ति साक्षात्कार</small></button>
+        <button type="button" class="type-btn" id="btnFGD"  onclick="selectType('fgd')">👥 FGD<br><small>समूह चर्चा</small></button>
+        <button type="button" class="type-btn" id="btnMkt"  onclick="selectType('market')">🏪 बाजार<br><small>उद्यम संभाव्यता</small></button>
+        <button type="button" class="type-btn" id="btnInst" onclick="selectType('inst')">🏢 संस्थागत<br><small>सेवा मानचित्रण</small></button>
+      </div>
+      <input type="hidden" name="meta_type" id="metaType">
+    </div>
+
+    <div class="q-group" id="respondentGroup">
+      <div class="q-label">उत्तरदाता का पद / भूमिका</div>
+      <input type="text" class="text-input" name="meta_respondent_role" placeholder="जैसे: पंचायत प्रतिनिधि, शिक्षक, व्यापारी...">
+    </div>
+
+    <div class="q-group" id="groupSizeGroup" style="display:none">
+      <div class="q-label">समूह के प्रतिभागियों की संख्या</div>
+      <input type="number" class="num-input" name="meta_group_size" min="1" max="50" placeholder="संख्या">
+    </div>
+  </div>
+
+  <!-- ══════ KII SECTION ══════ -->
+  <div class="form-section hidden" id="secKII">
+    <div class="section-header">प्रमुख व्यक्तियों से साक्षात्कार (KII)</div>
+    <div class="info-box">अनुमानित समय: 30–45 मिनट</div>
+
+    <div class="q-group">
+      <div class="q-label">1. आपके क्षेत्र की महिलाओं की प्रमुख सामाजिक एवं आर्थिक समस्याएँ क्या हैं?</div>
+      <textarea class="textarea-input" name="KII_1" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">2. यहां महिलाओं के लिए रोजगार के कौन-कौन से अवसर उपलब्ध हैं?</div>
+      <textarea class="textarea-input" name="KII_2" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">3. क्या रोजगार की तलाश में लोग दूसरे राज्यों में जाते हैं?</div>
+      <textarea class="textarea-input" name="KII_3" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">4. पलायन के प्रमुख कारण क्या हैं?</div>
+      <textarea class="textarea-input" name="KII_4" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">5. रोजगार के लिए लोगों की भर्ती कौन करता है?</div>
+      <textarea class="textarea-input" name="KII_5" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">6. क्या रोजगार के नाम पर धोखाधड़ी की शिकायतें सामने आती हैं?</div>
+      <textarea class="textarea-input" name="KII_6" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">7. क्या विवाह के नाम पर महिलाओं को दूसरे राज्यों में ले जाने की घटनाओं की जानकारी है?</div>
+      <textarea class="textarea-input" name="KII_7" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">8. क्या जबरन विवाह या विवाह के बाद शोषण की शिकायतें मिली हैं?</div>
+      <textarea class="textarea-input" name="KII_8" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">9. क्या मजदूरी, घरेलू काम या अन्य रोजगार में शोषण की घटनाएँ सामने आती हैं?</div>
+      <textarea class="textarea-input" name="KII_9" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">10. ऐसी महिलाओं को सहायता उपलब्ध कराने की वर्तमान व्यवस्था क्या है?</div>
+      <textarea class="textarea-input" name="KII_10" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">11. क्या स्थानीय स्तर पर कानूनी सहायता उपलब्ध है?</div>
+      <textarea class="textarea-input" name="KII_11" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">12. महिलाओं के आर्थिक पुनर्वास में सबसे बड़ी बाधाएँ क्या हैं?</div>
+      <textarea class="textarea-input" name="KII_12" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">13. कौन-से व्यवसाय इस क्षेत्र में सफल हो सकते हैं?</div>
+      <textarea class="textarea-input" name="KII_13" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">14. क्या स्थानीय संस्थाएँ Empower People के साथ मिलकर काम करना चाहेंगी?</div>
+      <textarea class="textarea-input" name="KII_14" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">15. आपके अनुसार महिलाओं की आर्थिक स्वतंत्रता बढ़ाने के लिए सबसे जरूरी तीन कदम क्या हैं?</div>
+      <textarea class="textarea-input" name="KII_15" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">साक्षात्कारकर्ता की टिप्पणी</div>
+      <textarea class="textarea-input" name="KII_note" placeholder="अतिरिक्त टिप्पणी..."></textarea>
+    </div>
+  </div>
+
+  <!-- ══════ FGD SECTION ══════ -->
+  <div class="form-section hidden" id="secFGD">
+    <div class="section-header">समूह चर्चा (FGD)</div>
+    <div class="info-box">अनुमानित समय: 60–90 मिनट</div>
+    <div class="safety-box">⚠️ किसी महिला से व्यक्तिगत तस्करी अनुभव बताने के लिए न कहें। किसी संभावित पीड़िता की पहचान सार्वजनिक न करें।</div>
+
+    <div class="section-note"><strong>विषय 1: महिलाओं की आर्थिक स्थिति</strong></div>
+    <div class="q-group">
+      <div class="q-label">1. गांव में महिलाएँ मुख्य रूप से कौन-से काम करती हैं?</div>
+      <textarea class="textarea-input" name="FGD_1" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">2. क्या महिलाओं को अपनी कमाई का उपयोग करने की स्वतंत्रता है?</div>
+      <textarea class="textarea-input" name="FGD_2" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">3. महिलाओं के रोजगार में सबसे बड़ी बाधाएँ क्या हैं?</div>
+      <textarea class="textarea-input" name="FGD_3" placeholder="उत्तर..."></textarea>
+    </div>
+
+    <div class="section-note"><strong>विषय 2: आजीविका एवं उद्यमिता</strong></div>
+    <div class="q-group">
+      <div class="q-label">4. महिलाएँ कौन-से व्यवसाय शुरू करना चाहती हैं?</div>
+      <textarea class="textarea-input" name="FGD_4" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">5. क्या महिलाएँ मिलकर व्यवसाय कर सकती हैं?</div>
+      <textarea class="textarea-input" name="FGD_5" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">6. व्यवसाय के लिए पूंजी और बाजार कहाँ से उपलब्ध हो सकते हैं?</div>
+      <textarea class="textarea-input" name="FGD_6" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">7. क्या सोलर/LED असेंबली और खाद्य प्रसंस्करण जैसे व्यवसाय यहां सफल हो सकते हैं?</div>
+      <textarea class="textarea-input" name="FGD_7" placeholder="उत्तर..."></textarea>
+    </div>
+
+    <div class="section-note"><strong>विषय 3: पलायन एवं सुरक्षा</strong></div>
+    <div class="q-group">
+      <div class="q-label">8. गांव से लोग रोजगार के लिए कहाँ जाते हैं?</div>
+      <textarea class="textarea-input" name="FGD_8" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">9. क्या रोजगार के नाम पर धोखाधड़ी की शिकायतें मिलती हैं?</div>
+      <textarea class="textarea-input" name="FGD_9" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">10. बाहर काम करने वाली महिलाओं को किन कठिनाइयों का सामना करना पड़ता है?</div>
+      <textarea class="textarea-input" name="FGD_10" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">11. शोषण की स्थिति में महिलाओं को कौन सहायता देता है?</div>
+      <textarea class="textarea-input" name="FGD_11" placeholder="उत्तर..."></textarea>
+    </div>
+
+    <div class="section-note"><strong>विषय 4: समुदाय की भूमिका</strong></div>
+    <div class="q-group">
+      <div class="q-label">12. महिलाएँ अपने गांव में किस प्रकार के समूह बना सकती हैं?</div>
+      <textarea class="textarea-input" name="FGD_12" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">13. महिला नेतृत्व को कैसे मजबूत किया जा सकता है?</div>
+      <textarea class="textarea-input" name="FGD_13" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">14. महिलाओं की आर्थिक स्वतंत्रता बढ़ाने के लिए क्या बदलाव आवश्यक हैं?</div>
+      <textarea class="textarea-input" name="FGD_14" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">संचालक की टिप्पणी</div>
+      <textarea class="textarea-input" name="FGD_note" placeholder="अतिरिक्त टिप्पणी..."></textarea>
+    </div>
+  </div>
+
+  <!-- ══════ MARKET SECTION ══════ -->
+  <div class="form-section hidden" id="secMkt">
+    <div class="section-header">बाजार एवं उद्यम संभाव्यता अध्ययन</div>
+
+    <div class="q-group">
+      <div class="q-label">खंड A: सामान्य जानकारी</div>
+      <table class="id-table">
+        <tr><td>व्यवसाय का नाम</td><td><input type="text" name="Mkt_biz_name" class="text-input" placeholder="नाम"></td></tr>
+        <tr><td>व्यवसाय का प्रकार</td><td><input type="text" name="Mkt_biz_type" class="text-input" placeholder="प्रकार"></td></tr>
+        <tr><td>स्थान</td><td><input type="text" name="Mkt_location" class="text-input" placeholder="स्थान"></td></tr>
+        <tr><td>कितने वर्षों से</td><td><input type="number" name="Mkt_years" class="text-input" min="0" placeholder="वर्ष"></td></tr>
+        <tr><td>कर्मचारी संख्या</td><td><input type="number" name="Mkt_employees" class="text-input" min="0" placeholder="संख्या"></td></tr>
+        <tr><td>मुख्य ग्राहक</td><td><input type="text" name="Mkt_customers" class="text-input" placeholder="ग्राहक वर्ग"></td></tr>
+      </table>
+    </div>
+
+    <div class="section-note"><strong>खंड B: सोलर एवं LED असेंबली</strong></div>
+    <div class="q-group">
+      <div class="q-label">B1. क्या आपके क्षेत्र में सोलर उत्पादों की मांग है?</div>
+      <textarea class="textarea-input" name="Mkt_B1" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">B2. कौन-से उत्पाद अधिक बिकते हैं?</div>
+      <textarea class="textarea-input" name="Mkt_B2" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">B3. क्या स्थानीय स्तर पर LED या सोलर उत्पादों का निर्माण होता है?</div>
+      <textarea class="textarea-input" name="Mkt_B3" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">B4. उत्पादों के लिए कच्चा माल कहाँ से आता है?</div>
+      <textarea class="textarea-input" name="Mkt_B4" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">B5. क्या आप महिला उद्यमियों से उत्पाद खरीदने में रुचि रखेंगे?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="Mkt_B5" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="Mkt_B5" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="Mkt_B5" value="चर्चा के बाद निर्णय"><span>चर्चा के बाद निर्णय</span></label>
+      </div>
+    </div>
+    <div class="q-group">
+      <div class="q-label">B6–B10. गुणवत्ता मानक, अनुमानित मूल्य, प्रतिस्पर्धी, जोखिम — विवरण</div>
+      <textarea class="textarea-input" name="Mkt_B6to10" placeholder="B6 से B10 के उत्तर यहाँ लिखें..."></textarea>
+    </div>
+
+    <div class="section-note"><strong>खंड C: खाद्य एवं कृषि प्रसंस्करण</strong></div>
+    <div class="q-group">
+      <div class="q-label">C1. क्षेत्र में मुख्य कृषि उत्पाद कौन-से हैं?</div>
+      <textarea class="textarea-input" name="Mkt_C1" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">C2. कौन-से उत्पादों का प्रसंस्करण किया जा सकता है?</div>
+      <textarea class="textarea-input" name="Mkt_C2" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">C3–C10. प्रसंस्करण इकाइयाँ, कच्चे माल की उपलब्धता, बिक्री, लाइसेंस, निवेश, चुनौतियाँ</div>
+      <textarea class="textarea-input" name="Mkt_C3to10" placeholder="C3 से C10 के उत्तर यहाँ लिखें..."></textarea>
+    </div>
+
+    <div class="section-note"><strong>खंड D: बाजार की संभावनाएँ</strong></div>
+    <div class="q-group">
+      <div class="q-label">D1. आपके अनुसार महिलाओं के लिए सबसे व्यवहारिक व्यवसाय कौन-सा है?</div>
+      <textarea class="textarea-input" name="Mkt_D1" placeholder="उत्तर..."></textarea>
+    </div>
+    <div class="q-group">
+      <div class="q-label">D2. क्या आप M3-SAGE के अंतर्गत विकसित महिला उद्यमों को बाजार उपलब्ध कराने में रुचि रखेंगे?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="Mkt_D2" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="Mkt_D2" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="Mkt_D2" value="चर्चा के बाद निर्णय लेंगे"><span>चर्चा के बाद निर्णय लेंगे</span></label>
+      </div>
+    </div>
+    <div class="q-group">
+      <div class="q-label">D3. क्या आप महिला उद्यमियों के साथ खरीद या विपणन साझेदारी करने के लिए तैयार हैं?</div>
+      <div class="options-list">
+        <label class="radio-opt"><input type="radio" name="Mkt_D3" value="हाँ"><span>हाँ</span></label>
+        <label class="radio-opt"><input type="radio" name="Mkt_D3" value="नहीं"><span>नहीं</span></label>
+        <label class="radio-opt"><input type="radio" name="Mkt_D3" value="संभवतः"><span>संभवतः</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ INSTITUTIONAL MAPPING SECTION ══════ -->
+  <div class="form-section hidden" id="secInst">
+    <div class="section-header">संस्थागत एवं सेवा उपलब्धता मानचित्रण</div>
+    <div class="info-box">निम्न संस्थाओं का मानचित्रण करें: थाना, DLSA, वन स्टॉप सेंटर, WCD, श्रम विभाग, बाल संरक्षण, स्वास्थ्य केंद्र, जीविका, SHG, बैंक, कौशल केंद्र, NGO/CBO</div>
+
+    <div id="instCards">
+      <!-- Institutions added dynamically -->
+    </div>
+
+    <button type="button" class="btn-secondary" style="width:100%;margin-bottom:12px" onclick="addInstitution()">
+      + संस्था जोड़ें
+    </button>
+  </div>
+
+</form>
+
+<div class="form-nav-wrap">
+  <div class="form-nav">
+    <button type="button" class="btn-submit" id="btnSubmit" onclick="submitForm()" style="display:none">जमा करें ✓</button>
+    <button type="button" class="btn-primary" id="btnProceed" onclick="proceedToForm()" disabled>आगे बढ़ें →</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+<script>
+initAuth(
+  user => { document.getElementById('formEnum').textContent = user.displayName || user.email; refreshSyncBadge(); document.querySelector('[name="meta_date"]').value = new Date().toISOString().slice(0,10); },
+  () => { window.location.href = 'index.html'; }
+);
+
+let selectedType = null;
+const CONTENT_SECTIONS = { kii: 'secKII', fgd: 'secFGD', market: 'secMkt', inst: 'secInst' };
+
+function selectType(type) {
+  selectedType = type;
+  document.getElementById('metaType').value = type;
+  ['btnKII','btnFGD','btnMkt','btnInst'].forEach(id => document.getElementById(id).classList.remove('active'));
+  const map = { kii:'btnKII', fgd:'btnFGD', market:'btnMkt', inst:'btnInst' };
+  document.getElementById(map[type]).classList.add('active');
+  document.getElementById('groupSizeGroup').style.display = type === 'fgd' ? '' : 'none';
+  document.getElementById('respondentGroup').style.display = type === 'inst' ? 'none' : '';
+  document.getElementById('btnProceed').disabled = false;
+}
+
+function proceedToForm() {
+  if (!selectedType) { alert('कृपया फॉर्म का प्रकार चुनें।'); return; }
+  document.getElementById('secMeta').classList.add('hidden');
+  document.getElementById(CONTENT_SECTIONS[selectedType]).classList.remove('hidden');
+  document.getElementById('btnProceed').style.display = 'none';
+  document.getElementById('btnSubmit').style.display = '';
+  window.scrollTo(0, 0);
+}
+
+let instCount = 0;
+function addInstitution() {
+  instCount++;
+  const card = document.createElement('div');
+  card.className = 'inst-card';
+  card.innerHTML = `
+    <div class="inst-title">संस्था ${instCount}</div>
+    <div class="inst-row full"><label>संस्था का नाम</label><input type="text" class="text-input" name="inst_${instCount}_name" placeholder="नाम"></div>
+    <div class="inst-row full"><label>संस्था का प्रकार</label>
+      <select class="select-input" name="inst_${instCount}_type">
+        <option value="">— चुनें —</option>
+        <option>सरकारी</option><option>गैर-सरकारी</option><option>वित्तीय</option><option>स्वास्थ्य</option><option>कानूनी</option><option>अन्य</option>
+      </select>
+    </div>
+    <div class="inst-row half">
+      <div class="col"><label>प्रखंड</label><input type="text" class="text-input" name="inst_${instCount}_block" placeholder="प्रखंड"></div>
+      <div class="col"><label>पंचायत/स्थान</label><input type="text" class="text-input" name="inst_${instCount}_panchayat" placeholder="स्थान"></div>
+    </div>
+    <div class="inst-row full"><label>संपर्क व्यक्ति का पद</label><input type="text" class="text-input" name="inst_${instCount}_contact_role" placeholder="पद"></div>
+    <div class="inst-row full"><label>आधिकारिक संपर्क (फोन/ईमेल)</label><input type="text" class="text-input" name="inst_${instCount}_contact_info" placeholder="संपर्क जानकारी"></div>
+    <div class="inst-row full"><label>उपलब्ध सेवाएँ</label><textarea class="textarea-input" name="inst_${instCount}_services" style="min-height:70px" placeholder="सेवाओं का विवरण..."></textarea></div>
+    <div class="inst-row full"><label>लाभार्थी पात्रता</label><input type="text" class="text-input" name="inst_${instCount}_eligibility" placeholder="कौन लाभ उठा सकता है"></div>
+    <div class="inst-row full"><label>सेवा की वास्तविक उपलब्धता</label>
+      <select class="select-input" name="inst_${instCount}_availability">
+        <option value="">— चुनें —</option><option>नियमित</option><option>कभी-कभी</option><option>केवल कागज पर</option><option>बंद</option>
+      </select>
+    </div>
+    <div class="inst-row full"><label>महिलाओं के लिए बाधाएँ</label><textarea class="textarea-input" name="inst_${instCount}_barriers" style="min-height:70px" placeholder="प्रमुख बाधाएँ..."></textarea></div>
+    <div class="inst-row full"><label>M3-SAGE के साथ साझेदारी की संभावना</label>
+      <select class="select-input" name="inst_${instCount}_partnership">
+        <option value="">— चुनें —</option><option>हाँ</option><option>नहीं</option><option>चर्चा के बाद</option>
+      </select>
+    </div>`;
+  document.getElementById('instCards').appendChild(card);
+}
+
+// Add first institution automatically for inst type
+document.getElementById('btnInst').addEventListener('click', () => {
+  if (document.getElementById('instCards').children.length === 0) addInstitution();
+});
+
+async function submitForm() {
+  if (!selectedType) { alert('फॉर्म का प्रकार नहीं चुना गया।'); return; }
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> जमा हो रहा है...';
+  try {
+    const id = await saveSubmission('kiifgd', collectFormData(document.getElementById('mainForm')));
+    document.getElementById('mainForm').classList.add('hidden');
+    document.getElementById('successScreen').classList.remove('hidden');
+    document.getElementById('successId').textContent = id;
+    document.getElementById('successNote').textContent = navigator.onLine ? 'Google Sheets में सिंक हो रहा है।' : 'ऑफलाइन — इंटरनेट आने पर सिंक होगा।';
+    document.querySelector('.form-nav-wrap').style.display = 'none';
+    window.scrollTo(0,0);
+  } catch(e) {
+    alert('जमा करने में समस्या। पुनः प्रयास करें।');
+    btn.disabled = false; btn.textContent = 'जमा करें ✓';
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d4a7c">
+  <title>M3-SAGE | Empower People</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<!-- ── OFFLINE BAR ── -->
+<div class="offline-bar">📵 ऑफलाइन — फॉर्म भरे जा सकते हैं, डेटा बाद में सिंक होगा</div>
+
+<!-- ═══════════════════════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════════════════════ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">📋</div>
+    <div class="login-org">Empower People</div>
+    <div class="login-title">M3-SAGE</div>
+    <div class="login-sub">आधारभूत सर्वेक्षण<br>शेरघाटी · आमस · डोभी, गया</div>
+
+    <button class="btn-google" id="btnGoogle" onclick="handleSignIn()">
+      <svg width="20" height="20" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.8 2.3 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.3l7.8 6C12.3 13.3 17.7 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8C43.9 37.5 46.5 31.4 46.5 24.5z"/>
+        <path fill="#FBBC05" d="M10.4 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.8-6C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.7l7.8-6z"/>
+        <path fill="#34A853" d="M24 48c6.3 0 11.6-2.1 15.5-5.7l-7.5-5.8c-2.1 1.4-4.8 2.3-8 2.3-6.3 0-11.7-4.3-13.6-10l-7.8 6C6.5 42.6 14.6 48 24 48z"/>
+      </svg>
+      Google से लॉगिन करें
+    </button>
+
+    <div id="loginError" class="login-error hidden"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HOME SCREEN
+════════════════════════════════════════════════ -->
+<div id="homeScreen" class="hidden">
+
+  <div class="app-header">
+    <div class="header-title">
+      M3-SAGE सर्वेक्षण
+      <div class="header-sub">Empower People · गया, बिहार</div>
+    </div>
+    <div class="sync-badge pending" id="syncBadge">...</div>
+  </div>
+
+  <div class="home-screen">
+
+    <!-- Welcome -->
+    <div class="home-welcome">
+      <div class="welcome-avatar">👤</div>
+      <div>
+        <div class="welcome-name" id="welcomeName">लोड हो रहा है...</div>
+        <div class="welcome-role">सर्वेक्षणकर्ता</div>
+      </div>
+    </div>
+
+    <!-- Forms -->
+    <div class="section-label">फॉर्म चुनें</div>
+    <div class="form-grid">
+      <a href="form-household.html" class="form-tile">
+        <div class="tile-icon">🏠</div>
+        <div class="tile-num">फॉर्म 1</div>
+        <div class="tile-name">परिवार सर्वेक्षण</div>
+      </a>
+      <a href="form-village.html" class="form-tile">
+        <div class="tile-icon">🗺️</div>
+        <div class="tile-num">फॉर्म 2</div>
+        <div class="tile-name">ग्राम प्रोफाइल एवं मानचित्रण</div>
+      </a>
+      <a href="form-kii-fgd.html" class="form-tile">
+        <div class="tile-icon">💬</div>
+        <div class="tile-num">फॉर्म 3</div>
+        <div class="tile-name">KII / FGD / बाजार</div>
+      </a>
+      <a href="form-survivor.html" class="form-tile confidential">
+        <div class="tile-icon">🔒</div>
+        <div class="tile-num">फॉर्म 4</div>
+        <div class="tile-name">गोपनीय परामर्श</div>
+      </a>
+    </div>
+
+    <!-- Sync -->
+    <div class="section-label">सिंक स्थिति</div>
+    <div class="sync-card">
+      <div class="sync-info">
+        <div class="sync-count" id="syncCount">जाँच हो रही है...</div>
+        <div class="sync-sub" id="syncSub">—</div>
+      </div>
+      <button class="btn-sync" id="btnSyncNow" onclick="handleSyncNow()">सिंक करें</button>
+    </div>
+
+    <!-- Recent submissions -->
+    <div class="section-label" id="recentLabel" style="display:none">हाल के जमा</div>
+    <div class="submissions-list hidden" id="submissionsList"></div>
+
+    <!-- Sign out -->
+    <button class="btn-signout" onclick="appSignOut()">लॉगआउट करें</button>
+
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+
+<script>
+// ── Init ──
+initAuth(
+  user => showHome(user),
+  code => showLogin(code)
+);
+
+function showLogin(code) {
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('homeScreen').classList.add('hidden');
+  if (code === 'not-allowed') {
+    showError('आपका ईमेल इस ऐप के लिए अधिकृत नहीं है। कृपया प्रशासक से संपर्क करें।');
+  } else if (code === 'config-error') {
+    showError('ऐप कॉन्फ़िगर नहीं हुई है। firebase-config.js में अपनी जानकारी भरें।');
+  }
+}
+
+async function showHome(user) {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('homeScreen').classList.remove('hidden');
+  document.getElementById('welcomeName').textContent = user.displayName || user.email;
+  await loadHomeData();
+}
+
+async function loadHomeData() {
+  await refreshSyncBadge();
+
+  const pending = await getPendingCount();
+  const all     = await getAllSubmissions();
+
+  document.getElementById('syncCount').textContent =
+    pending > 0 ? `${pending} फॉर्म सिंक बाकी` : 'सभी सिंक हो गए ✓';
+  document.getElementById('syncSub').textContent   =
+    `कुल जमा: ${all.length}`;
+
+  if (all.length > 0) {
+    const listEl  = document.getElementById('submissionsList');
+    const labelEl = document.getElementById('recentLabel');
+    labelEl.style.display = '';
+    listEl.classList.remove('hidden');
+    listEl.innerHTML = all.slice(0, 8).map(s => `
+      <div class="sub-item">
+        <div class="sub-dot ${s.status}"></div>
+        <div class="sub-info">
+          <div class="sub-id">${s.id}</div>
+          <div class="sub-meta">${FORM_LABELS[s.formType] || s.formType} · ${fmtDate(s.submittedAt)}</div>
+        </div>
+      </div>`).join('');
+  }
+}
+
+async function handleSignIn() {
+  document.getElementById('btnGoogle').disabled = true;
+  document.getElementById('btnGoogle').innerHTML = '<span class="spinner"></span> लॉगिन हो रहा है...';
+  try {
+    await signInWithGoogle();
+    // onAuthStateChanged in initAuth handles the rest
+  } catch (e) {
+    showError('लॉगिन नहीं हो सका। कृपया फिर से प्रयास करें।');
+    document.getElementById('btnGoogle').disabled = false;
+    document.getElementById('btnGoogle').innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 48 48">...</svg> Google से लॉगिन करें`;
+  }
+}
+
+async function handleSyncNow() {
+  const btn = document.getElementById('btnSyncNow');
+  btn.disabled = true;
+  btn.textContent = '...';
+  const result = await syncAll();
+  btn.disabled = false;
+  btn.textContent = 'सिंक करें';
+  await loadHomeData();
+  if (result.synced > 0) {
+    document.getElementById('syncCount').textContent = `${result.synced} सिंक हुए ✓`;
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('loginError');
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+</script>
+</body>
+</html>
