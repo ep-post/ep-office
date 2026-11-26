@@ -246,7 +246,7 @@ function showIssueReporter(prefill) {
     } catch(e) { btn.textContent = "Send report"; btn.disabled = false; toast("Could not send — check your connection"); }
   };
 }
-window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); window.deferredPrompt = e; const sib = document.getElementById("sideInstBtn"); if(sib){ sib.style.display = ""; sib.onclick = async () => { e.prompt(); window.deferredPrompt = null; sib.style.display = "none"; }; } });
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); window.deferredPrompt = e; });
 // Surface all silent failures — catches any unhandled promise rejection anywhere in the app
 // Auto-log activity to day report — called after every key save, no button needed
 // Like autoLogActivity but only adds to an EXISTING day report stub — never creates one.
@@ -3643,6 +3643,7 @@ function boot() {
 
   $("outBtn").onclick = () => auth.signOut(); $("deniedOut").onclick = () => auth.signOut();
   $("reportIssueBtn").onclick = () => showIssueReporter();
+  $("updateAppBtn").onclick = async () => { $("updateAppBtn").textContent = "🔄 Updating…"; try { const reg = await navigator.serviceWorker.getRegistration(); if (reg) await reg.update(); navigator.serviceWorker.addEventListener("controllerchange", () => location.reload()); if (reg?.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"}); else { await new Promise(r=>setTimeout(r,1500)); location.reload(); } } catch(e) { location.reload(); } };
   $("menuBtn").onclick = () => $("drawer").classList.toggle("hidden");
   $("drawer").onclick = e => { if (e.target === $("drawer")) closeDrawer(); };
   const net = () => $("offlineBar").classList.toggle("hidden", navigator.onLine); window.addEventListener("online", net); window.addEventListener("offline", net); net();
