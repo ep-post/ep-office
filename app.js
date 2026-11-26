@@ -221,10 +221,15 @@ function showIssueReporter() {
   const name = userName(me?.uid) || me?.email || "Unknown";
   const screen = state.route || "unknown";
   const version = document.querySelector('link[href*="styles.css"]')?.href?.match(/v=(\d+)/)?.[1] || "?";
+  const ua = navigator.userAgent;
+  const deviceType = window.innerWidth < 480 ? "Phone" : window.innerWidth < 1024 ? "Tablet" : "Laptop/Desktop";
+  const os = /android/i.test(ua) ? "Android" : /ipad/i.test(ua) ? "iPadOS" : /iphone|ipod/i.test(ua) ? "iOS" : /windows/i.test(ua) ? "Windows" : /mac/i.test(ua) ? "Mac" : /linux/i.test(ua) ? "Linux" : "Unknown OS";
+  const browser = /edg\//i.test(ua) ? "Edge" : /opr\//i.test(ua) ? "Opera" : /chrome/i.test(ua) ? "Chrome" : /safari/i.test(ua) ? "Safari" : /firefox/i.test(ua) ? "Firefox" : "Unknown browser";
+  const deviceInfo = `${deviceType} · ${os} · ${browser}`;
   const overlay = document.createElement("div");
   overlay.id = "issueOverlay";
   overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
-  overlay.innerHTML = `<div style="background:var(--bg);border-radius:12px;padding:24px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.3)"><h2 style="margin:0 0 4px">🐛 Report app issue</h2><p class="small muted" style="margin:0 0 16px">From: <b>${esc(name)}</b> · Screen: <b>${esc(screen)}</b> · v${version}</p><label class="field"><span>What type of issue?</span><select id="issueType"><option value="not_working">Something not working</option><option value="screen_blank">Screen not loading / blank</option><option value="data_wrong">Wrong data showing</option><option value="slow">Very slow</option><option value="other">Other</option></select></label><label class="field"><span>Describe what happened</span><textarea id="issueDesc" rows="4" placeholder="What were you trying to do? What did you expect? What actually happened?" style="resize:vertical"></textarea></label><div style="display:flex;gap:8px;margin-top:8px"><button class="btn small" id="issueSubmit">Send report</button><button class="btn small quiet" onclick="document.getElementById('issueOverlay').remove()">Cancel</button></div></div>`;
+  overlay.innerHTML = `<div style="background:var(--bg);border-radius:12px;padding:24px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.3)"><h2 style="margin:0 0 4px">🐛 Report app issue</h2><p class="small muted" style="margin:0 0 16px">From: <b>${esc(name)}</b> · Screen: <b>${esc(screen)}</b> · v${version} · ${esc(deviceInfo)}</p><label class="field"><span>What type of issue?</span><select id="issueType"><option value="not_working">Something not working</option><option value="screen_blank">Screen not loading / blank</option><option value="data_wrong">Wrong data showing</option><option value="slow">Very slow</option><option value="other">Other</option></select></label><label class="field"><span>Describe what happened</span><textarea id="issueDesc" rows="4" placeholder="What were you trying to do? What did you expect? What actually happened?" style="resize:vertical"></textarea></label><div style="display:flex;gap:8px;margin-top:8px"><button class="btn small" id="issueSubmit">Send report</button><button class="btn small quiet" onclick="document.getElementById('issueOverlay').remove()">Cancel</button></div></div>`;
   document.body.appendChild(overlay);
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
   document.getElementById("issueSubmit").onclick = async () => {
@@ -234,7 +239,7 @@ function showIssueReporter() {
     const btn = document.getElementById("issueSubmit");
     btn.textContent = "Sending…"; btn.disabled = true;
     try {
-      await db.collection("appIssues").add({ by: me?.uid||null, name, screen, version, type, desc, roles: (state.users?.find(u=>u.id===me?.uid)?.roles||[]).join(", "), at: firebase.firestore.FieldValue.serverTimestamp(), status: "open" });
+      await db.collection("appIssues").add({ by: me?.uid||null, name, screen, version, type, desc, device: deviceInfo, roles: (state.users?.find(u=>u.id===me?.uid)?.roles||[]).join(", "), at: firebase.firestore.FieldValue.serverTimestamp(), status: "open" });
       overlay.remove(); toast("Report sent — thank you!");
     } catch(e) { btn.textContent = "Send report"; btn.disabled = false; toast("Could not send — check your connection"); }
   };

@@ -1977,7 +1977,7 @@ routes.appIssues = async () => {
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap">
       <div>
         <span class="small" style="font-weight:600">${esc(i.name||"Unknown")}</span>
-        <span class="small muted"> · ${esc(i.roles||"")} · ${esc(i.screen||"")} · v${esc(i.version||"?")} · ${fmtAgo(i.at)}</span>
+        <span class="small muted"> · ${esc(i.roles||"")} · ${esc(i.screen||"")} · v${esc(i.version||"?")} · ${esc(i.device||"")} · ${fmtAgo(i.at)}</span>
       </div>
       <span class="tag small" style="background:var(--line);padding:2px 8px;border-radius:20px">${esc(typeLabel[i.type]||i.type||"")}</span>
     </div>
