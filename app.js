@@ -216,7 +216,7 @@ async function forceAppUpdate() {
   window.location.reload(true);
 }
 
-function showIssueReporter() {
+function showIssueReporter(prefill) {
   const me = state.user;
   const name = userName(me?.uid) || me?.email || "Unknown";
   const screen = state.route || "unknown";
@@ -232,6 +232,8 @@ function showIssueReporter() {
   overlay.innerHTML = `<div style="background:var(--bg);border-radius:12px;padding:24px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.3)"><h2 style="margin:0 0 4px">🐛 Report app issue</h2><p class="small muted" style="margin:0 0 16px">From: <b>${esc(name)}</b> · Screen: <b>${esc(screen)}</b> · v${version} · ${esc(deviceInfo)}</p><label class="field"><span>What type of issue?</span><select id="issueType"><option value="not_working">Something not working</option><option value="screen_blank">Screen not loading / blank</option><option value="data_wrong">Wrong data showing</option><option value="slow">Very slow</option><option value="other">Other</option></select></label><label class="field"><span>Describe what happened</span><textarea id="issueDesc" rows="4" placeholder="What were you trying to do? What did you expect? What actually happened?" style="resize:vertical"></textarea></label><div style="display:flex;gap:8px;margin-top:8px"><button class="btn small" id="issueSubmit">Send report</button><button class="btn small quiet" onclick="document.getElementById('issueOverlay').remove()">Cancel</button></div></div>`;
   document.body.appendChild(overlay);
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  if (prefill?.desc) document.getElementById("issueDesc").value = prefill.desc;
+  if (prefill?.type) document.getElementById("issueType").value = prefill.type;
   document.getElementById("issueSubmit").onclick = async () => {
     const type = document.getElementById("issueType").value;
     const desc = document.getElementById("issueDesc").value.trim();
@@ -329,18 +331,36 @@ function logError(err, context) {
   } catch(_) {}
 }
 
+function errorToast(msg, errorDetail) {
+  const el = document.getElementById("toast");
+  if (!el) return;
+  el.innerHTML = `<span>⚠ ${msg}</span><button onclick="showIssueReporter({type:'not_working',desc:${JSON.stringify("Auto-detected error: " + errorDetail)}})" style="margin-left:12px;background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:20px;padding:4px 12px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">Report this</button>`;
+  el.classList.remove("hidden");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.classList.add("hidden"); el.innerHTML = ""; }, 8000);
+}
+
 window.addEventListener("unhandledrejection", event => {
   const err = event.reason;
   if (!err) return;
-  const msg = err.code === "permission-denied" ? "Could not save — you don't have permission. Contact your administrator."
-    : err.code === "unavailable" ? "No connection — please check your internet and try again."
+  const msg = err.code === "permission-denied" ? "Could not save — you don't have permission."
+    : err.code === "unavailable" ? "No connection — check your internet and try again."
     : err.code === "not-found" ? "Record not found — it may have been deleted."
     : (err.message || String(err));
-  if (typeof toast === "function") toast("⚠ " + msg);
+  errorToast(msg, err.message || err.code || String(err));
   logError(err, "unhandled");
   console.error("Unhandled rejection:", err);
   event.preventDefault();
 });
+
+window.onerror = (message, source, lineno, colno, error) => {
+  if (!message || String(message).includes("ResizeObserver")) return;
+  const msg = "Something went wrong — the app hit an unexpected error.";
+  const detail = `${message} (line ${lineno})`;
+  errorToast(msg, detail);
+  logError(error || { message, source, lineno }, "onerror");
+  return false;
+};
 const friendlyAuth = e => ({
   "auth/invalid-phone-number": "That mobile number doesn't look right. Enter the 10 digits only.",
   "auth/invalid-email": "That mobile number doesn't look right. Enter the 10 digits only.",
