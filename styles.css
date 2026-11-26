@@ -7,10 +7,10 @@
   --violet:#5B4CF5; --teal:#0AADA8;
   --safe-top:env(safe-area-inset-top,0px); --safe-bottom:env(safe-area-inset-bottom,0px);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--ink);font-family:Mukta,"Noto Sans Devanagari","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.45}
-button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
-input,select,textarea{font:inherit;color:inherit;width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:Mukta,"Noto Sans Devanagari","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;-webkit-appearance:none}
+input,select,textarea{font:inherit;color:inherit;width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;-webkit-appearance:none}
 textarea{resize:vertical;min-height:80px}
 :focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .hidden{display:none!important}
@@ -45,7 +45,7 @@ textarea{resize:vertical;min-height:80px}
 .navlink.on{background:linear-gradient(90deg,rgba(26,107,74,.12),rgba(26,107,74,.04));color:var(--green);font-weight:700;border-left:3px solid var(--green)}
 .navlink.out{margin-top:auto;color:var(--clay)}
 
-.content{flex:1;overflow:auto;padding:14px 14px calc(20px + var(--safe-bottom));max-width:980px;width:100%;margin:0 auto}
+.content{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:14px 14px calc(20px + var(--safe-bottom));max-width:980px;width:100%;margin:0 auto}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(26,107,74,.06)}
 .card h2{font-size:18px;margin-bottom:8px}
 .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -94,7 +94,7 @@ textarea{resize:vertical;min-height:80px}
 .chanlist .navlink.active{background:rgba(26,107,74,.1);color:var(--green);font-weight:700}
 .chatmain{display:flex;flex-direction:column;min-height:60vh}
 .chathead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
-.msgs{flex:1;overflow-y:auto;max-height:52vh;display:flex;flex-direction:column;gap:4px;padding-right:4px}
+.msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;max-height:52vh;display:flex;flex-direction:column;gap:4px;padding-right:4px}
 .msg{max-width:78%}.msg.mine{align-self:flex-end;text-align:right}
 .msg .who{font-size:11px;color:#777;margin:4px 0 2px}
 .msg .bub{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:7px 11px;font-size:14px;text-align:left}
