@@ -1999,6 +1999,24 @@ routes.appIssues = async () => {
 
 window.resolveIssue = async (id, btn) => {
   btn.disabled = true; btn.textContent = "Saving…";
-  await db.collection("appIssues").doc(id).update({ status:"resolved", resolvedAt: firebase.firestore.FieldValue.serverTimestamp() }).catch(()=>{});
+  const doc = await db.collection("appIssues").doc(id).get().catch(()=>null);
+  const resolvedBy = state.user?.name || state.me?.displayName || "Admin";
+  if (doc?.exists) {
+    const issue = doc.data();
+    const reporterUid = issue.by;
+    const reporterUser = state.users?.find(u => u.id === reporterUid);
+    const reporterEmail = reporterUser?.email || issue.email || "";
+    const canEmail = reporterEmail && !reporterEmail.endsWith("@phone.empowerpeople.in");
+    await db.collection("appIssues").doc(id).update({
+      status: "resolved",
+      resolvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      resolvedBy,
+      notifyEmail: canEmail ? reporterEmail : null,
+      notifyName: issue.name || "",
+      notifyDesc: issue.desc || ""
+    }).catch(()=>{});
+  } else {
+    await db.collection("appIssues").doc(id).update({ status:"resolved", resolvedAt: firebase.firestore.FieldValue.serverTimestamp(), resolvedBy }).catch(()=>{});
+  }
   routes.appIssues();
 };

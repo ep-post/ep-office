@@ -2,6 +2,12 @@
   "hosting": {
     "site": "ep-office-a9d09",
     "public": ".",
-    "ignore": ["firebase.json", ".firebaserc", ".git", ".github", "node_modules"]
+    "ignore": ["firebase.json", "**/.*", "node_modules/**", "*.zip"],
+    "headers": [
+      {
+        "source": "/sw.js",
+        "headers": [{"key": "Cache-Control", "value": "no-cache, no-store, must-revalidate"}]
+      }
+    ]
   }
 }
