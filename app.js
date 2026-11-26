@@ -246,7 +246,7 @@ function showIssueReporter(prefill) {
     } catch(e) { btn.textContent = "Send report"; btn.disabled = false; toast("Could not send — check your connection"); }
   };
 }
-window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); window.deferredPrompt = e; });
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); window.deferredPrompt = e; const sib = document.getElementById("sideInstBtn"); if(sib){ sib.style.display = ""; sib.onclick = async () => { e.prompt(); window.deferredPrompt = null; sib.style.display = "none"; }; } });
 // Surface all silent failures — catches any unhandled promise rejection anywhere in the app
 // Auto-log activity to day report — called after every key save, no button needed
 // Like autoLogActivity but only adds to an EXISTING day report stub — never creates one.
@@ -2933,7 +2933,7 @@ if ($("sigFile")) $("sigFile").onchange = async e => {
     }
     if (d.joined !== (m.joined || "")) routes.profile();          // the staff number carries the year
   };
-  if (window.deferredPrompt) { const b = $("instBtn"); b.style.display = ""; b.onclick = async () => { window.deferredPrompt.prompt(); window.deferredPrompt = null; b.style.display = "none"; }; }
+  if (window.deferredPrompt) { const b = $("instBtn"); if(b){ b.style.display = ""; b.onclick = async () => { window.deferredPrompt.prompt(); window.deferredPrompt = null; b.style.display = "none"; const sib=$("sideInstBtn"); if(sib)sib.style.display="none"; }; } const sib=$("sideInstBtn"); if(sib){ sib.style.display=""; sib.onclick=async()=>{ window.deferredPrompt.prompt(); window.deferredPrompt=null; sib.style.display="none"; const b=$("instBtn"); if(b)b.style.display="none"; }; } }
   // Link Google account — shown only if Google is not already linked
   const linkBtn = $("linkGoogleBtn");
   if (linkBtn) {
