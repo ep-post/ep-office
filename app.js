@@ -85,7 +85,7 @@ async function uploadField(inputId, folderKey, nameHint) {
 /* ===== 1. CONFIGURE — paste from Firebase console → Project settings → Your apps → Web app ===== */
 const firebaseConfig = {
   apiKey: "AIzaSyBz7Uqepe_qjOzLtL7myh6wNtAbF73th8I",
-  authDomain: "ep-office-a9d09.firebaseapp.com",
+  authDomain: "app.empowerpeople.in",
   projectId: "ep-office-a9d09",
   storageBucket: "ep-office-a9d09.firebasestorage.app",
   messagingSenderId: "21622493707",
@@ -2933,7 +2933,7 @@ if ($("sigFile")) $("sigFile").onchange = async e => {
     }
     if (d.joined !== (m.joined || "")) routes.profile();          // the staff number carries the year
   };
-  if (window.deferredPrompt) { const b = $("instBtn"); if(b){ b.style.display = ""; b.onclick = async () => { window.deferredPrompt.prompt(); window.deferredPrompt = null; b.style.display = "none"; const sib=$("sideInstBtn"); if(sib)sib.style.display="none"; }; } const sib=$("sideInstBtn"); if(sib){ sib.style.display=""; sib.onclick=async()=>{ window.deferredPrompt.prompt(); window.deferredPrompt=null; sib.style.display="none"; const b=$("instBtn"); if(b)b.style.display="none"; }; } }
+  if (window.deferredPrompt) { const b = $("instBtn"); b.style.display = ""; b.onclick = async () => { window.deferredPrompt.prompt(); window.deferredPrompt = null; b.style.display = "none"; }; }
   // Link Google account — shown only if Google is not already linked
   const linkBtn = $("linkGoogleBtn");
   if (linkBtn) {
@@ -3643,7 +3643,6 @@ function boot() {
 
   $("outBtn").onclick = () => auth.signOut(); $("deniedOut").onclick = () => auth.signOut();
   $("reportIssueBtn").onclick = () => showIssueReporter();
-  $("updateAppBtn").onclick = async () => { $("updateAppBtn").textContent = "🔄 Updating…"; try { const reg = await navigator.serviceWorker.getRegistration(); if (reg) await reg.update(); navigator.serviceWorker.addEventListener("controllerchange", () => location.reload()); if (reg?.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"}); else { await new Promise(r=>setTimeout(r,1500)); location.reload(); } } catch(e) { location.reload(); } };
   $("menuBtn").onclick = () => $("drawer").classList.toggle("hidden");
   $("drawer").onclick = e => { if (e.target === $("drawer")) closeDrawer(); };
   const net = () => $("offlineBar").classList.toggle("hidden", navigator.onLine); window.addEventListener("online", net); window.addEventListener("offline", net); net();
