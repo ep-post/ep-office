@@ -1962,3 +1962,43 @@ document.addEventListener("change", async function(evt){
     } else { if(st) st.textContent="Upload failed"; }
   } catch(err){ if(st) st.textContent=err.message; }
 });
+
+routes.appIssues = async () => {
+  if (!has("super_admin", "admin")) return html(`<div class="card"><h2>Not available</h2></div>`);
+  setTitle("App issues");
+  html(`<div class="card"><div class="empty">Loading…</div></div>`);
+  const snap = await db.collection("appIssues").orderBy("at","desc").limit(100).get().catch(()=>({docs:[]}));
+  const issues = snap.docs.map(d=>({id:d.id,...d.data()}));
+  const open = issues.filter(i=>i.status==="open");
+  const done = issues.filter(i=>i.status!=="open");
+  const typeLabel = { not_working:"Not working", screen_blank:"Screen blank", data_wrong:"Wrong data", slow:"Slow", other:"Other" };
+  const fmtAgo = ts => { if(!ts) return ""; const s=Math.floor((Date.now()-ts.toMillis())/1000); if(s<60) return "just now"; if(s<3600) return Math.floor(s/60)+"m ago"; if(s<86400) return Math.floor(s/3600)+"h ago"; return Math.floor(s/86400)+"d ago"; };
+  const row = i => `<div class="card" style="margin-bottom:8px;border-left:3px solid ${i.status==='open'?'var(--accent)':'var(--line)'}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap">
+      <div>
+        <span class="small" style="font-weight:600">${esc(i.name||"Unknown")}</span>
+        <span class="small muted"> · ${esc(i.roles||"")} · ${esc(i.screen||"")} · v${esc(i.version||"?")} · ${fmtAgo(i.at)}</span>
+      </div>
+      <span class="tag small" style="background:var(--line);padding:2px 8px;border-radius:20px">${esc(typeLabel[i.type]||i.type||"")}</span>
+    </div>
+    <p style="margin:8px 0 10px;white-space:pre-wrap">${esc(i.desc||"")}</p>
+    <div style="display:flex;gap:8px">
+      ${i.status==="open"
+        ? `<button class="btn small quiet" onclick="resolveIssue('${i.id}',this)">✓ Mark resolved</button>`
+        : `<span class="small muted">✓ Resolved</span>`}
+    </div>
+  </div>`;
+  html(`
+    <div class="card"><h2>App issues</h2>
+      <p class="small muted">${open.length} open · ${done.length} resolved</p>
+    </div>
+    ${open.length ? open.map(row).join("") : "<div class='card'><p class='muted small'>No open issues 🎉</p></div>"}
+    ${done.length ? `<div class="card" style="margin-top:16px"><p class="small muted" style="margin:0">Resolved (${done.length})</p></div>${done.map(row).join("")}` : ""}
+  `);
+};
+
+window.resolveIssue = async (id, btn) => {
+  btn.disabled = true; btn.textContent = "Saving…";
+  await db.collection("appIssues").doc(id).update({ status:"resolved", resolvedAt: firebase.firestore.FieldValue.serverTimestamp() }).catch(()=>{});
+  routes.appIssues();
+};

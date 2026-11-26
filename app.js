@@ -215,6 +215,30 @@ async function forceAppUpdate() {
   } catch(e) {}
   window.location.reload(true);
 }
+
+function showIssueReporter() {
+  const me = state.user;
+  const name = userName(me?.uid) || me?.email || "Unknown";
+  const screen = state.route || "unknown";
+  const version = document.querySelector('link[href*="styles.css"]')?.href?.match(/v=(\d+)/)?.[1] || "?";
+  const overlay = document.createElement("div");
+  overlay.id = "issueOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px";
+  overlay.innerHTML = `<div style="background:var(--bg);border-radius:12px;padding:24px;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.3)"><h2 style="margin:0 0 4px">🐛 Report app issue</h2><p class="small muted" style="margin:0 0 16px">From: <b>${esc(name)}</b> · Screen: <b>${esc(screen)}</b> · v${version}</p><label class="field"><span>What type of issue?</span><select id="issueType"><option value="not_working">Something not working</option><option value="screen_blank">Screen not loading / blank</option><option value="data_wrong">Wrong data showing</option><option value="slow">Very slow</option><option value="other">Other</option></select></label><label class="field"><span>Describe what happened</span><textarea id="issueDesc" rows="4" placeholder="What were you trying to do? What did you expect? What actually happened?" style="resize:vertical"></textarea></label><div style="display:flex;gap:8px;margin-top:8px"><button class="btn small" id="issueSubmit">Send report</button><button class="btn small quiet" onclick="document.getElementById('issueOverlay').remove()">Cancel</button></div></div>`;
+  document.body.appendChild(overlay);
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  document.getElementById("issueSubmit").onclick = async () => {
+    const type = document.getElementById("issueType").value;
+    const desc = document.getElementById("issueDesc").value.trim();
+    if (!desc) { toast("Please describe the issue first"); return; }
+    const btn = document.getElementById("issueSubmit");
+    btn.textContent = "Sending…"; btn.disabled = true;
+    try {
+      await db.collection("appIssues").add({ by: me?.uid||null, name, screen, version, type, desc, roles: (state.users?.find(u=>u.id===me?.uid)?.roles||[]).join(", "), at: firebase.firestore.FieldValue.serverTimestamp(), status: "open" });
+      overlay.remove(); toast("Report sent — thank you!");
+    } catch(e) { btn.textContent = "Send report"; btn.disabled = false; toast("Could not send — check your connection"); }
+  };
+}
 window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); window.deferredPrompt = e; });
 // Surface all silent failures — catches any unhandled promise rejection anywhere in the app
 // Auto-log activity to day report — called after every key save, no button needed
@@ -766,6 +790,7 @@ const CAN = {
   assets: () => has("super_admin", "director_acf", "procurement", "admin"),
   asset: () => isActive(),
   assetVerify: () => has("super_admin", "director_acf", "procurement", "admin"),
+  appIssues: () => has("super_admin", "admin"),
   operations: () => has("super_admin", "director_acf", "program_officer"),
   staffRecord: () => has("super_admin", "admin", "director_acf") || isManager(),
   forms: () => true,
@@ -884,6 +909,7 @@ function buildNav() {
   if (SUPER || canFR()) add("Project Development, Research & Innovations · Coordinator – PDRI", [["frCalendar", "Opportunity calendar"], ["frProposals", "Proposals sent & status"], ["frOutreach", "Partnerships & outreach"], ["frObligations", "Donor relations & reporting"], ["volunteers", "Volunteers"], ["profileApprovals", "Volunteer verification"], ["projects", "Project register"], ["requisition", "Volunteer & other requests"], ["bulk", "Bulk import"]]);
 
   if (!APPHAT) add("Chat", [["chat", "Chat & calls"]]);
+  if (SUPER || isAdmin()) add("App", [["appIssues", "App issues"]]);
   if (!LEAD && !APPHAT) add("Calendar", [["calendar", "Calendar"]]);
 
 
@@ -3591,6 +3617,7 @@ function boot() {
     $("loginErr").textContent = ""; });
 
   $("outBtn").onclick = () => auth.signOut(); $("deniedOut").onclick = () => auth.signOut();
+  $("reportIssueBtn").onclick = () => showIssueReporter();
   $("menuBtn").onclick = () => $("drawer").classList.toggle("hidden");
   $("drawer").onclick = e => { if (e.target === $("drawer")) closeDrawer(); };
   const net = () => $("offlineBar").classList.toggle("hidden", navigator.onLine); window.addEventListener("online", net); window.addEventListener("offline", net); net();
