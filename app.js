@@ -914,7 +914,7 @@ function buildNav() {
   if (SUPER || canFR()) add("Project Development, Research & Innovations · Coordinator – PDRI", [["frCalendar", "Opportunity calendar"], ["frProposals", "Proposals sent & status"], ["frOutreach", "Partnerships & outreach"], ["frObligations", "Donor relations & reporting"], ["volunteers", "Volunteers"], ["profileApprovals", "Volunteer verification"], ["projects", "Project register"], ["requisition", "Volunteer & other requests"], ["bulk", "Bulk import"]]);
 
   if (!APPHAT) add("Chat", [["chat", "Chat & calls"]]);
-  if (SUPER || isAdmin()) add("App", [["appIssues", "App issues"]]);
+  if (SUPER || isAdmin()) add("· App", [["appIssues", "App issues"]]);
   if (!LEAD && !APPHAT) add("Calendar", [["calendar", "Calendar"]]);
 
 
