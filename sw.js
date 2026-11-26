@@ -1,4 +1,4 @@
-const CACHE = "ep-office-v602";
+const CACHE = "ep-office-v603";
 const SHELL = ["./index.html", "./geo.js", "./app.js", "./programs.js", "./fundraising.js", "./modules.js", "./collab.js", "./accounts.js", "./forms.js", "./policy.js", "./i18n.js", "./programmes-v2.js", "./styles.css", "./manifest.json", "./icon-192.png", "./logo.png", "./stamp.png", "./hero.jpg", "./letterhead.jpg"];
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));

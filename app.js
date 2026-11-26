@@ -934,11 +934,11 @@ function buildNav() {
   if (SUPER || canFR()) add("Project Development, Research & Innovations · Coordinator – PDRI", [["frCalendar", "Opportunity calendar"], ["frProposals", "Proposals sent & status"], ["frOutreach", "Partnerships & outreach"], ["frObligations", "Donor relations & reporting"], ["volunteers", "Volunteers"], ["profileApprovals", "Volunteer verification"], ["projects", "Project register"], ["requisition", "Volunteer & other requests"], ["bulk", "Bulk import"]]);
 
   if (!APPHAT) add("Chat", [["chat", "Chat & calls"]]);
-  if (SUPER || isAdmin()) add("App", [["appIssues", "App issues"]]);
+  if (!APPHAT && isAdmin()) add("App", [["appIssues", "App issues"]]);
   if (!LEAD && !APPHAT) add("Calendar", [["calendar", "Calendar"]]);
 
 
-  if (APPHAT) add("App administration", [["posts", "Posts & organigram"], ["seedOrg", "Load the organigram"], ["seedProgrammes", "Load our programmes"], ["structure", "Change structure"], ["roles", "Roles"], ["users", "People & sign-ins"], ["persons", "Sakhis (update records)"], ["viewAs", "See as someone else"], ["handoverPost", "Exit handover"], ["profileApprovals", "Profile approvals"], ["override", "App Super Admin tools"], ["audit", "Audit log"], ["bulk", "Bulk import"], ["backup", "Backup"], ["drive", "Drive & attachments"]]);
+  if (APPHAT) add("App administration", [["appIssues", "App issues"], ["posts", "Posts & organigram"], ["seedOrg", "Load the organigram"], ["seedProgrammes", "Load our programmes"], ["structure", "Change structure"], ["roles", "Roles"], ["users", "People & sign-ins"], ["persons", "Sakhis (update records)"], ["viewAs", "See as someone else"], ["handoverPost", "Exit handover"], ["profileApprovals", "Profile approvals"], ["override", "App Super Admin tools"], ["audit", "Audit log"], ["bulk", "Bulk import"], ["backup", "Backup"], ["drive", "Drive & attachments"]]);
   /* Counsellor nav — simple: their cases + record support + resources + profile */
   if (has("counsellor")) {
     add("My cases", [["mycases","My cases"],["persons","All Sakhis (read)"]]);
