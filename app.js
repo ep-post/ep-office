@@ -78,7 +78,7 @@ async function uploadField(inputId, folderKey, nameHint) {
     return res;
   } catch(e) {
     if (note) note.textContent = "Upload failed: " + e.message;
-    toast("Could not upload — " + e.message);
+    errorToast("Could not upload — " + e.message, "Upload error: " + e.message);
     return null;
   }
 }
@@ -2535,7 +2535,7 @@ routes.dayreport = async () => {
     const attachments = [];
     for (const f of files) {
       if (!f?.size) continue;
-      try { const _a=await uploadToDrive(f,"program",f.name); if(_a&&_a.url) attachments.push(_a); else toast("Could not upload "+f.name+" — Drive unavailable"); } catch(e){toast("Upload error: "+e.message);}
+      try { const _a=await uploadToDrive(f,"program",f.name); if(_a&&_a.url) attachments.push(_a); else errorToast("Could not upload "+f.name+" — Drive unavailable", "Upload: Drive unavailable"); } catch(e){errorToast("Upload error: "+e.message, e.message);}
     }
     if (audio) d.audio = audio;
     // Check if auto-report already exists for today — if so, update it; otherwise create
@@ -2864,7 +2864,7 @@ routes.profile = async () => {
   $("ph").onchange = async e => { const f = e.target.files[0]; if (!f) return;
     const res = await uploadToDrive(f, "admin", state.me.name+"-photo."+f.name.split(".").pop()).catch(()=>null);
     const data = res?.webViewLink||res?.url||null;
-    if (!data) { toast("Could not upload photo to Drive"); return; }
+    if (!data) { errorToast("Could not upload photo — check your connection", "Photo upload failed"); return; }
     await db.collection("users").doc(m.id).update({ photo: data }); state.me.photo = data; $("pv").src = data; toast("Photo updated"); };
   if($("docUpload")) $("docUpload").onclick = async function() {
     var file=$("doc")&&$("doc").files[0];
@@ -3689,7 +3689,7 @@ if(_bootOrig) {
             var url=await ref.getDownloadURL();
             await db.collection('driveQueue').add({storagePath:path,driveFolder:fk||'root',driveName:nh||'file',driveMime:(file&&file.type)||'application/octet-stream',status:'pending',createdAt:today(),createdBy:(state.user&&state.user.uid)||''});
             return{name:nh,link:url,url,webViewLink:url,id:path,driveStatus:'pending'};
-          }catch(se){console.error('Storage fallback failed:',se);throw se;}
+          }catch(se){console.error('Storage fallback failed:',se);if(typeof errorToast==='function')errorToast('Could not upload '+(nh||'file')+' — check your connection and try again.','Upload failed: '+se.message);throw se;}
         };
         window.uploadToDrive._fallbackWrapped=true;
       }
